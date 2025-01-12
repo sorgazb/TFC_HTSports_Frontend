@@ -1,1 +1,27 @@
-<p>inicio-sesion works!</p>
+<div class="container">
+    <div class="flex justify-center items-center">
+        <div class="border-solid border-2 border-opacity-25 rounded p-5 md:w-1/2 shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)]">
+            <div class="">
+                <form class="" [formGroup]="formLogin">
+                    <!-- Email -->
+                    <div class="m-5">
+                        <mat-form-field appearance="outline" class="md:w-1/2">
+                            <mat-label>Correo electrónico</mat-label>
+                            <input type="email"  matInput formControlName="email" placeholder="Correo electrónico">
+                            <mat-error *ngIf="controlarErrores('email', 'required')">Introduce una dirección de correo electrónico</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <!-- Password -->
+                    <div class="m-5">
+                        <mat-form-field appearance="outline" class="md:w-1/2">
+                            <mat-label>Introduce tu contraseña</mat-label>
+                            <input type="password" matInput formControlName="password" placeholder="Introduce tu contraseña">
+                            <mat-error *ngIf="controlarErrores('password', 'required')">Introduce tu contraseña</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <button type="submit" [disabled]="!formLogin.valid" class="">Iniciar Sesión</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
