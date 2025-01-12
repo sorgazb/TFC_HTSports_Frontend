@@ -1,0 +1,42 @@
+header{
+    background-color: #274a80;
+    padding: 2rem;
+    width: 100%;
+}
+
+.contenedorHeader{
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+nav{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+ul{
+    list-style: none;
+    display: flex;
+    gap: 2rem;
+    margin: 0;
+    padding: 0;
+}
+
+.btnInicioSesion{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.5rem;
+    width: fit-content;
+    background-color: #ffffff;
+    color: #274a80;
+    border-radius: 5px;
+    padding: 10px;
+    transition: all 0.3s ease;
+}
+
+.btnInicioSesion:hover{
+    background-color: #B4D1F6;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
