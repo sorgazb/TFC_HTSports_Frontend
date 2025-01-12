@@ -3,5 +3,16 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body { height: 100%; }
+html, body { 
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    width: 100%;
+    overflow-x: hidden; 
+}
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.mdc-notched-outline__notch {
+    border-right: none;
+}
+

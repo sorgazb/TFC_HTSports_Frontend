@@ -1,9 +1,12 @@
-<header>
-    <div class="contenedorHeader">
-        <nav>
-            <ul>
-                <li><a  routerLink="inicioSesion" class="btnInicioSesion"><mat-icon fontIcon="person_outline"></mat-icon>Iniciar Sesión</a></li>
-            </ul>
-        </nav>  
-    </div>
-</header>
+<div *ngIf="mostrarBarraNav">
+    <header>
+        <div class="contenedorHeader">
+            <nav>
+                <ul>
+                    <li><a  routerLink="inicioSesion" class="btnInicioSesion"><mat-icon fontIcon="person_outline"></mat-icon>Iniciar Sesión</a></li>
+                </ul>
+            </nav>  
+        </div>
+    </header>
+</div>
+<router-outlet></router-outlet>
