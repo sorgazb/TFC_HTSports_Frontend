@@ -4,11 +4,6 @@ header{
     width: 100%;
 }
 
-.contenedorHeader{
-    max-width: 1200px;
-    margin: 0 auto;
-}
-
 nav{
     display: flex;
     justify-content: flex-end;
