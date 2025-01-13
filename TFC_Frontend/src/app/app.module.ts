@@ -15,7 +15,9 @@ import { HeaderComponent } from './header/header.component';
 import {MatIconModule} from '@angular/material/icon';
 import { InicioSesionComponent } from './inicio-sesion/inicio-sesion.component'
 import {MatFormFieldModule} from '@angular/material/form-field';
-import {MatInputModule} from '@angular/material/input'
+import {MatInputModule} from '@angular/material/input';
+import { RegistroComponent } from './registro/registro.component';
+import {NzAlertModule} from 'ng-zorro-antd/alert'
 
 registerLocaleData(es);
 
@@ -24,7 +26,8 @@ registerLocaleData(es);
     AppComponent,
     InicioComponent,
     HeaderComponent,
-    InicioSesionComponent
+    InicioSesionComponent,
+    RegistroComponent
   ],
   imports: [
     BrowserModule,
@@ -35,7 +38,8 @@ registerLocaleData(es);
     MatIconModule,
     ReactiveFormsModule,
     MatFormFieldModule,
-    MatInputModule
+    MatInputModule,
+    NzAlertModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: es_ES }

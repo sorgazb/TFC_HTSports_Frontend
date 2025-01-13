@@ -3,22 +3,24 @@
         <div class="border-solid border-2 border-opacity-25 rounded-2xl p-5 md:w-1/2 shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)]">
             <div class="">
                 <div class="m-5 flex justify-center">
-                    <h1>Iniciar Sesión</h1>
+                    <h1 class="text-lg font-bold text-azul">Iniciar Sesión</h1>
                 </div>
-                <form [formGroup]="formLogin">
+                <form [formGroup]="formLogin" (ngSubmit)="iniciarSesion()">
                     <!-- Email -->
                     <div class="m-5 flex justify-center">
                         <mat-form-field class="md:w-2/3" appearance="outline" hideRequiredMarker>
-                            <mat-label>Correo electrónico</mat-label>
+                            <mat-label class="bg-white p-1">Correo electrónico</mat-label>
                             <input type="email"  matInput formControlName="email" placeholder="Correo electrónico">
                             <mat-error *ngIf="controlarErrores('email', 'required')">Introduce una dirección de <strong>correo electrónico</strong></mat-error>
+                            <mat-error *ngIf="controlarErrores('email','email')">Dirección de correo <strong>no válida</strong></mat-error>
                         </mat-form-field>
                     </div>
                     <!-- Password -->
                     <div class="m-5 flex justify-center">
                         <mat-form-field class="md:w-2/3" appearance="outline" hideRequiredMarker>
-                            <mat-label>Introduce tu contraseña</mat-label>
-                            <input type="password" matInput formControlName="password" placeholder="Introduce tu contraseña">
+                            <mat-label class="bg-white p-1">Introduce tu contraseña</mat-label>
+                            <input matInput [type]="mostrarPassword ? 'text' : 'password'" formControlName="password" placeholder="Introduce tu contraseña">
+                            <mat-icon matSuffix (click) = 'cambiarVisibilidadPassword()'>{{mostrarPassword ? 'visibility_off':'visibility'}}</mat-icon>
                             <mat-error *ngIf="controlarErrores('password', 'required')">Introduce tu <strong>contraseña</strong></mat-error>
                         </mat-form-field>
                     </div>
@@ -26,6 +28,7 @@
                         <button type="submit" [disabled]="!formLogin.valid" class="p-2 bg-azul text-white md:w-1/2 rounded-full">Iniciar Sesión</button>
                     </div>
                 </form>
+                <!-- Registro de nuevos usuarios -->
                 <div class="m-5 flex justify-center">
                     <div class="space-x-1">
                         <span>¿No tienes cuenta?</span>
@@ -37,8 +40,13 @@
                     <span class="px-4 text-gray-500 text-sm whitespace-nowrap">o inicia sesion con</span>
                     <hr class="w-full border-gray-300">
                 </div>
+                <!-- Inicio de sesion con cuenta de Google -->
                 <div class="m-5 flex justify-center">
                     <button class="flex items-center p-2 space-x-2 rounded-full border-2 border-gray"><img src="https://img.icons8.com/color/22/000000/google-logo.png"><span>Inicia sesion con Google</span></button>
+                </div>
+                <!-- Mostrar alertas error inicio de sesion -->
+                <div *ngIf="mostrarError">
+                    <nz-alert nzType="error" nzCloseable nzMessage="Error al iniciar sesión" nzDescription="No se ha podido verificar tu cuenta, dirección de correo o contraseña incorrectas" nzShowIcon></nz-alert>
                 </div>
             </div>
         </div>
