@@ -16,3 +16,12 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     border-right: none;
 }
 
+.mat-mdc-form-field .mat-mdc-floating-label.mdc-floating-label {
+    overflow: visible;
+}
+
+
+
+
+
+  

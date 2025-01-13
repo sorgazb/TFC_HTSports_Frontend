@@ -1,11 +1,14 @@
 <div class="container">
     <div class="min-h-screen flex items-center justify-center overflow-hidden">
-        <div class="border-solid border-2 border-opacity-25 rounded p-5 md:w-1/2 shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)]">
+        <div class="border-solid border-2 border-opacity-25 rounded-2xl p-5 md:w-1/2 shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)]">
             <div class="">
-                <form class="" [formGroup]="formLogin">
+                <div class="m-5 flex justify-center">
+                    <h1>Iniciar Sesión</h1>
+                </div>
+                <form [formGroup]="formLogin">
                     <!-- Email -->
                     <div class="m-5 flex justify-center">
-                        <mat-form-field class="md:w-2/3" appearance="outline">
+                        <mat-form-field class="md:w-2/3" appearance="outline" hideRequiredMarker>
                             <mat-label>Correo electrónico</mat-label>
                             <input type="email"  matInput formControlName="email" placeholder="Correo electrónico">
                             <mat-error *ngIf="controlarErrores('email', 'required')">Introduce una dirección de <strong>correo electrónico</strong></mat-error>
@@ -13,7 +16,7 @@
                     </div>
                     <!-- Password -->
                     <div class="m-5 flex justify-center">
-                        <mat-form-field class="md:w-2/3" appearance="outline">
+                        <mat-form-field class="md:w-2/3" appearance="outline" hideRequiredMarker>
                             <mat-label>Introduce tu contraseña</mat-label>
                             <input type="password" matInput formControlName="password" placeholder="Introduce tu contraseña">
                             <mat-error *ngIf="controlarErrores('password', 'required')">Introduce tu <strong>contraseña</strong></mat-error>
@@ -23,6 +26,20 @@
                         <button type="submit" [disabled]="!formLogin.valid" class="p-2 bg-azul text-white md:w-1/2 rounded-full">Iniciar Sesión</button>
                     </div>
                 </form>
+                <div class="m-5 flex justify-center">
+                    <div class="space-x-1">
+                        <span>¿No tienes cuenta?</span>
+                        <a href="" class="text-azul"><strong>Registrate aquí</strong></a>
+                    </div>
+                </div>
+                <div class="m-5 flex items-center justify-center">
+                    <hr class="w-full border-gray-300">
+                    <span class="px-4 text-gray-500 text-sm whitespace-nowrap">o inicia sesion con</span>
+                    <hr class="w-full border-gray-300">
+                </div>
+                <div class="m-5 flex justify-center">
+                    <button class="flex items-center p-2 space-x-2 rounded-full border-2 border-gray"><img src="https://img.icons8.com/color/22/000000/google-logo.png"><span>Inicia sesion con Google</span></button>
+                </div>
             </div>
         </div>
     </div>
