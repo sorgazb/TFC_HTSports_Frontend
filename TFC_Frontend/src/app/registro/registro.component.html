@@ -33,6 +33,8 @@
                             <input matInput [type]="mostrarPassword ? 'text' : 'password'" formControlName="password" placeholder="Introduce tu contraseña">
                             <mat-icon matSuffix (click) = 'cambiarVisibilidadPassword()'>{{mostrarPassword ? 'visibility_off':'visibility'}}</mat-icon>
                             <mat-error *ngIf="controlarErrores('password', 'required')">Introduce tu <strong>contraseña</strong></mat-error>
+                            <mat-error *ngIf="controlarErrores('password', 'minlength')">Contraseña debe tener <strong>más de 8 caracteres</strong></mat-error>
+                            <mat-error *ngIf="controlarErrores('password', 'pattern')">Contraseña <strong>no valida</strong></mat-error>
                         </mat-form-field>
                     </div>
                     <!-- Informacion formato Password -->
