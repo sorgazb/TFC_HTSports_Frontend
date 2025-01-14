@@ -16,6 +16,8 @@ export class HeaderComponent {
     ).subscribe((event) => {
       if(this.router.url === '/inicioSesion'){
         this.mostrarBarraNav = false
+      }else if(this.router.url === '/registro'){
+        this.mostrarBarraNav = false
       }else{
         this.mostrarBarraNav = true
       }

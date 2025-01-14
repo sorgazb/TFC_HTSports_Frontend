@@ -14,14 +14,6 @@
                             <mat-error *ngIf="controlarErrores('nombre', 'required')">Introduce <strong>nombre</strong></mat-error>
                         </mat-form-field>
                     </div>
-                    <!-- Apellidos -->
-                    <div class="m-5 flex justify-center">
-                        <mat-form-field class="md:w-2/3" appearance="outline" hideRequiredMarker>
-                            <mat-label class="bg-white p-1">Apellidos</mat-label>
-                            <input type="text" matInput formControlName="apellidos" placeholder="Introduce tus apellidos">
-                            <mat-error *ngIf="controlarErrores('apellidos', 'required')">Introduce <strong>apellidos</strong></mat-error>
-                        </mat-form-field>
-                    </div>
                     <!-- Email -->
                     <div class="m-5 flex justify-center">
                         <mat-form-field class="md:w-2/3" appearance="outline" hideRequiredMarker>
@@ -54,14 +46,14 @@
                         </mat-form-field>
                     </div>
                     <div class="flex justify-center">
-                        <button type="submit" [disabled]="!formRegistro.valid" class="p-2 bg-azul text-white md:w-1/2 rounded-full">Iniciar Sesión</button>
+                        <button type="submit" [disabled]="!formRegistro.valid" class="p-2 bg-azul text-white md:w-1/2 rounded-full">Crear Cuenta</button>
                     </div>
                 </form>
                 <!-- Registro de nuevos usuarios -->
                 <div class="m-5 flex justify-center">
                     <div class="space-x-1">
                         <span>¿Ya tienes cuenta?</span>
-                        <a href="" class="text-azul"><strong>Inicia sesión aquí</strong></a>
+                        <a routerLink="/inicioSesion" class="text-azul"><strong>Inicia sesión aquí</strong></a>
                     </div>
                 </div>
             </div>
