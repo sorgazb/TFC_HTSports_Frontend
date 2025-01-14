@@ -46,7 +46,7 @@
                 </div>
                 <!-- Mostrar alertas error inicio de sesion -->
                 <div *ngIf="mostrarError">
-                    <nz-alert nzType="error" nzCloseable nzMessage="Error al iniciar sesión" nzDescription="No se ha podido verificar tu cuenta, dirección de correo o contraseña incorrectas" nzShowIcon></nz-alert>
+                    <nz-alert nzType="error" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="Error al iniciar sesión" nzDescription="No se ha podido verificar tu cuenta, dirección de correo o contraseña incorrectas" nzShowIcon></nz-alert>
                 </div>
             </div>
         </div>

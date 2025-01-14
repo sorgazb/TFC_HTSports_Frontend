@@ -34,4 +34,8 @@ export class InicioSesionComponent implements OnInit{
   public iniciarSesion(){
     this.mostrarError = true
   }
+
+  public cerrarAlerta(){
+    this.mostrarError = false
+  }
 }

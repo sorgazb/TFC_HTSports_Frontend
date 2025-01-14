@@ -1,1 +1,71 @@
-<p>registro works!</p>
+<div>
+    <div class="min-h-screen flex items-center justify-center overflow-hidden">
+        <div class="border-solid border-2 border-opacity-25 rounded-2xl p-5 md:w-1/2 shadow-[0_2px_22px_-4px_rgba(93,96,127,0.2)]">
+            <div class="">
+                <div class="m-5 flex justify-center">
+                    <h1 class="text-lg font-bold text-azul">Crear Cuenta</h1>
+                </div>
+                <form [formGroup]="formRegistro" (ngSubmit)="registrarUsuario()">
+                    <!-- Nombre -->
+                    <div class="m-5 flex justify-center">
+                        <mat-form-field class="md:w-2/3" appearance="outline" hideRequiredMarker>
+                            <mat-label class="bg-white p-1">Nombre</mat-label>
+                            <input type="text" matInput formControlName="nombre" placeholder="Introduce tu nombre">
+                            <mat-error *ngIf="controlarErrores('nombre', 'required')">Introduce <strong>nombre</strong></mat-error>
+                        </mat-form-field>
+                    </div>
+                    <!-- Apellidos -->
+                    <div class="m-5 flex justify-center">
+                        <mat-form-field class="md:w-2/3" appearance="outline" hideRequiredMarker>
+                            <mat-label class="bg-white p-1">Apellidos</mat-label>
+                            <input type="text" matInput formControlName="apellidos" placeholder="Introduce tus apellidos">
+                            <mat-error *ngIf="controlarErrores('apellidos', 'required')">Introduce <strong>apellidos</strong></mat-error>
+                        </mat-form-field>
+                    </div>
+                    <!-- Email -->
+                    <div class="m-5 flex justify-center">
+                        <mat-form-field class="md:w-2/3" appearance="outline" hideRequiredMarker>
+                            <mat-label class="bg-white p-1">Correo electrónico</mat-label>
+                            <input type="email"  matInput formControlName="email" placeholder="Correo electrónico">
+                            <mat-error *ngIf="controlarErrores('email', 'required')">Introduce una dirección de <strong>correo electrónico</strong></mat-error>
+                            <mat-error *ngIf="controlarErrores('email','email')">Dirección de correo <strong>no válida</strong></mat-error>
+                        </mat-form-field>
+                    </div>
+                    <!-- Password -->
+                    <div class="m-5 flex justify-center">
+                        <mat-form-field class="md:w-2/3" appearance="outline" hideRequiredMarker>
+                            <mat-label class="bg-white p-1">Introduce tu contraseña</mat-label>
+                            <input matInput [type]="mostrarPassword ? 'text' : 'password'" formControlName="password" placeholder="Introduce tu contraseña">
+                            <mat-icon matSuffix (click) = 'cambiarVisibilidadPassword()'>{{mostrarPassword ? 'visibility_off':'visibility'}}</mat-icon>
+                            <mat-error *ngIf="controlarErrores('password', 'required')">Introduce tu <strong>contraseña</strong></mat-error>
+                        </mat-form-field>
+                    </div>
+                    <!-- Informacion formato Password -->
+                    <div>
+
+                    </div>
+                    <!--Confirmacion Password -->
+                    <div class="m-5 flex justify-center">
+                        <mat-form-field class="md:w-2/3" appearance="outline" hideRequiredMarker>
+                            <mat-label class="bg-white p-1">Vuelve a introducir tu contraseña</mat-label>
+                            <input matInput [type]="mostrarPassword ? 'text' : 'password'" formControlName="validacionPassword" placeholder="Introduce tu contraseña">
+                            <mat-icon matSuffix (click) = 'cambiarVisibilidadPassword()'>{{mostrarPassword ? 'visibility_off':'visibility'}}</mat-icon>
+                            <mat-error *ngIf="controlarErrores('validacionPassword', 'required')">Introduce tu <strong>contraseña</strong></mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="flex justify-center">
+                        <button type="submit" [disabled]="!formRegistro.valid" class="p-2 bg-azul text-white md:w-1/2 rounded-full">Iniciar Sesión</button>
+                    </div>
+                </form>
+                <!-- Registro de nuevos usuarios -->
+                <div class="m-5 flex justify-center">
+                    <div class="space-x-1">
+                        <span>¿Ya tienes cuenta?</span>
+                        <a href="" class="text-azul"><strong>Inicia sesión aquí</strong></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
