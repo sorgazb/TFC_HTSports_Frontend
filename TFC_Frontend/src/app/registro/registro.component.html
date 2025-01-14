@@ -12,6 +12,9 @@
                             <mat-label class="bg-white p-1">Nombre</mat-label>
                             <input type="text" matInput formControlName="nombre" placeholder="Introduce tu nombre">
                             <mat-error *ngIf="controlarErrores('nombre', 'required')">Introduce <strong>nombre</strong></mat-error>
+                            <mat-error *ngIf="controlarErrores('nombre','minlength')">Nombre debe tener <strong>3 o mas caracteres</strong></mat-error>
+                            <mat-error *ngIf="controlarErrores('nombre','maxlength')">Nombre supera el <strong>máximo de caracteres</strong></mat-error>
+                            <mat-error *ngIf="controlarErrores('nombre','pattern')">Nombre no puede contener <strong>numeros o caracteres especiales</strong></mat-error>
                         </mat-form-field>
                     </div>
                     <!-- Email -->
