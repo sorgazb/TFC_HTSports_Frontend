@@ -12,6 +12,11 @@ export class RegistroComponent implements OnInit{
 
   mostrarPassword : boolean = false
 
+  passwordIguales : boolean = false
+
+  infoPassword : boolean = false
+
+  mostrarErrorPasswords : boolean = false
 
   constructor(){}
 
@@ -20,7 +25,7 @@ export class RegistroComponent implements OnInit{
       nombre : new FormControl('',[Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$')]),
       email : new FormControl('',[Validators.required, Validators.email]),
       password : new FormControl('',[Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/)]),
-      validacionPassword : new FormControl('',[Validators.required])
+      validacionPassword : new FormControl('',[Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/)])
     })
   }
 
@@ -33,6 +38,32 @@ export class RegistroComponent implements OnInit{
   }
 
   public registrarUsuario(){
-
+    this.comprobarIgualdadPasswords(this.formRegistro)
+    if(!this.passwordIguales){
+      this.mostrarErrorPasswords = true
+    }
   }
+
+  public comprobarIgualdadPasswords(formulario : FormGroup){
+    const password1 = formulario.get('password')?.value
+    const password2 = formulario.get('validacionPassword')?.value
+
+    if(password1 === password2){
+      this.passwordIguales = true
+    }
+  }
+
+  mostrarInfoPassword() {
+    this.infoPassword = true
+  }
+
+  ocultarInfoPassword(){
+    this.infoPassword = false
+  }
+
+  cerrarAlerta (){
+    this.mostrarErrorPasswords = false
+  }
+
+    
 }
