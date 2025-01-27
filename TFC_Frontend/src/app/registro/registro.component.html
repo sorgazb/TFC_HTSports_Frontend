@@ -20,10 +20,10 @@
                     <!-- Email -->
                     <div class="m-5 flex justify-center">
                         <mat-form-field class="w-full md:w-2/3" appearance="outline" hideRequiredMarker>
-                            <mat-label class="bg-white p-1">Correo electrónico</mat-label>
-                            <input type="email"  matInput formControlName="email" placeholder="Correo electrónico">
-                            <mat-error *ngIf="controlarErrores('email', 'required')">Introduce una dirección de <strong>correo electrónico</strong></mat-error>
-                            <mat-error *ngIf="controlarErrores('email','email')">Dirección de correo <strong>no válida</strong></mat-error>
+                            <mat-label class="bg-white p-1">{{'Correo-Electronico' | translate}}</mat-label>
+                            <input type="email"  matInput formControlName="email" placeholder="{{'Correo-Electronico' | translate}}">
+                            <mat-error *ngIf="controlarErrores('email', 'required')">{{'introduce-una-direccion' | translate}} <strong>{{'correo-electronico' | translate}}</strong></mat-error>
+                            <mat-error *ngIf="controlarErrores('email','email')">{{'direccion-correo' | translate}} <strong>{{'no-valida' | translate}}</strong></mat-error>
                         </mat-form-field>
                     </div>
                     <!-- Password -->
