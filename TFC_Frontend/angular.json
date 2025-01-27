@@ -4,10 +4,6 @@
   "newProjectRoot": "projects",
   "projects": {
     "TFC_Frontend": {
-      "i18n":{
-        "sourceLocale":"es-ES",
-        "locales": {"en-GB": "src/locale/messages.en.xlf"}
-      },
       "projectType": "application",
       "schematics": {},
       "root": "",
@@ -17,7 +13,6 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "localize":["es-ES", "en-GB"],
             "outputPath": "dist/tfc-frontend",
             "index": "src/index.html",
             "main": "src/main.ts",
