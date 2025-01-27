@@ -3,9 +3,12 @@
         <div class="contenedorHeader">
             <nav>
                 <ul>
-                    <li><a  routerLink="inicioSesion" class="btnInicioSesion"><mat-icon fontIcon="person_outline"></mat-icon>Iniciar Sesión</a></li>
+                    <li><a  routerLink="inicioSesion" class="btnInicioSesion"><mat-icon fontIcon="person_outline"></mat-icon>{{'iniciar-sesion' | translate}}</a></li>
                 </ul>
-            </nav>  
+            </nav>
+            <select (change)="onChange($event)" class="">
+                <option *ngFor="let idioma of idiomas" value="{{idioma.value}}">{{idioma.display}}</option>
+            </select>
         </div>
     </header>
 </div>

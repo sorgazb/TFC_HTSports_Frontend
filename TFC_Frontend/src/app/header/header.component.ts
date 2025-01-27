@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +11,12 @@ import { filter } from 'rxjs';
 export class HeaderComponent {
   mostrarBarraNav : boolean = true
 
-  constructor (private router : Router){
+  idiomas = [
+    {value : 'es', display : 'Español', icon:'🇪🇸'},
+    {value : 'en', display : 'English'}
+  ]
+
+  constructor (private router : Router, private translate: TranslateService){
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event) => {
@@ -22,5 +28,10 @@ export class HeaderComponent {
         this.mostrarBarraNav = true
       }
     })
+  }
+
+  onChange = (event : Event) => {
+    const idioma = (event.target as HTMLSelectElement).value
+    this.translate.use(idioma)
   }
 }

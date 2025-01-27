@@ -9,7 +9,7 @@ import { es_ES } from 'ng-zorro-antd/i18n';
 import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { InicioComponent } from './inicio/inicio.component';
 import { HeaderComponent } from './header/header.component';
 import {MatIconModule} from '@angular/material/icon';
@@ -18,6 +18,8 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import { RegistroComponent } from './registro/registro.component';
 import {NzAlertModule} from 'ng-zorro-antd/alert'
+import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 registerLocaleData(es);
 
@@ -39,7 +41,14 @@ registerLocaleData(es);
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
-    NzAlertModule
+    NzAlertModule,
+    TranslateModule.forRoot({
+      loader :{
+        provide : TranslateLoader,
+        useFactory : HttpLoaderFactory,
+        deps : [HttpClient]
+      }
+    }) 
   ],
   providers: [
     { provide: NZ_I18N, useValue: es_ES }
@@ -47,3 +56,8 @@ registerLocaleData(es);
   bootstrap: [AppComponent]
 })
 export class AppModule { }
+
+// Traducciones
+export function HttpLoaderFactory(http : HttpClient){
+  return new TranslateHttpLoader(http, './assets/languages/', '.json')
+}
