@@ -18,4 +18,13 @@ export class AppComponent {
       this.translate.use(lang)
     }
   }
+  currentLang = localStorage.getItem('language') || 'es-ES';
+
+  changeLanguage(lang: string) {
+    console.log(lang);
+    if (this.currentLang !== lang) {
+      localStorage.setItem('language', lang);
+      window.location.href = `/${lang}/`; // Recarga la app con el nuevo idioma.
+    }
+  }
 }
