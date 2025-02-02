@@ -20,6 +20,8 @@ import { RegistroComponent } from './registro/registro.component';
 import {NzAlertModule} from 'ng-zorro-antd/alert'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { MatSelectCountryModule } from "@angular-material-extensions/select-country";
+
 
 registerLocaleData(es);
 
@@ -48,7 +50,8 @@ registerLocaleData(es);
         useFactory : HttpLoaderFactory,
         deps : [HttpClient]
       }
-    }) 
+    }),
+    MatSelectCountryModule.forRoot('es')
   ],
   providers: [
     { provide: NZ_I18N, useValue: es_ES }

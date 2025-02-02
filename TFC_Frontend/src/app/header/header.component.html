@@ -1,14 +1,18 @@
 <div *ngIf="mostrarBarraNav">
     <header>
         <div class="contenedorHeader">
+            <select (change)="onChange($event)" class="">
+                <option *ngFor="let idioma of idiomas" value="{{idioma.value}}">
+                    {{idioma.display}}
+                </option>
+            </select>           
             <nav>
                 <ul>
                     <li><a  routerLink="inicioSesion" class="btnInicioSesion"><mat-icon fontIcon="person_outline"></mat-icon>{{'iniciar-sesion' | translate}}</a></li>
                 </ul>
             </nav>
-            <select (change)="onChange($event)" class="">
-                <option *ngFor="let idioma of idiomas" value="{{idioma.value}}">{{idioma.display}}</option>
-            </select>
         </div>
+        <mat-select-country>
+        </mat-select-country>
     </header>
 </div>
