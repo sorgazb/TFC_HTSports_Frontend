@@ -34,5 +34,9 @@
   "ya-tienes-cuenta": "¿Ya tienes cuenta?",
   "inciar-sesion-aqui": "Inicia sesión aquí",
   "err-ru": "Error al registrar usuario",
-  "text-err-ru": "Las contraseñas no coinciden"
+  "text-err-ru": "Las contraseñas no coinciden",
+  "idioma": "Idioma",
+  "select-idioma": "Selecciona idioma",
+  "confirmar" : "Confirmar",
+  "cambiar-idioma": "Cambiar idioma"
 }

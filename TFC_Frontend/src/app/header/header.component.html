@@ -1,18 +1,20 @@
 <div *ngIf="mostrarBarraNav">
-    <header>
-        <div class="contenedorHeader">
-            <select (change)="onChange($event)" class="">
-                <option *ngFor="let idioma of idiomas" value="{{idioma.value}}">
-                    {{idioma.display}}
-                </option>
-            </select>           
+    <header class="flex flex-col md:flex-row-reverse items-center justify-between p-4 gap-4">
+        <div class="w-full md:w-auto flex justify-center md:justify-start">
             <nav>
-                <ul>
-                    <li><a  routerLink="inicioSesion" class="btnInicioSesion"><mat-icon fontIcon="person_outline"></mat-icon>{{'iniciar-sesion' | translate}}</a></li>
+                <ul class="flex items-center space-x-4">
+                    <li>
+                        <a routerLink="inicioSesion" class="btnInicioSesion flex items-center space-x-2">
+                            <mat-icon fontIcon="person_outline"></mat-icon>
+                            <span>{{'iniciar-sesion' | translate}}</span>
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </div>
-        <mat-select-country>
-        </mat-select-country>
+        <div class="w-full md:w-auto flex justify-center md:justify-end">
+            <button (click)="cambiarIdioma()" class="btnInicioSesion flex items-center space-x-2"><mat-icon fontIcon="location_on"></mat-icon>{{'cambiar-idioma' | translate}}</button>
+        </div>
     </header>
 </div>
+

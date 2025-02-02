@@ -34,6 +34,10 @@
     "ya-tienes-cuenta": "Already have an account?",
     "inciar-sesion-aqui": "Log in here",
     "err-ru": "Error registering user",
-    "text-err-ru": "Passwords do not match"
+    "text-err-ru": "Passwords do not match",
+    "idioma": "Language",
+    "select-idioma": "Select language",
+    "confirmar" : "Confirm",
+    "cambiar-idioma": "Change language"
   }
   

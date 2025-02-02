@@ -21,6 +21,9 @@ import {NzAlertModule} from 'ng-zorro-antd/alert'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MatSelectCountryModule } from "@angular-material-extensions/select-country";
+import { CardIdiomaComponent } from './card-idioma/card-idioma.component';
+import { MatDialogModule } from '@angular/material/dialog'
+import { MatButtonModule } from '@angular/material/button'
 
 
 registerLocaleData(es);
@@ -31,7 +34,8 @@ registerLocaleData(es);
     InicioComponent,
     HeaderComponent,
     InicioSesionComponent,
-    RegistroComponent
+    RegistroComponent,
+    CardIdiomaComponent
   ],
   imports: [
     BrowserModule,
@@ -51,7 +55,9 @@ registerLocaleData(es);
         deps : [HttpClient]
       }
     }),
-    MatSelectCountryModule.forRoot('es')
+    MatSelectCountryModule.forRoot('es'),
+    MatDialogModule,
+    MatButtonModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: es_ES }
