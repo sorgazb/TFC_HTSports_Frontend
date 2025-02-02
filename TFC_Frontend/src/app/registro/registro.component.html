@@ -11,10 +11,10 @@
                         <mat-form-field class="w-full md:w-2/3" appearance="outline" hideRequiredMarker>
                             <mat-label class="bg-white p-1">{{'Nombre' | translate}}</mat-label>
                             <input type="text" matInput formControlName="nombre" placeholder="{{'introduce-tu-nombre' | translate}}">
-                            <mat-error *ngIf="controlarErrores('nombre', 'required')">{{'introduce' | translate}} <strong>{{'nombre' | translate}}</strong></mat-error>
-                            <mat-error *ngIf="controlarErrores('nombre','minlength')">{{'nombre-debe' | translate}} <strong>{{'tres-o-mas' | translate}}</strong></mat-error>
-                            <mat-error *ngIf="controlarErrores('nombre','maxlength')">{{'nombre-supera' | translate}} <strong>{{'maximo-caracteres'  | translate}}</strong></mat-error>
-                            <mat-error *ngIf="controlarErrores('nombre','pattern')">{{'nombre-no-puede-contener' | translate}} <strong>{{'numeros-caracteres' | translate}}</strong></mat-error>
+                            <mat-error *ngIf="controlarErrores('nombre', 'required')">{{'introduce-tu' | translate}} <strong>{{'nombre' | translate}}</strong></mat-error>
+                            <mat-error *ngIf="controlarErrores('nombre','minlength') && !controlarErrores('nombre','pattern')">{{'nombre-debe' | translate}} <strong>{{'tres-o-mas' | translate}}</strong></mat-error>
+                            <mat-error *ngIf="controlarErrores('nombre','maxlength') && !controlarErrores('nombre','pattern')">{{'nombre-supera' | translate}} <strong>{{'maximo-caracteres'  | translate}}</strong></mat-error>
+                            <mat-error *ngIf="controlarErrores('nombre','pattern') && (!controlarErrores('nombre','minlength') || !controlarErrores('nombre','maxlength'))">{{'nombre-no-puede-contener' | translate}} <strong>{{'numeros-caracteres' | translate}}</strong></mat-error>
                         </mat-form-field>
                     </div>
                     <!-- Email -->
@@ -33,8 +33,8 @@
                             <input matInput [type]="mostrarPassword ? 'text' : 'password'" formControlName="password" placeholder="{{'introduce-tu-password' | translate}}" (focus)="mostrarInfoPassword()" (focusout)="ocultarInfoPassword()">
                             <mat-icon matSuffix (click) = 'cambiarVisibilidadPassword()'>{{mostrarPassword ? 'visibility_off':'visibility'}}</mat-icon>
                             <mat-error *ngIf="controlarErrores('password', 'required')">{{'introduce-tu' | translate}} <strong>{{'password' | translate}}</strong></mat-error>
-                            <mat-error *ngIf="controlarErrores('password', 'minlength')">{{'password-debe' | translate}} <strong>m{{'mas-ocho-caracteres' | translate}}</strong></mat-error>
-                            <mat-error *ngIf="controlarErrores('password', 'pattern')">{{'Password' | translate}} <strong>{{'no-valida' | translate}}</strong></mat-error>
+                            <mat-error *ngIf="controlarErrores('password', 'minlength') && !controlarErrores('password','required')">{{'password-debe' | translate}} <strong>{{'mas-ocho-carateres' | translate}}</strong></mat-error>
+                            <mat-error  *ngIf="controlarErrores('password', 'pattern') && !controlarErrores('password','minlength')">{{'Password' | translate}} <strong>{{'no-valida' | translate}}</strong></mat-error>
                         </mat-form-field>
                     </div>
                     <!-- Informacion formato Password -->
