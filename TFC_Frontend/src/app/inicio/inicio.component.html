@@ -1,1 +1,58 @@
 <app-header></app-header>
+<div class="grid grid-cols-1">
+    <div>
+        <div class="bg-gray-950">
+            <video muted autoplay loop class="w-screen brightness-50">
+                <source src="../../assets/videos/205193-926528071_small.mp4" type="video/mp4">
+            </video>
+        </div>
+    </div>
+    <div class="h-96">
+        <nz-carousel nzAutoPlay [nzEffect]="effect" [nzLoop]="true">
+            <div nz-carousel-content *ngFor="let index of array">
+            <img src="{{index}}" alt="{{index}}">
+            </div> 
+        </nz-carousel>  
+    </div>
+    <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr] gap-4 p-5">
+        <div>
+            <div class="border-solid border-2 border-opacity-25 rounded-2xl p-5 grid grid-rows-[auto_1fr_auto_auto] gap-5 transition duration-300 ease-in-out hover:-translate-y-1">
+                <img class="rounded" src="https://killerasturias.com/drimage/920/0/2500/-/sites/default/files/2022-02/51693656604_d3e898d0e4_k%20%282%29.jpg" alt="">
+                <h1 class="text-center text-3xl font-extrabold tracking-tight">Experiencia Aficionado</h1>
+                <button class="p-2 bg-azul text-white w-full rounded transition duration-300 ease-in-out hover:-translate-y-1" (click)="funcMostrarInfoAficionado()">Mas informacion</button>
+                <div *ngIf="mostrarInfoAficionado" @fadeInOut>
+                    <h1 class="text-2xl text-center font-bold italic text-azul">"Vive el fútbol como nunca"</h1>
+                    <p class="text-center">Los Aficionados podran disfrutar al máximo del fútbol, sigue a tus equipos y jugadores favoritos, consulta estadísticas en tiempo real, y compra entradas para eventos y merchandising exclusivo. ¡Todo lo que necesitas para estar más cerca de la acción!</p>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="border-solid border-2 border-opacity-25 rounded-2xl p-5 grid grid-rows-[auto_1fr_auto_auto] gap-5 transition duration-300 ease-in-out hover:-translate-y-1">
+                <img class="rounded" src="https://statics-maker.llt-services.com/leg/images/2025/02/15/xlarge-wp/f7e1dad0-542c-4c2c-a830-78367ba4b6db-346.webp" alt="">
+                <h1  class="text-center text-3xl font-extrabold tracking-tight">Experiencia Deportista</h1>
+                <button class="p-2 bg-azul text-white w-full rounded transition duration-300 ease-in-out hover:-translate-y-1" (click)="funcMostrarInfoJugador()">Mas informacion</button>
+                <div *ngIf="mostrarInfoJugador" @fadeInOut>
+                    <h1 class="text-2xl text-center font-bold italic text-azul">"Tu rendimiento, nuestra prioridad"</h1>
+                    <p class="text-center">Los Jugadores pueden gestionar su desarrollo de manera integral. Consulta tu planning semanal, solicita dietas personalizadas a nuestra IA, pide citas médicas y organiza reuniones con el cuerpo técnico. Todo lo que necesitas para mejorar tu rendimiento y mantenerte al máximo nivel.</p>
+                </div>
+            </div>
+        </div>
+        <div class="">
+            <div class="border-solid border-2 border-opacity-25 rounded-2xl p-5 grid grid-rows-[auto_1fr_auto_auto] gap-5 transition duration-300 ease-in-out hover:-translate-y-1">
+                <img class="rounded" src="https://cdn.vox-cdn.com/thumbor/V-lWecKTEUTO9AcFNT7Lz6I6sB8=/0x0:2049x1366/1220x813/filters:focal(766x105:1092x431):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/72532265/1595868752.0.jpg" alt="">
+                <h1  class="text-center text-3xl font-extrabold tracking-tight">Experiencia Cuerpo Tecnico</h1>
+                <button class="p-2 bg-azul text-white w-full rounded transition duration-300 ease-in-out hover:-translate-y-1" (click)="funMostrarInfoCT()">Mas informacion</button>
+                <div *ngIf="mostrarInfoCT" @fadeInOut>
+                    <h1 class="text-2xl text-center font-bold italic text-azul">"Lidera el equipo con precisión"</h1>
+                    <p class="text-center">El Cuerpo Técnico podran gestionar todos los aspectos del rendimiento. Crear planes de entrenamiento semanales, establecer alineaciones y consulta estadísticas detalladas de jugadores generadas con IA. Organizar reuniones con la plantilla y otros miembros del cuerpo técnico, montar una red de ojeadores para asegurar el mejor seguimiento del talento. Todo lo que necesitas para optimizar el rendimiento del equipo.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+

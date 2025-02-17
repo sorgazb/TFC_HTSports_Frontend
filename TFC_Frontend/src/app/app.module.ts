@@ -24,7 +24,7 @@ import { MatSelectCountryModule } from "@angular-material-extensions/select-coun
 import { CardIdiomaComponent } from './card-idioma/card-idioma.component';
 import { MatDialogModule } from '@angular/material/dialog'
 import { MatButtonModule } from '@angular/material/button'
-
+import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 
 registerLocaleData(es);
 
@@ -57,7 +57,8 @@ registerLocaleData(es);
     }),
     MatSelectCountryModule.forRoot('es'),
     MatDialogModule,
-    MatButtonModule
+    MatButtonModule,
+    NzCarouselModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: es_ES }
