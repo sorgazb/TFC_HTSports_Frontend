@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Output } from '@angular/core';
 
 import { TranslateService } from '@ngx-translate/core';
 @Component({
@@ -7,7 +7,7 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'TFC_Frontend';
+  title = 'HT Sports';
 
   constructor(private translate: TranslateService) {
     this.translate.addLangs(['es', 'en']);

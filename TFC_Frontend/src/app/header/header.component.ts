@@ -15,12 +15,10 @@ export class HeaderComponent {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event) => {
-      if(this.router.url === '/inicioSesion'){
-        this.mostrarBarraNav = false
-      }else if(this.router.url === '/registro'){
-        this.mostrarBarraNav = false
-      }else{
+      if(this.router.url === '/'){
         this.mostrarBarraNav = true
+      }else{
+        this.mostrarBarraNav = false
       }
     })
   }

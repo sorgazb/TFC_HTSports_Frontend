@@ -20,6 +20,16 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     overflow: visible;
 }
 
+/* Para navegadores modernos */
+body {
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* Internet Explorer y Edge */
+  }
+  
+  body::-webkit-scrollbar {
+    display: none; /* Chrome, Safari y Opera */
+}
+
 
 
 

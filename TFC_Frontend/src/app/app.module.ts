@@ -25,6 +25,9 @@ import { CardIdiomaComponent } from './card-idioma/card-idioma.component';
 import { MatDialogModule } from '@angular/material/dialog'
 import { MatButtonModule } from '@angular/material/button'
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { ObserveVisibilityDirective } from './observe-visibility.directive';
+import { FooterComponent } from './footer/footer.component';
 
 registerLocaleData(es);
 
@@ -35,7 +38,10 @@ registerLocaleData(es);
     HeaderComponent,
     InicioSesionComponent,
     RegistroComponent,
-    CardIdiomaComponent
+    CardIdiomaComponent,
+    LandingPageComponent,
+    ObserveVisibilityDirective,
+    FooterComponent
   ],
   imports: [
     BrowserModule,

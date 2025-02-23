@@ -1,0 +1,35 @@
+.typing-demo{
+    width: 22ch;
+    animation: typing 4.5s steps(30) infinite,
+    blink 0.5s step-end infinite alternate;
+    white-space: nowrap;
+    overflow: hidden;
+    /* border-right: 5px solid; */
+    font-size: 2em;
+}
+
+.typing-1{
+    font-family: "Bungee", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: xx-large;
+    color: white;
+}
+
+.typing-2{
+    font-family: "Bungee", serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: xx-large;
+    background: linear-gradient(to right, #2d84d4, #1a29fd);
+    background-clip: text;
+    color: transparent;
+}
+
+@keyframes typing {
+    from { width: 0; }
+}
+
+@keyframes blink {
+    50% { border-color: transparent; }
+}
