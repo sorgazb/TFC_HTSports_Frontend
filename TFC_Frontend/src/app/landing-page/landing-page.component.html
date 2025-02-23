@@ -41,7 +41,7 @@
             <hr class="flex-1 border-azul hidden md:block">
         </div>
         <hr class="w-full border-azul md:hidden">
-        <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 p-5">
+        <div class="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-[1fr_1fr_1fr] gap-4 p-5">
             <div>
                 <div class="border-solid border-2 border-opacity-25 rounded-2xl p-5 grid grid-rows-[auto_1fr_auto_auto] gap-5 transition duration-300 ease-in-out hover:-translate-y-1">
                     <img class="rounded" src="https://killerasturias.com/drimage/920/0/2500/-/sites/default/files/2022-02/51693656604_d3e898d0e4_k%20%282%29.jpg" alt="">
@@ -53,11 +53,10 @@
                     </div>
                 </div>
             </div>
-            
             <div>
                 <div class="border-solid border-2 border-opacity-25 rounded-2xl p-5 grid grid-rows-[auto_1fr_auto_auto] gap-5 transition duration-300 ease-in-out hover:-translate-y-1">
                     <img class="rounded" src="https://statics-maker.llt-services.com/leg/images/2025/02/15/xlarge-wp/f7e1dad0-542c-4c2c-a830-78367ba4b6db-346.webp" alt="">
-                    <h1 class="text-center text-3xl font-extrabold tracking-tight">{{'titulo-Deportista-Exp' | translate}}</h1>
+                    <h1  class="text-center text-3xl font-extrabold tracking-tight">{{'titulo-Deportista-Exp' | translate}}</h1>
                     <button class="p-2 bg-azul text-white w-full rounded transition duration-300 ease-in-out hover:-translate-y-1" (click)="funcMostrarInfoJugador()">{{'btn-Mas-Informacion' | translate}}</button>
                     <div *ngIf="mostrarInfoJugador" @fadeInOut>
                         <h1 class="text-2xl text-center font-bold italic text-azul">"{{'titulo-Azul-Exp-Deportista' | translate}}"</h1>
@@ -65,11 +64,10 @@
                     </div>
                 </div>
             </div>
-            
-            <div class="md:col-span-2 md:col-start-1 flex justify-center lg:col-span-1 lg:col-start-auto">
-                <div class="border-solid border-2 border-opacity-25 rounded-2xl p-5 w-full md:max-w-[50%] lg:max-w-full grid grid-rows-[auto_1fr_auto_auto] gap-5 transition duration-300 ease-in-out hover:-translate-y-1">
+            <div>
+                <div class="border-solid border-2 border-opacity-25 rounded-2xl p-5 grid grid-rows-[auto_1fr_auto_auto] gap-5 transition duration-300 ease-in-out hover:-translate-y-1 ">
                     <img class="rounded" src="https://cdn.vox-cdn.com/thumbor/V-lWecKTEUTO9AcFNT7Lz6I6sB8=/0x0:2049x1366/1220x813/filters:focal(766x105:1092x431):format(webp)/cdn.vox-cdn.com/uploads/chorus_image/image/72532265/1595868752.0.jpg" alt="">
-                    <h1 class="text-center text-3xl font-extrabold tracking-tight">{{'titulo-Entrenador-Exp' | translate}}</h1>
+                    <h1  class="text-center text-3xl font-extrabold tracking-tight">{{'titulo-Entrenador-Exp' | translate}}</h1>
                     <button class="p-2 bg-azul text-white w-full rounded transition duration-300 ease-in-out hover:-translate-y-1" (click)="funMostrarInfoCT()">{{'btn-Mas-Informacion' | translate}}</button>
                     <div *ngIf="mostrarInfoCT" @fadeInOut>
                         <h1 class="text-2xl text-center font-bold italic text-azul">"{{'titulo-Azul-Exp-Entrenador' | translate}}"</h1>
@@ -78,7 +76,6 @@
                 </div>
             </div>
         </div>
-        
     </div>
 </div>
 <br>
