@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { filter } from 'rxjs';
@@ -20,7 +20,7 @@ import { filter } from 'rxjs';
     ]),
   ],
 })
-export class LandingPageComponent {
+export class LandingPageComponent implements OnInit, AfterViewInit {
 
   imgCarruselEsp = [
     '../../assets/img/carrusel/tienda_ES.png',
@@ -50,6 +50,8 @@ export class LandingPageComponent {
 
   mostrarLandingPage : boolean = true
 
+  @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
+
   constructor(translate: TranslateService, private router : Router) {
     this.translate = translate;
     console.log(this.translate.currentLang == 'es')
@@ -63,7 +65,22 @@ export class LandingPageComponent {
       }
     })
   }
+  ngOnInit(): void {
+    
+  }
 
+  ngAfterViewInit(): void {
+    const video = this.videoPlayer.nativeElement;
+    
+    if (video) {
+      video.muted = true; // Asegurar que está silenciado
+      video.autoplay = true; // Habilitar autoplay
+      video.loop = true; // Habilitar loop
+      video.play().catch(error => {
+        console.log("Autoplay bloqueado:", error);
+      });
+    }
+  }
 
   funcMostrarInfoAficionado(){
     if(!this.mostrarInfoAficionado){
