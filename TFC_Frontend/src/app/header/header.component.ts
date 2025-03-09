@@ -14,8 +14,8 @@ export class HeaderComponent implements OnInit {
 
   mostrarBarraNav : boolean = true
 
-  toggleOpen !: HTMLElement;
-  toggleClose !: HTMLElement;
+  btnAbrir !: HTMLElement;
+  btnCerrar !: HTMLElement;
 
   constructor (private router : Router, public dialog: MatDialog){
     this.router.events.pipe(
@@ -34,8 +34,8 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.toggleOpen = document.getElementById('toggleOpen') as HTMLElement;
-    this.toggleClose = document.getElementById('toggleClose') as HTMLElement;
+    this.btnAbrir = document.getElementById('btnAbrir') as HTMLElement;
+    this.btnCerrar = document.getElementById('btnCerrar') as HTMLElement;
   }
   
   handleClick() {

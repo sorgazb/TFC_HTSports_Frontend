@@ -1,7 +1,37 @@
 <ng-container *ngIf="mostrarFooter">
-    <footer class="bg-azul text-white py-6">
-        <div class="text-center text-sm mt-4 border-t border-white pt-4">
-          &copy; {{'derechos-Footer' | translate}}
-        </div>
-    </footer>
+  <footer class="bg-azul text-white py-6">
+    <div class="container mx-auto px-4">
+      <!-- Logo -->
+      <div class="flex justify-center mb-4">
+        <img width="50px" src="../../assets/img/logo.png" alt="Logo">
+      </div>
+
+      <!-- Derechos de autor -->
+      <div class="text-center text-sm mb-4">
+        &copy; {{'derechos-Footer' | translate}}
+      </div>
+
+      <!-- Redes Sociales -->
+      <div class="flex justify-center space-x-6 mb-4">
+        <a href="https://www.instagram.com/tuempresa" target="_blank" class="text-white hover:text-blue-400">
+          <i-bs name="instagram" class="w-6 h-6"></i-bs>
+        </a>
+        <a href="https://www.facebook.com/tuempresa" target="_blank" class="text-white hover:text-blue-400">
+          <i-bs name="facebook" class="w-6 h-6"></i-bs>
+        </a>
+        <a href="https://www.twitter.com/tuempresa" target="_blank" class="text-white hover:text-blue-400">
+          <i-bs name="twitter" class="w-6 h-6"></i-bs>
+        </a>
+        <a href="https://github.com/tuempresa" target="_blank" class="text-white hover:text-blue-400">
+          <i-bs name="github" class="w-6 h-6"></i-bs>
+        </a>
+        <a href="https://www.linkedin.com/company/tuempresa" target="_blank" class="text-white hover:text-blue-400">
+          <i-bs name="linkedin" class="w-6 h-6"></i-bs>
+        </a>
+        <a href="https://www.tiktok.com/@tuempresa" target="_blank" class="text-white hover:text-blue-400">
+          <i-bs name="tiktok" class="w-6 h-6"></i-bs>
+        </a>
+      </div>
+    </div>
+  </footer>
 </ng-container>

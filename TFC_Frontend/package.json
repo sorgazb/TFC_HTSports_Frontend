@@ -25,6 +25,7 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "ng-zorro-antd": "^15.1.1",
+    "ngx-bootstrap-icons": "^1.9.3",
     "rxjs": "^7.8.0",
     "svg-country-flags": "^1.2.10",
     "tslib": "^2.3.0",

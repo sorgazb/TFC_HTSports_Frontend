@@ -28,6 +28,7 @@ import { NzCarouselModule } from 'ng-zorro-antd/carousel';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { ObserveVisibilityDirective } from './observe-visibility.directive';
 import { FooterComponent } from './footer/footer.component';
+import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
 
 registerLocaleData(es);
 
@@ -64,12 +65,15 @@ registerLocaleData(es);
     MatSelectCountryModule.forRoot('es'),
     MatDialogModule,
     MatButtonModule,
-    NzCarouselModule
+    NzCarouselModule,
+    NgxBootstrapIconsModule.pick(allIcons)
   ],
   providers: [
     { provide: NZ_I18N, useValue: es_ES }
   ],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  
+
 })
 export class AppModule { }
 
