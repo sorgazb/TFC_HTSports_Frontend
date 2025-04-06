@@ -1,0 +1,65 @@
+<div class="min-h-screen flex items-center justify-center px-4">
+  <div class="w-full max-w-4xl bg-white border-2 border-azul p-8 rounded-2xl">
+    <h2 class="text-2xl font-semibold text-center mb-6">Dirección de Envío</h2>
+
+    <!-- Selector de dirección -->
+    <div class="mb-4">
+      <label class="block text-sm font-medium text-gray-700 mb-1">Selecciona una opción</label>
+      <select [(ngModel)]="usarDireccionGuardada" name="direccionSeleccionada"
+              (change)="onDireccionSeleccionada()" 
+              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-azul">
+        <option [ngValue]="true">Usar dirección guardada</option>
+        <option [ngValue]="false">Escribir una nueva dirección</option>
+      </select>
+    </div>
+
+    <!-- Formulario nuevo dirección -->
+    <form [formGroup]="formRegistro" *ngIf="!usarDireccionGuardada">
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Dirección</label>
+        <input type="text" formControlName="direccion"
+               class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-azul"
+               placeholder="Calle y número" />
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Población</label>
+        <input type="text" formControlName="poblacion"
+               class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-azul"
+               placeholder="Ciudad o pueblo" />
+      </div>
+
+      <div class="mb-4">
+        <label class="block text-sm font-medium text-gray-700 mb-1">Código Postal</label>
+        <input type="text" formControlName="codigoPostal"
+               class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-azul"
+               placeholder="12345" />
+      </div>
+
+      <button type="submit"
+              class="bg-azul text-white w-full py-2 rounded-full hover:bg-blue-700 transition"
+              (click)="crearPedido()">
+        Actualizar Dirección
+      </button>
+    </form>
+
+    <!-- PayPal -->
+    <div *ngIf="pedidoIDCreado" class="mt-8">
+      <h2 class="text-2xl font-semibold text-center mb-4">Método de Pago</h2>
+      <div class="w-full flex justify-center">
+        <div #paypal class="w-full max-w-md"></div>
+      </div>
+    </div>
+
+    <nz-alert
+    *ngIf="alerta.mostrar"
+    [nzMessage]="alerta.mensaje"
+    nzShowIcon
+    nzCloseable
+    (nzOnClose)="alerta.mostrar = false"
+    class="mb-4 p-5">
+  </nz-alert>
+
+
+  </div>
+</div>

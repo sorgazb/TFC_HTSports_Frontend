@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ServicioUsuarioService } from '../services/servicio-usuario.service';
+import { Usuario } from '../usuario';
+import { Router } from '@angular/router';
+import { Aficionado } from '../aficionado';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -14,7 +18,10 @@ export class InicioSesionComponent implements OnInit{
 
   mostrarError : boolean = false
 
-  constructor(){}
+  usuario !: Usuario
+  aficionado !: Aficionado
+
+  constructor(private router: Router ,private serviciosUsuario: ServicioUsuarioService){}
 
   ngOnInit(): void {
     this.formLogin = new FormGroup({
@@ -32,10 +39,53 @@ export class InicioSesionComponent implements OnInit{
   }
 
   public iniciarSesion(){
-    this.mostrarError = true
+    // this.mostrarError = true
+
+      
+        this.usuario = new Usuario();
+        this.usuario.nombre = ''
+        this.usuario.correo_electronico = this.formLogin.get('email')?.value;
+        this.usuario.password = this.formLogin.get('password')?.value; 
+        this.usuario.tipo = '';
+        this.usuario.edad = 0;
+        this.usuario.posicion = '';
+        this.usuario.equipo_id = 0;
+        this.usuario.tipo_cuerpo_tecnico = '';
+      
+        const loginData = {
+          correo_electronico: this.usuario.correo_electronico,
+          password: this.usuario.password
+        };
+
+        this.serviciosUsuario.loguearUsuario(loginData)
+        .subscribe((usuarioLogeado: Usuario) => {
+          console.log("Usuario logueado: ", usuarioLogeado);
+          this.usuario = usuarioLogeado
+          sessionStorage.setItem('token', usuarioLogeado.token);
+          sessionStorage.setItem('usuario', JSON.stringify(this.usuario));  
+
+          let id
+
+          if(sessionStorage.getItem('usuario') != null){
+            let usarioLogin = sessionStorage.getItem('usuario')
+            let usuarioParseado = JSON.parse(usarioLogin!)
+            id = usuarioParseado.usuario.ID
+            console.log("ID del usuario logueado: ", id);
+          }
+
+          this.serviciosUsuario.obtenerAficionado(id).subscribe((aficionadoObtenido: Aficionado) => {
+            this.aficionado = aficionadoObtenido;
+            localStorage.setItem('aficionado', JSON.stringify(this.aficionado));
+            this.router.navigate(['/']).then(() => {
+              window.location.reload();
+            });
+          });
+        });
+
   }
 
   public cerrarAlerta(){
     this.mostrarError = false
   }
+
 }

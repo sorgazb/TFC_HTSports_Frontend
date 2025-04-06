@@ -3,6 +3,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { CardIdiomaComponent } from '../card-idioma/card-idioma.component';
 import { MatDialog } from '@angular/material/dialog';
+import { ServicioCarritoService } from '../services/servicio-carrito.service';
+import { Carrito } from '../carrito';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -17,14 +19,25 @@ export class HeaderComponent implements OnInit {
   btnAbrir !: HTMLElement;
   btnCerrar !: HTMLElement;
 
-  constructor (private router : Router, public dialog: MatDialog){
+  cantidadProductos : number = 0;
+
+  carritoVacio : boolean = true;
+
+  productosCarrito: Carrito[] = [];
+
+  isMenuOpen: boolean = false;
+
+  usuario : any = null
+  aficionado : any = null
+
+  constructor (private router : Router, public dialog: MatDialog, private servicioCarrito: ServicioCarritoService) {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event) => {
-      if(this.router.url === '/'){
-        this.mostrarBarraNav = true
-      }else{
+      if(this.router.url === '/inicioSesion' || this.router.url === '/registro'){
         this.mostrarBarraNav = false
+      }else{
+        this.mostrarBarraNav = true
       }
     })
   }
@@ -34,8 +47,31 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Obtener el token desde sessionStorage
+    const tokenGuardado = sessionStorage.getItem('token');
+    
+    const usuarioGuardado = sessionStorage.getItem('usuario');
+    
+    if (usuarioGuardado) {
+      this.usuario = JSON.parse(usuarioGuardado);
+    }
+
+    // Obtener los datos del aficionado desde localStorage
+    const aficionadoGuardado = localStorage.getItem('aficionado');
+    if (aficionadoGuardado) {
+      this.aficionado = JSON.parse(aficionadoGuardado);
+    }
+    
+    if (this.aficionado) {
+      console.log("Aficionado en sesión:", this.aficionado);
+    }
+
     this.btnAbrir = document.getElementById('btnAbrir') as HTMLElement;
     this.btnCerrar = document.getElementById('btnCerrar') as HTMLElement;
+    this.servicioCarrito.carrito$.subscribe(carrito => {
+      this.productosCarrito = carrito;
+      this.cantidadProductos = carrito.reduce((total, item) => total + item.cantidad, 0);
+    });
   }
   
   handleClick() {
@@ -43,4 +79,26 @@ export class HeaderComponent implements OnInit {
     const menu = this.collapseMenu.nativeElement;
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
   }
+
+  toggleMenu() {
+    this.isMenuOpen = !this.isMenuOpen;
+
+  }
+
+  clickedOutside() {
+    this.isMenuOpen = false;
+  }
+
+  cerrarSesion() {
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('usuario');
+    localStorage.removeItem('aficionado');
+    localStorage.removeItem('carrito');
+    this.servicioCarrito.limpiarCarrito();
+    this.router.navigate(['/']).then(() => {
+      window.location.reload();
+    });
+  }
+
+
 }

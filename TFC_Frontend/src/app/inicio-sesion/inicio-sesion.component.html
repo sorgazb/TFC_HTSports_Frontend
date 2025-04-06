@@ -24,7 +24,7 @@
                     </mat-form-field>
                 </div>
                 <div class="flex justify-center">
-                    <button type="submit" [disabled]="!formLogin.valid" class="p-2 bg-azul text-white w-full md:w-1/2 rounded-full">{{'iniciar-sesion' | translate}}</button>
+                    <button type="submit" [disabled]="!formLogin.valid" class="p-2 bg-azul text-white w-full md:w-1/2 rounded-full" (click)="iniciarSesion()">{{'iniciar-sesion' | translate}}</button>
                 </div>
             </form>
             <!-- Registro de nuevos usuarios -->

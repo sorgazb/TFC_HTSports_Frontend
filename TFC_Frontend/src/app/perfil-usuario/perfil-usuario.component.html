@@ -1,0 +1,54 @@
+<div class="flex items-center justify-center overflow-hidden p-6 bg-gray-50 min-h-screen">
+    <div class="w-full md:w-4/5 lg:w-3/5 xl:w-1/2 bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
+      <div class="mb-8 text-center">
+        <h1 class="text-2xl font-bold text-azul">Perfil de Usuario</h1>
+      </div>
+      <form class="max-w-md mx-auto space-y-6 mb-5">
+        <!-- Imagen de perfil -->
+        <!-- <div class="flex flex-col items-center space-y-4">
+            <img 
+              class="rounded-full w-36 h-36 border-4 border-azul shadow-md object-cover" 
+              src="{{obtenerImgPerfil()}}" 
+              alt="Avatar del usuario"
+            >
+            
+            <input 
+              type="file" 
+              id="file_input" 
+              (change)="comprobarImagenPerfil($event)" 
+              class="block w-full text-sm text-azul file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:bg-azul file:text-white hover:file:bg-azul-claro transition"
+              aria-describedby="file_input_help"
+              data-testid="file_input"
+            />
+          </div> -->
+        <div>
+          <label for="nombre" class="block mb-1 text-sm font-medium text-azul">Nombre:</label>
+          <input type="text" id="nombre" value="{{usuario.nombre}}" class="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-azul focus:outline-none transition text-sm"/>
+        </div>
+        <div>
+          <label for="correo_electronico" class="block mb-1 text-sm font-medium text-azul">Correo Electrónico:</label>
+          <input type="email" id="correo_electronico" value="{{usuario.correo_electronico}}" class="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-azul focus:outline-none transition text-sm"/>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="bg-azul hover:bg-azul-claro text-white font-medium py-3 px-6 rounded-xl transition w-full sm:w-auto">Actualizar Perfil</button>
+        </div>
+      </form>
+      <div class="mb-8 text-center">
+        <h1 class="text-2xl font-bold text-azul">Direccion de Envio</h1>
+      </div>
+      <form class="max-w-md mx-auto space-y-6">
+        <div>
+          <label for="nombre" class="block mb-1 text-sm font-medium text-azul">Nombre:</label>
+          <input type="text" id="nombre" value="{{usuario.nombre}}" class="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-azul focus:outline-none transition text-sm"/>
+        </div>
+        <div>
+          <label for="correo_electronico" class="block mb-1 text-sm font-medium text-azul">Correo Electrónico:</label>
+          <input type="email" id="correo_electronico" value="{{usuario.correo_electronico}}" class="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-azul focus:outline-none transition text-sm"/>
+        </div>
+        <div class="text-center">
+          <button type="submit" class="bg-azul hover:bg-azul-claro text-white font-medium py-3 px-6 rounded-xl transition w-full sm:w-auto">Actualizar Direccion de Envio</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  

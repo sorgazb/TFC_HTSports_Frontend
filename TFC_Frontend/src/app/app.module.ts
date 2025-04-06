@@ -29,6 +29,17 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { ObserveVisibilityDirective } from './observe-visibility.directive';
 import { FooterComponent } from './footer/footer.component';
 import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
+import { TiendaComponent } from './tienda/tienda.component';
+import { MatPaginatorModule } from '@angular/material/paginator';  
+import { MatTableDataSource } from '@angular/material/table';
+import { ProductoComponent } from './producto/producto.component';
+import { CarritoComponent } from './carrito/carrito.component';
+import { PasarelaPagoComponent } from './pasarela-pago/pasarela-pago.component';
+import { ToggleMenuDirective } from './toggle-menu.directive';
+import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
+import { AreaPedidosComponent } from './area-pedidos/area-pedidos.component';
+import { MatTableModule } from '@angular/material/table';
+
 
 registerLocaleData(es);
 
@@ -42,10 +53,18 @@ registerLocaleData(es);
     CardIdiomaComponent,
     LandingPageComponent,
     ObserveVisibilityDirective,
-    FooterComponent
+    FooterComponent,
+    TiendaComponent,
+    ProductoComponent,
+    CarritoComponent,
+    PasarelaPagoComponent,
+    ToggleMenuDirective,
+    PerfilUsuarioComponent,
+    AreaPedidosComponent,
   ],
   imports: [
     BrowserModule,
+    MatTableModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -66,7 +85,8 @@ registerLocaleData(es);
     MatDialogModule,
     MatButtonModule,
     NzCarouselModule,
-    NgxBootstrapIconsModule.pick(allIcons)
+    NgxBootstrapIconsModule.pick(allIcons),
+    MatPaginatorModule,
   ],
   providers: [
     { provide: NZ_I18N, useValue: es_ES }

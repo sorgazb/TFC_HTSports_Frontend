@@ -16,10 +16,10 @@ export class FooterComponent {
       this.router.events.pipe(
         filter(event => event instanceof NavigationEnd)
       ).subscribe((event) => {
-        if(this.router.url === '/'){
-          this.mostrarFooter = true
-        }else{
+        if(this.router.url === '/inicioSesison' || this.router.url === '/registro'){
           this.mostrarFooter = false
+        }else{
+          this.mostrarFooter = true
         }
       })
     }
