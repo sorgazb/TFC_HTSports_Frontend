@@ -65,7 +65,7 @@
                         </button>
                     </li>
                     <li>
-                        <a *ngIf="aficionado" routerLink="tienda" class="btnInicioSesion">
+                        <a *ngIf="aficionado && usuario" routerLink="tienda" class="btnInicioSesion">
                             <mat-icon fontIcon="shopping_cart"></mat-icon>
                             <span>{{'tienda' | translate}}</span>
                         </a>

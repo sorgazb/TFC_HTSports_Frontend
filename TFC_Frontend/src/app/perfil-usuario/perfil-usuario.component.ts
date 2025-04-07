@@ -28,13 +28,4 @@ export class PerfilUsuarioComponent implements OnInit {
     }
   }
 
-  comprobarImagenPerfil(event: Event): boolean {
-    const input = event.target as HTMLInputElement;
-    if (input.files && input.files[0]) {
-      const archivo = input.files[0];
-      console.log('Archivo seleccionado:', archivo);
-      return this.seriviosUsuario.comprobarImagenPerfil(archivo);
-    }
-    return false; // Retorna false si no hay archivo seleccionado
-  }
 }
