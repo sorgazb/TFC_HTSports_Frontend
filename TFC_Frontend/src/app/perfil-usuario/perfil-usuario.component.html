@@ -31,6 +31,7 @@
     for="avatarInput"
     class="cursor-pointer flex items-center justify-center w-36 h-36 rounded-full border-2 border-dashed border-gray-300 hover:border-azul transition duration-200 bg-gray-50 overflow-hidden"
   >
+  <img *ngIf="usuario.avatar" src="data:image/jpeg;base64,{{usuario.avatar}}" alt="Imagen">
     <ng-container *ngIf="imagenSeleccionada; else placeholderAvatar">
       <img
         [src]="imagenSeleccionada"

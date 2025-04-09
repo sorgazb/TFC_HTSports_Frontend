@@ -9,5 +9,5 @@ export class Usuario {
     equipo_id !: number
     tipo_cuerpo_tecnico !: string
     token !: string
-    avatar !: string
+    avatar !: File
 }

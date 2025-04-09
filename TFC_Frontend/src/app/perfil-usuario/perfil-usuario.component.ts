@@ -104,11 +104,10 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   obtenerImgPerfil(): string {
-    if (this.usuario.avatar) {
-      return this.usuario.avatar;
-    }
-    return '';
+    console.log(this.usuario.avatar)
+    return 'data:image/png;base64,'+this.usuario.avatar // Un base64 de ejemplo
   }
+  
 
   actualizarDatosUsuario() {
     const datosUsuarioActualizar = {
@@ -116,25 +115,25 @@ export class PerfilUsuarioComponent implements OnInit {
       correo_electronico: this.formUsuario.get('email')?.value
     };
   
-    // Verifica si hay una imagen que subir
     if (this.fileToUpload) {
+      // Primero se comprueba la imagen
       this.seriviosUsuario.comprobarImagen(this.fileToUpload).subscribe({
-        next: (res) => {
-          console.log('Respuesta de la API: ', res); // Verifica la respuesta
-          this.usuario.avatar = res.avatarUrl;  // Asume que avatarUrl es el campo correcto
-    
-          const datosConAvatar = {
-            ...datosUsuarioActualizar,
-            avatar: this.usuario.avatar
-          };
-    
-          this.seriviosUsuario.actualizarDatosUsuario(this.usuario.ID, datosConAvatar).subscribe({
+        next: () => {
+          const formData = new FormData();
+          formData.append('nombre', datosUsuarioActualizar.nombre);
+          formData.append('correo_electronico', datosUsuarioActualizar.correo_electronico);
+          formData.append('avatar', this.fileToUpload!);
+  
+          this.seriviosUsuario.actualizarDatosUsuario(this.usuario.ID, formData).subscribe({
             next: () => {
               this.mostrarUsuarioActualizado = true;
-              this.usuario = { ...this.usuario, ...datosConAvatar };
+              this.usuario = {
+                ...this.usuario,
+                ...datosUsuarioActualizar,
+                avatar: this.fileToUpload!
+              };
               this.usuarioSubject.next(this.usuario);
-              const usuarioSesionActualizado = { usuario: this.usuario };
-              sessionStorage.setItem('usuario', JSON.stringify(usuarioSesionActualizado));
+              sessionStorage.setItem('usuario', JSON.stringify({ usuario: this.usuario }));
             },
             error: (error) => {
               if (error.status === 400) {
@@ -149,17 +148,18 @@ export class PerfilUsuarioComponent implements OnInit {
           }
         }
       });
-    }
-    
-     else {
-      // Si no hay imagen, solo se actualizan los datos normales
-      this.seriviosUsuario.actualizarDatosUsuario(this.usuario.ID, datosUsuarioActualizar).subscribe({
+    } else {
+      // Si no hay imagen, simplemente se envían los datos de texto
+      const formData = new FormData();
+      formData.append('nombre', datosUsuarioActualizar.nombre);
+      formData.append('correo_electronico', datosUsuarioActualizar.correo_electronico);
+  
+      this.seriviosUsuario.actualizarDatosUsuario(this.usuario.ID, formData).subscribe({
         next: () => {
           this.mostrarUsuarioActualizado = true;
           this.usuario = { ...this.usuario, ...datosUsuarioActualizar };
           this.usuarioSubject.next(this.usuario);
-          const usuarioSesionActualizado = { usuario: this.usuario };
-          sessionStorage.setItem('usuario', JSON.stringify(usuarioSesionActualizado));
+          sessionStorage.setItem('usuario', JSON.stringify({ usuario: this.usuario }));
         },
         error: (error) => {
           if (error.status === 400) {
@@ -169,6 +169,8 @@ export class PerfilUsuarioComponent implements OnInit {
       });
     }
   }
+  
+  
   
   
   cambiarVisibilidadPassword(){

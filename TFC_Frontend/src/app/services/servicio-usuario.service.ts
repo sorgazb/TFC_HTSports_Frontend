@@ -39,13 +39,12 @@ export class ServicioUsuarioService {
     return this.http.get<Usuario>(`${this.apiUrl}${this.endPoint}/usuario/${correo_electronico}`)
   }
 
-  actualizarDatosUsuario(id:number,datosActualizar: { nombre: string, correo_electronico: string }): Observable<Usuario>{
-    return this.http.put<Usuario>(`${this.apiUrl}${this.endPoint}/actualizar/${id}`, datosActualizar).pipe(
-      catchError((error : any) => {
-        return throwError(() => error)
-      })
-    )
+  actualizarDatosUsuario(id: number, datos: FormData): Observable<Usuario> {
+    return this.http.put<Usuario>(`${this.apiUrl}${this.endPoint}/actualizar/${id}`, datos).pipe(
+      catchError((error: any) => throwError(() => error))
+    );
   }
+  
 
   actualizarDatosAficionado(id:number,datosActualizar: { telefono: string, direccion: string, poblacion: string, codigo_postal: string }): Observable<Aficionado>{
     return this.http.put<Aficionado>(`${this.apiUrl}${this.endPoint}/aficionado/${id}/datos`, datosActualizar).pipe(
