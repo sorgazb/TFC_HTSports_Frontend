@@ -16,10 +16,11 @@ export class ServicioProductoService {
   constructor(private http : HttpClient,  private translate: TranslateService) { }
 
   obtenerTodosLosProductos():Observable<Producto[]>{
-    return this.http.get<Producto[]>(`${this.apiUrl}${this.endPoint}?lang='${this.translate.currentLang}`)
+    console.log(this.translate.currentLang)
+    return this.http.get<Producto[]>(`${this.apiUrl}${this.endPoint}?lang=${this.translate.currentLang}`)
   }
 
   obtenerProductoPorId(id: number): Observable<Producto> {
-    return this.http.get<Producto>(`${this.apiUrl}${this.endPoint}/${id}?lang='${this.translate.currentLang}`)
+    return this.http.get<Producto>(`${this.apiUrl}${this.endPoint}/${id}?lang=${this.translate.currentLang}`)
   }
 }
