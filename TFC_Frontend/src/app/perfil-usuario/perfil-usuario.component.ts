@@ -118,32 +118,38 @@ export class PerfilUsuarioComponent implements OnInit {
     if (this.fileToUpload) {
       // Primero se comprueba la imagen
       this.seriviosUsuario.comprobarImagen(this.fileToUpload).subscribe({
-        next: () => {
-          const formData = new FormData();
-          formData.append('nombre', datosUsuarioActualizar.nombre);
-          formData.append('correo_electronico', datosUsuarioActualizar.correo_electronico);
-          formData.append('avatar', this.fileToUpload!);
-  
-          this.seriviosUsuario.actualizarDatosUsuario(this.usuario.ID, formData).subscribe({
-            next: () => {
-              this.mostrarUsuarioActualizado = true;
-              this.usuario = {
-                ...this.usuario,
-                ...datosUsuarioActualizar,
-                avatar: this.fileToUpload!
-              };
-              this.usuarioSubject.next(this.usuario);
-              sessionStorage.setItem('usuario', JSON.stringify({ usuario: this.usuario }));
-            },
-            error: (error) => {
-              if (error.status === 400) {
-                this.mostrarErrorRegistro = true;
+        next: (response) => {
+          console.log(response.count)
+          if(response.count == 1){
+            const formData = new FormData();
+            formData.append('nombre', datosUsuarioActualizar.nombre);
+            formData.append('correo_electronico', datosUsuarioActualizar.correo_electronico);
+            formData.append('avatar', this.fileToUpload!);
+    
+            this.seriviosUsuario.actualizarDatosUsuario(this.usuario.ID, formData).subscribe({
+              next: () => {
+                this.mostrarUsuarioActualizado = true;
+                this.usuario = {
+                  ...this.usuario,
+                  ...datosUsuarioActualizar,
+                  avatar: this.fileToUpload!
+                };
+                this.usuarioSubject.next(this.usuario);
+                sessionStorage.setItem('usuario', JSON.stringify({ usuario: this.usuario }));
+              },
+              error: (error) => {
+                if (error.status === 400) {
+                  this.mostrarErrorRegistro = true;
+                }
               }
-            }
-          });
+            });
+          }else{
+            this.mostrarErrorRegistro = true;
+          }
+
         },
         error: (error) => {
-          if (error.status === 422) {
+          if (error.status === 422 || error.status === 400) {
             this.mostrarErrorRegistro = true;
           }
         }
