@@ -19,12 +19,13 @@ export class RegistroComponent implements OnInit {
   mostrarErrorPasswords: boolean = false;
   usuario!: Usuario;
   aficionado!: Aficionado;
+  mostrarErrorRegistro : boolean = false
 
   constructor(private serviciosUsuario: ServicioUsuarioService, private route: Router) { }
 
   ngOnInit(): void {
     this.formRegistro = new FormGroup({
-      nombre: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]+$')]),
+      nombre: new FormControl('', [Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$')]),
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/)]),
       validacionPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/)])
@@ -41,52 +42,50 @@ export class RegistroComponent implements OnInit {
 
 
   public registrarUsuario() {
-    this.comprobarIgualdadPasswords(this.formRegistro);
+
+    this.comprobarIgualdadPasswords(this.formRegistro)
     if (!this.passwordIguales) {
-      this.mostrarErrorPasswords = true;
-      return;
+      this.mostrarErrorPasswords = true
+      return
     }
   
-    this.usuario = new Usuario();
-    this.usuario.nombre = this.formRegistro.get('nombre')?.value;
-    this.usuario.correo_electronico = this.formRegistro.get('email')?.value;
-    this.usuario.password = this.formRegistro.get('password')?.value;  // Asegúrate de que se asigna correctamente la contraseña
-    this.usuario.tipo = 'aficionado';
-    this.usuario.edad = 0;
-    this.usuario.posicion = '';
-    this.usuario.equipo_id = 0;
-    this.usuario.tipo_cuerpo_tecnico = '';
-  
-    console.log("Usuario a registrar: ", this.usuario); // Verifica si la contraseña está asignada
-  
-    // Registrar el usuario
-    this.serviciosUsuario.registrarUsuario(this.usuario).subscribe((usuarioRegistrado: Usuario) => {
-      console.log("Usuario registrado: ", usuarioRegistrado); // Verifica los datos registrados
-  
-      // Ahora asignamos correctamente la contraseña al login
-      const loginData = {
-        correo_electronico: usuarioRegistrado.correo_electronico,
-        password: this.usuario.password  // Asegúrate de que la contraseña se pasa correctamente aquí
-      };
-  
-      console.log("Datos de login: ", loginData); // Verifica si la contraseña ahora está presente
-  
-      this.serviciosUsuario.loguearUsuario(loginData)
-        .subscribe((usuarioLogeado: Usuario) => {
-          this.usuario = usuarioLogeado; // Este podría ser solo el token
-          sessionStorage.setItem('token', usuarioLogeado.token); // Guarda el token
-          sessionStorage.setItem('usuario', JSON.stringify(this.usuario));
-  
-          // Obtener aficionado con el ID correcto
+    this.usuario = new Usuario()
+    this.usuario.nombre = this.formRegistro.get('nombre')?.value
+    this.usuario.correo_electronico = this.formRegistro.get('email')?.value
+    this.usuario.password = this.formRegistro.get('password')?.value
+    this.usuario.tipo = 'aficionado'
+    this.usuario.edad = 0
+    this.usuario.posicion = ''
+    this.usuario.equipo_id = 0
+    this.usuario.tipo_cuerpo_tecnico = ''
+
+    this.serviciosUsuario.registrarUsuario(this.usuario).subscribe({
+      next: (usuarioRegistrado : Usuario) => {
+        const loginData = {
+          correo_electronico: usuarioRegistrado.correo_electronico,
+          password: this.usuario.password
+        }
+        
+        this.serviciosUsuario.loguearUsuario(loginData).subscribe((usuarioLogeado: Usuario) => {
+          this.usuario = usuarioLogeado
+          sessionStorage.setItem('token', usuarioLogeado.token)
+          sessionStorage.setItem('usuario', JSON.stringify(this.usuario))
+          
           this.serviciosUsuario.obtenerAficionado(usuarioRegistrado.ID).subscribe((aficionadoObtenido: Aficionado) => {
-            this.aficionado = aficionadoObtenido;
-            localStorage.setItem('aficionado', JSON.stringify(this.aficionado));
+            this.aficionado = aficionadoObtenido
+            localStorage.setItem('aficionado', JSON.stringify(this.aficionado))
             this.route.navigate(['/']).then(() => {
               window.location.reload();
-            });
-          });
-        });
-    });
+            })
+          })
+        })
+      },
+      error: (error) => {
+        if(error.status == 400){
+          this.mostrarErrorRegistro = true
+        }
+      }
+    })
   }
   
   
@@ -113,5 +112,6 @@ export class RegistroComponent implements OnInit {
 
   cerrarAlerta() {
     this.mostrarErrorPasswords = false;
+    this.mostrarErrorRegistro = false
   }
 }

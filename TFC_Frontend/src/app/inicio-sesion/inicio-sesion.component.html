@@ -6,7 +6,7 @@
             </div>
             <form [formGroup]="formLogin" (ngSubmit)="iniciarSesion()">
                 <!-- Email -->
-                <div class="m-5 flex justify-center">
+                <div class="m-5 mb-7 flex justify-center">
                     <mat-form-field class="w-full md:w-2/3" appearance="outline" hideRequiredMarker>
                         <mat-label class="bg-white p-1">{{'Correo-Electronico' | translate}}</mat-label>
                         <input type="email" matInput formControlName="email" placeholder="{{'Correo-Electronico' | translate}}">

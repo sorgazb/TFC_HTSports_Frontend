@@ -1,5 +1,5 @@
 export class Aficionado {
-    id !: number
+    ID !: number
     id_Usuario !: number
     telefono !: string
     direccion !: string

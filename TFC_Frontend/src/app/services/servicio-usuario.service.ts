@@ -1,7 +1,7 @@
 import { HttpClient} from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Usuario } from '../usuario'
-import { Observable } from 'rxjs'
+import { catchError, Observable, throwError } from 'rxjs'
 import { Aficionado } from '../aficionado'
 
 @Injectable({
@@ -16,19 +16,42 @@ export class ServicioUsuarioService {
   constructor(private http: HttpClient) { }
 
   registrarUsuario(usuario: Usuario): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.apiUrl}${this.endPoint}/registrar`, usuario);
+    return this.http.post<Usuario>(`${this.apiUrl}${this.endPoint}/registrar`, usuario).pipe(
+      catchError((error : any) => {
+        return throwError(() => error)
+      })
+    )
   }
 
   loguearUsuario(datosLogin: { correo_electronico: string, password: string }): Observable<Usuario> {
-    return this.http.post<Usuario>(`${this.apiUrl}${this.endPoint}/login`, datosLogin);
+    return this.http.post<Usuario>(`${this.apiUrl}${this.endPoint}/login`, datosLogin).pipe(
+      catchError((error : any) => {
+        return throwError(() => error)
+      })
+    )
   }
   
-
   obtenerAficionado(id: number): Observable<Aficionado> {
-    return this.http.get<Aficionado>(`${this.apiUrl}${this.endPoint}/aficionado/${id}`);
+    return this.http.get<Aficionado>(`${this.apiUrl}${this.endPoint}/aficionado/${id}`)
   }
 
   obtenerUsuario(correo_electronico: string): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.apiUrl}${this.endPoint}/usuario/${correo_electronico}`);
+    return this.http.get<Usuario>(`${this.apiUrl}${this.endPoint}/usuario/${correo_electronico}`)
+  }
+
+  actualizarDatosUsuario(id:number,datosActualizar: { nombre: string, correo_electronico: string }): Observable<Usuario>{
+    return this.http.put<Usuario>(`${this.apiUrl}${this.endPoint}/actualizar/${id}`, datosActualizar).pipe(
+      catchError((error : any) => {
+        return throwError(() => error)
+      })
+    )
+  }
+
+  actualizarDatosAficionado(id:number,datosActualizar: { telefono: string, direccion: string, poblacion: string, codigo_postal: string }): Observable<Aficionado>{
+    return this.http.put<Aficionado>(`${this.apiUrl}${this.endPoint}/aficionado/${id}/datos`, datosActualizar).pipe(
+      catchError((error : any) => {
+        return throwError(() => error)
+      })
+    )
   }
 }

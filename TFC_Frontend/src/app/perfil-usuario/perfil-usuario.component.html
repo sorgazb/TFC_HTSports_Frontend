@@ -1,53 +1,95 @@
 <div class="flex items-center justify-center overflow-hidden p-6 bg-gray-50 min-h-screen">
     <div class="w-full md:w-4/5 lg:w-3/5 xl:w-1/2 bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
+
       <div class="mb-8 text-center">
-        <h1 class="text-2xl font-bold text-azul">Perfil de Usuario</h1>
+        <h1 class="text-2xl font-bold text-azul">{{'perfil-usuario' | translate}}</h1>
       </div>
-      <form class="max-w-md mx-auto space-y-6 mb-5">
-        <!-- Imagen de perfil -->
-        <!-- <div class="flex flex-col items-center space-y-4">
-            <img 
-              class="rounded-full w-36 h-36 border-4 border-azul shadow-md object-cover" 
-              src="{{obtenerImgPerfil()}}" 
-              alt="Avatar del usuario"
-            >
-            
-            <input 
-              type="file" 
-              id="file_input" 
-              (change)="comprobarImagenPerfil($event)" 
-              class="block w-full text-sm text-azul file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:bg-azul file:text-white hover:file:bg-azul-claro transition"
-              aria-describedby="file_input_help"
-              data-testid="file_input"
-            />
-          </div> -->
-        <div>
-          <label for="nombre" class="block mb-1 text-sm font-medium text-azul">Nombre:</label>
-          <input type="text" id="nombre" value="{{usuario.nombre}}" class="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-azul focus:outline-none transition text-sm"/>
-        </div>
-        <div>
-          <label for="correo_electronico" class="block mb-1 text-sm font-medium text-azul">Correo Electrónico:</label>
-          <input type="email" id="correo_electronico" value="{{usuario.correo_electronico}}" class="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-azul focus:outline-none transition text-sm"/>
-        </div>
-        <div class="text-center">
-          <button type="submit" class="bg-azul hover:bg-azul-claro text-white font-medium py-3 px-6 rounded-xl transition w-full sm:w-auto">Actualizar Perfil</button>
+
+      <form [formGroup]="formUsuario" (ngSubmit)="actualizarDatosUsuario()" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-2">
+          <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
+              <mat-label class="bg-white p-1">{{'Nombre' | translate}}</mat-label>
+              <input type="text" matInput formControlName="nombre">
+              <mat-error *ngIf="controlarErrores('nombre', 'required')">{{'introduce-tu' | translate}} <strong>{{'nombre' | translate}}</strong></mat-error>
+              <mat-error *ngIf="controlarErrores('nombre','minlength') && !controlarErrores('nombre','pattern')">{{'nombre-debe' | translate}} <strong>{{'tres-o-mas' | translate}}</strong></mat-error>
+              <mat-error *ngIf="controlarErrores('nombre','maxlength') && !controlarErrores('nombre','pattern')">{{'nombre-supera' | translate}} <strong>{{'maximo-caracteres'  | translate}}</strong></mat-error>
+              <mat-error *ngIf="controlarErrores('nombre','pattern') && (!controlarErrores('nombre','minlength') || !controlarErrores('nombre','maxlength'))">{{'nombre-no-puede-contener' | translate}} <strong>{{'numeros-caracteres' | translate}}</strong></mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
+            <mat-label class="bg-white p-1">{{'Correo-Electronico' | translate}}</mat-label>
+            <input type="email" matInput formControlName="email">
+            <mat-error *ngIf="controlarErrores('email', 'required')">{{'introduce-una-direccion' | translate}} <strong>{{'correo-electronico' | translate}}</strong></mat-error>
+            <mat-error *ngIf="controlarErrores('email','email')">{{'direccion-correo' | translate}} <strong>{{'no-valida' | translate}}</strong></mat-error>
+          </mat-form-field>
+
+          <div class="md:col-span-2">
+            <div *ngIf="mostrarErrorRegistro">
+              <nz-alert nzType="error" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'err-ru' | translate}}" nzDescription="{{'text-err-ru' | translate}}" nzShowIcon></nz-alert>
+            </div>
+  
+            <div *ngIf="mostrarUsuarioActualizado">
+              <nz-alert nzType="success" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'usuario-actualizado' | translate}}" nzDescription="{{'text-usuario-actualizado' | translate}}" nzShowIcon></nz-alert>
+            </div>
+          </div>
+
+        <div class="md:col-span-2 flex justify-center">
+          <button type="submit" [disabled]="!formUsuario.valid" class="bg-azul text-white px-6 py-2 rounded-full shadow">
+            {{'actualizar-usuario' | translate}}
+          </button>
         </div>
       </form>
-      <div class="mb-8 text-center">
-        <h1 class="text-2xl font-bold text-azul">Direccion de Envio</h1>
+      
+      <div class="my-8 text-center">
+        <h1 class="text-2xl font-bold text-azul">{{'direccion-envio' | translate}}</h1>
       </div>
-      <form class="max-w-md mx-auto space-y-6">
-        <div>
-          <label for="nombre" class="block mb-1 text-sm font-medium text-azul">Nombre:</label>
-          <input type="text" id="nombre" value="{{usuario.nombre}}" class="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-azul focus:outline-none transition text-sm"/>
+
+      <form [formGroup]="formAficionado" (ngSubmit)="actualizarDatosAficionado()" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-2">
+          <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
+              <mat-label class="bg-white p-1">{{'telefono' | translate}}</mat-label>
+              <input type="text" matInput [(ngModel)]="aficionado.telefono" formControlName="telefono">
+              <mat-error *ngIf="controlarErroresAficionado('telefono', 'required')">{{'introduce-tu' | translate}} <strong>{{'telefono-form' | translate}}</strong></mat-error>
+              <mat-error *ngIf="controlarErroresAficionado('telefono', 'minlength') && !controlarErroresAficionado('telefono','pattern')"><strong>{{'formato-incorrecto' | translate}}</strong></mat-error>
+              <mat-error *ngIf="controlarErroresAficionado('telefono', 'maxlength') && !controlarErroresAficionado('telefono','pattern')"><strong>{{'formato-incorrecto' | translate}}</strong></mat-error>
+              <mat-error *ngIf="controlarErroresAficionado('telefono', 'pattern') && (!controlarErroresAficionado('telefono','minlength') || !controlarErroresAficionado('telefono','maxlength'))">{{'introduce' | translate}} <strong>{{'solo-numeros' | translate}}</strong></mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
+            <mat-label class="bg-white p-1">{{'direccion' | translate}}</mat-label>
+            <input type="text" [(ngModel)]="aficionado.direccion"  matInput formControlName="direccion">
+            <mat-error *ngIf="controlarErroresAficionado('direccion', 'required')">{{'introduce-tu' | translate}} <strong>{{'direccion-form' | translate}}</strong></mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
+            <mat-label class="bg-white p-1">{{'poblacion' | translate}}</mat-label>
+            <input type="text" [(ngModel)]="aficionado.poblacion"  matInput formControlName="poblacion">
+            <mat-error *ngIf="controlarErroresAficionado('poblacion', 'required')">{{'introduce-tu' | translate}} <strong>{{'poblacion-form' | translate}}</strong></mat-error>
+          </mat-form-field>
+
+          <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
+            <mat-label class="bg-white p-1">{{'codigo-postal' | translate}}</mat-label>
+            <input type="text" [(ngModel)]="aficionado.codigo_postal"  matInput formControlName="codigoPostal">
+            <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'required')">{{'introduce-tu' | translate}} <strong>{{'codigo-postal-form' | translate}}</strong></mat-error>
+            <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'minlength') && !controlarErroresAficionado('codigoPostal','pattern')"><strong>{{'formato-incorrecto' | translate}}</strong></mat-error>
+            <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'maxlength') && !controlarErroresAficionado('codigoPostal','pattern')"><strong>{{'formato-incorrecto' | translate}}</strong></mat-error>
+            <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'pattern') && (!controlarErroresAficionado('codigoPostal','minlength') || !controlarErroresAficionado('codigoPostal','maxlength'))">{{'introduce' | translate}} <strong>{{'solo-numeros' | translate}}</strong></mat-error>
+          </mat-form-field>
+
+          <div class="md:col-span-2">
+            <div *ngIf="mostrarErrorAficionado">
+              <nz-alert nzType="error" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'error-aficionado' | translate}}" nzDescription="{{'text-error-aficionado' | translate}}" nzShowIcon></nz-alert>
+            </div>
+  
+            <div *ngIf="mostrarAficionadoActualizado">
+              <nz-alert nzType="success" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'aficionado-actualizado' | translate}}" nzDescription="{{'text-aficionado-actualizado' | translate}}" nzShowIcon></nz-alert>
+            </div>
+          </div>
+
+        <div class="md:col-span-2 flex justify-center">
+          <button type="submit" [disabled]="!formAficionado.valid" class="bg-azul text-white px-6 py-2 rounded-full shadow">
+            {{'actualizar-direccion' | translate}}
+          </button>
         </div>
-        <div>
-          <label for="correo_electronico" class="block mb-1 text-sm font-medium text-azul">Correo Electrónico:</label>
-          <input type="email" id="correo_electronico" value="{{usuario.correo_electronico}}" class="w-full p-3 rounded-xl border border-gray-300 focus:ring-2 focus:ring-azul focus:outline-none transition text-sm"/>
-        </div>
-        <div class="text-center">
-          <button type="submit" class="bg-azul hover:bg-azul-claro text-white font-medium py-3 px-6 rounded-xl transition w-full sm:w-auto">Actualizar Direccion de Envio</button>
-        </div>
+
       </form>
     </div>
   </div>

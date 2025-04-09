@@ -7,7 +7,7 @@
                 </div>
                 <form [formGroup]="formRegistro" (ngSubmit)="registrarUsuario()">
                     <!-- Nombre -->
-                    <div class="m-5 flex justify-center">
+                    <div class="m-5 mb-7 flex justify-center">
                         <mat-form-field class="w-full md:w-2/3" appearance="outline" hideRequiredMarker>
                             <mat-label class="bg-white p-1">{{'Nombre' | translate}}</mat-label>
                             <input type="text" matInput formControlName="nombre" placeholder="{{'introduce-tu-nombre' | translate}}">
@@ -18,7 +18,7 @@
                         </mat-form-field>
                     </div>
                     <!-- Email -->
-                    <div class="m-5 flex justify-center">
+                    <div class="m-5 mb-7 flex justify-center">
                         <mat-form-field class="w-full md:w-2/3" appearance="outline" hideRequiredMarker>
                             <mat-label class="bg-white p-1">{{'Correo-Electronico' | translate}}</mat-label>
                             <input type="email"  matInput formControlName="email" placeholder="{{'Correo-Electronico' | translate}}">
@@ -27,7 +27,7 @@
                         </mat-form-field>
                     </div>
                     <!-- Password -->
-                    <div class="m-5 flex justify-center">
+                    <div class="m-5 mb-7 flex justify-center">
                         <mat-form-field class="w-full md:w-2/3" appearance="outline" hideRequiredMarker>
                             <mat-label class="bg-white p-1">{{'introduce-tu-password' | translate}}</mat-label>
                             <input matInput [type]="mostrarPassword ? 'text' : 'password'" formControlName="password" placeholder="{{'introduce-tu-password' | translate}}" (focus)="mostrarInfoPassword()" (focusout)="ocultarInfoPassword()">
@@ -69,6 +69,10 @@
                 </div>
                 <!-- Mostrar alertas error inicio de sesion -->
                 <div *ngIf="mostrarErrorPasswords">
+                    <nz-alert nzType="error" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'err-ru' | translate}}" nzDescription="{{'text-err-ru-pass' | translate}}" nzShowIcon></nz-alert>
+                </div>
+
+                <div *ngIf="mostrarErrorRegistro">
                     <nz-alert nzType="error" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'err-ru' | translate}}" nzDescription="{{'text-err-ru' | translate}}" nzShowIcon></nz-alert>
                 </div>
             </div>
