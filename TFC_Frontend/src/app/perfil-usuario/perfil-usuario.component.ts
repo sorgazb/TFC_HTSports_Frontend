@@ -3,6 +3,7 @@ import { Usuario } from '../usuario';
 import { ServicioUsuarioService } from '../services/servicio-usuario.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Aficionado } from '../aficionado';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -29,19 +30,43 @@ export class PerfilUsuarioComponent implements OnInit {
 
   mostrarErrorAficionado : boolean = false
 
+  usuarioSubject: BehaviorSubject<Usuario | null> = new BehaviorSubject<Usuario | null>(null);
+  aficionadoSubject: BehaviorSubject<Aficionado | null> = new BehaviorSubject<Aficionado | null>(null);
+
+  fileToUpload: File | null = null;
+  apiResponse: any;
+
+  imagenSeleccionada: string | ArrayBuffer | null = null; // Añade esta propiedad arriba
+
+
   ngOnInit(): void {
 
     let usuarioAux = sessionStorage.getItem('usuario')
     let usuarioSesion = JSON.parse(usuarioAux!)
     this.usuario = usuarioSesion.usuario
+    this.usuarioSubject.next(this.usuario)
 
     let aficionadoAux = localStorage.getItem('aficionado')
     let aficionadoSesison = JSON.parse(aficionadoAux!)
     this.aficionado = aficionadoSesison
+    this.aficionadoSubject.next(this.aficionado)
+
 
     this.formUsuario = new FormGroup({
       nombre: new FormControl(this.usuario.nombre, [Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$')]),
       email : new FormControl(this.usuario.correo_electronico,[Validators.required, Validators.email]),
+    })
+
+    this.usuarioSubject.subscribe(usarioSesionActualizado => {
+      if(usarioSesionActualizado){
+        this.usuario = usarioSesionActualizado
+        if(this.formUsuario){
+          this.formUsuario.patchValue({
+            nombre: this.usuario.nombre,
+            email: this.usuario.correo_electronico
+          })
+        }
+      }
     })
 
     this.formAficionado = new FormGroup({
@@ -51,10 +76,24 @@ export class PerfilUsuarioComponent implements OnInit {
       codigoPostal : new FormControl(this.aficionado.codigo_postal, [Validators.required, Validators.minLength(5), Validators.maxLength(5), Validators.pattern('^[0-9]+$')])
     })
 
-
+    this.aficionadoSubject.subscribe(aficionadoActualizado => {
+      if(aficionadoActualizado){
+        this.aficionado = aficionadoActualizado
+        if(this.formAficionado){
+          this.formAficionado.patchValue({
+            telefono: this.aficionado.telefono,
+            direccion: this.aficionado.direccion,
+            poblacion: this.aficionado.poblacion,
+            codigoPostal: this.aficionado.codigo_postal
+          })
+        }
+      }
+    })
   }
 
   constructor(private seriviosUsuario : ServicioUsuarioService) { }
+
+  
 
   public controlarErrores(nombreControl : string, nombreError : string){
     return this.formUsuario.controls[nombreControl].hasError(nombreError)
@@ -67,30 +106,71 @@ export class PerfilUsuarioComponent implements OnInit {
   obtenerImgPerfil(): string {
     if (this.usuario.avatar) {
       return this.usuario.avatar;
-    }else{
-      return 'https://www.w3schools.com/howto/img_avatar.png';
     }
+    return '';
   }
 
-  actualizarDatosUsuario(){
-
+  actualizarDatosUsuario() {
     const datosUsuarioActualizar = {
       nombre: this.formUsuario.get('nombre')?.value,
       correo_electronico: this.formUsuario.get('email')?.value
-    }
-
-    this.seriviosUsuario.actualizarDatosUsuario(this.usuario.ID,datosUsuarioActualizar).subscribe({
-      next: () => {
-        this.mostrarUsuarioActualizado = true
-      },
-      error: (error) => {
-        if(error.status == 400){
-          this.mostrarErrorRegistro = true
+    };
+  
+    // Verifica si hay una imagen que subir
+    if (this.fileToUpload) {
+      this.seriviosUsuario.comprobarImagen(this.fileToUpload).subscribe({
+        next: (res) => {
+          console.log('Respuesta de la API: ', res); // Verifica la respuesta
+          this.usuario.avatar = res.avatarUrl;  // Asume que avatarUrl es el campo correcto
+    
+          const datosConAvatar = {
+            ...datosUsuarioActualizar,
+            avatar: this.usuario.avatar
+          };
+    
+          this.seriviosUsuario.actualizarDatosUsuario(this.usuario.ID, datosConAvatar).subscribe({
+            next: () => {
+              this.mostrarUsuarioActualizado = true;
+              this.usuario = { ...this.usuario, ...datosConAvatar };
+              this.usuarioSubject.next(this.usuario);
+              const usuarioSesionActualizado = { usuario: this.usuario };
+              sessionStorage.setItem('usuario', JSON.stringify(usuarioSesionActualizado));
+            },
+            error: (error) => {
+              if (error.status === 400) {
+                this.mostrarErrorRegistro = true;
+              }
+            }
+          });
+        },
+        error: (error) => {
+          if (error.status === 422) {
+            this.mostrarErrorRegistro = true;
+          }
         }
-      }
-    })
+      });
+    }
+    
+     else {
+      // Si no hay imagen, solo se actualizan los datos normales
+      this.seriviosUsuario.actualizarDatosUsuario(this.usuario.ID, datosUsuarioActualizar).subscribe({
+        next: () => {
+          this.mostrarUsuarioActualizado = true;
+          this.usuario = { ...this.usuario, ...datosUsuarioActualizar };
+          this.usuarioSubject.next(this.usuario);
+          const usuarioSesionActualizado = { usuario: this.usuario };
+          sessionStorage.setItem('usuario', JSON.stringify(usuarioSesionActualizado));
+        },
+        error: (error) => {
+          if (error.status === 400) {
+            this.mostrarErrorRegistro = true;
+          }
+        }
+      });
+    }
   }
-
+  
+  
   cambiarVisibilidadPassword(){
     this.mostrarPassword = !this.mostrarPassword
   }
@@ -105,7 +185,16 @@ export class PerfilUsuarioComponent implements OnInit {
 
     this.seriviosUsuario.actualizarDatosAficionado(this.aficionado.ID,datosAficionadoActualizar).subscribe({
       next: () => {
+
         this.mostrarAficionadoActualizado = true
+
+        this.aficionado.telefono = datosAficionadoActualizar.telefono
+        this.aficionado.direccion = datosAficionadoActualizar.direccion
+        this.aficionado.poblacion = datosAficionadoActualizar.poblacion
+        this.aficionado.codigo_postal = datosAficionadoActualizar.codigo_postal
+
+        this.aficionadoSubject.next(this.aficionado);
+        localStorage.setItem('aficionado', JSON.stringify(this.aficionado));
       },
       error: (error) => {
         if(error.status == 400){
@@ -122,5 +211,17 @@ export class PerfilUsuarioComponent implements OnInit {
     this.mostrarErrorAficionado = false
   }
 
+  onFileSelected(event: any) {
+    const file: File = event.target.files[0];
+    if (file) {
+      this.fileToUpload = file;
+  
+      const reader = new FileReader();
+      reader.onload = () => {
+        this.imagenSeleccionada = reader.result;
+      };
+      reader.readAsDataURL(file);
+    }
+  }
 
 }

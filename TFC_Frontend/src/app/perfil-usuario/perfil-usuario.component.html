@@ -22,6 +22,46 @@
             <mat-error *ngIf="controlarErrores('email','email')">{{'direccion-correo' | translate}} <strong>{{'no-valida' | translate}}</strong></mat-error>
           </mat-form-field>
 
+
+<!-- Nuevo campo para cargar el Avatar -->
+<div class="md:col-span-2 flex flex-col items-center gap-2">
+  <label class="text-sm font-semibold text-gray-700">{{ 'Avatar' | translate }}</label>
+  
+  <label
+    for="avatarInput"
+    class="cursor-pointer flex items-center justify-center w-36 h-36 rounded-full border-2 border-dashed border-gray-300 hover:border-azul transition duration-200 bg-gray-50 overflow-hidden"
+  >
+    <ng-container *ngIf="imagenSeleccionada; else placeholderAvatar">
+      <img
+        [src]="imagenSeleccionada"
+        alt="Avatar"
+        class="w-full h-full object-cover rounded-full"
+      />
+    </ng-container>
+    <ng-template #placeholderAvatar>
+      <svg
+        class="w-10 h-10 text-gray-400"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+        stroke="currentColor"
+      >
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+              d="M5.121 17.804A9.004 9.004 0 0112 3a9.004 9.004 0 016.879 14.804M15 11a3 3 0 11-6 0 3 3 0 016 0zm2 6H7a5 5 0 0110 0z"/>
+      </svg>
+    </ng-template>
+  </label>
+
+  <input
+    id="avatarInput"
+    type="file"
+    accept="image/*"
+    (change)="onFileSelected($event)"
+    class="hidden"
+  />
+  <span class="text-xs text-gray-500 italic">{{ 'selecciona-una-imagen' | translate }}</span>
+</div>
+
           <div class="md:col-span-2">
             <div *ngIf="mostrarErrorRegistro">
               <nz-alert nzType="error" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'err-ru' | translate}}" nzDescription="{{'text-err-ru' | translate}}" nzShowIcon></nz-alert>
