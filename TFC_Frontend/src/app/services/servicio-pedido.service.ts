@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Pedido } from '../pedido';
 import { Observable } from 'rxjs';
 import { DetallePedido } from '../detalle-pedido';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class ServicioPedidoService {
   private apiUrl = 'https://tfc-htsports-api-884687165526.europe-southwest1.run.app/'
   private endPoint = 'api/pedidos'
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient, private translate: TranslateService) { }
 
   crearPedido(pedido: Pedido): Observable<Pedido> {
     return this.http.post<Pedido>(`${this.apiUrl}${this.endPoint}`, pedido)
@@ -35,7 +36,7 @@ export class ServicioPedidoService {
   }
 
   obtenerPedidosAficionado(idAficionado: number): Observable<Pedido[]>{
-    return this.http.get<Pedido[]>(`${this.apiUrl}${this.endPoint}/aficionados/${idAficionado}/pedidos`)
+    return this.http.get<Pedido[]>(`${this.apiUrl}${this.endPoint}/aficionados/${idAficionado}/pedidos?lang=${this.translate.currentLang}`)
   }
 
   obtenerPedido(idPedido: number): Observable<Pedido[]>{

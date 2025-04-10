@@ -1,6 +1,6 @@
 <section class="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
     <div class="mx-auto max-w-screen-xl px-4 2xl:px-0">
-      <h2 class="text-xl font-semibold text-azul sm:text-2xl">Carro de Compra</h2>
+      <h2 class="text-xl font-semibold text-azul sm:text-2xl">{{'carro-compra' | translate}}</h2>
   
       <div class="mt-6 sm:mt-8 md:gap-6 lg:flex lg:items-start xl:gap-8">
         <div class="mx-auto w-full flex-none lg:max-w-2xl xl:max-w-4xl">
@@ -17,14 +17,14 @@
   
                 <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">
                   <a href="/producto/{{producto.producto.ID}}" class="text-base font-medium text-azul hover:underline">{{producto.producto.nombre}}</a>
-                  <p class="text-base font-medium text-azul">Cantidad: {{producto.cantidad}}</p>
-                  <p class="text-base font-medium text-azul">Talla: {{producto.talla}}</p>
+                  <p class="text-base font-medium text-azul">{{'cantidad' | translate}} {{producto.cantidad}}</p>
+                  <p class="text-base font-medium text-azul">{{'talla' | translate}} {{producto.talla}}</p>
                   <div class="flex items-center gap-4">
                     <button 
                     type="button" 
                     (click)="eliminarProducto(producto.producto.ID, producto.talla)" 
                     class="inline-flex items-center text-sm font-medium text-red-600 hover:underline dark:text-red-500">
-                    Eliminar Producto
+                    {{'eliminar-producto' | translate}}
                   </button>
                   </div>
                 </div>
@@ -35,7 +35,7 @@
   
         <div class="mx-auto mt-6 max-w-4xl flex-1 space-y-6 lg:mt-0 lg:w-full">
           <div class="space-y-4 rounded-lg border-2 border-azul bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 sm:p-6">
-            <p class="text-xl font-semibold text-azul">Resumen Pedido</p>
+            <p class="text-xl font-semibold text-azul">{{'resumen-pedido' | translate}}</p>
   
             <div class="space-y-4">  
               <dl class="flex items-center justify-between gap-4 border-t border-azul pt-2 dark:border-gray-700">
@@ -43,11 +43,11 @@
                 <dd class="text-base font-bold text-black">{{obtenerImporteTotal()}} €</dd>
               </dl>
             </div>
-            <a href="/pasarelapago" class="flex w-full items-center justify-center rounded-lg bg-azul px-5 py-2.5 text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-primary-300">Proceder con la Compra</a>
+            <a href="/pasarelapago" class="flex w-full items-center justify-center rounded-lg bg-azul px-5 py-2.5 text-sm font-medium text-white focus:outline-none focus:ring-4 focus:ring-primary-300">{{'proceder-compra' | translate}}</a>
             <div class="flex items-center justify-center gap-2">
-              <span class="text-sm font-normal text-gray-500 dark:text-gray-400"> o </span>
+              <span class="text-sm font-normal text-gray-500 dark:text-gray-400"> {{'o' | translate}} </span>
               <a routerLink="/tienda" title="" class="inline-flex items-center gap-2 text-sm font-medium text-primary-700 underline hover:no-underline dark:text-primary-500">
-                Continuar Comprando
+                {{'continuar-comprando' | translate}}
               </a>
             </div>
           </div>

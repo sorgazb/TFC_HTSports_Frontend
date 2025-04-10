@@ -1,42 +1,35 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatPaginator } from '@angular/material/paginator';
-import { MatTableDataSource } from '@angular/material/table';
+import { Component, OnInit } from '@angular/core';
 import { ServicioPedidoService } from '../services/servicio-pedido.service';
 import { Pedido } from '../pedido';
-import { MatSort } from '@angular/material/sort';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-area-pedidos',
   templateUrl: './area-pedidos.component.html',
   styleUrls: ['./area-pedidos.component.css']
 })
-export class AreaPedidosComponent implements AfterViewInit, OnInit{
+export class AreaPedidosComponent implements OnInit {
 
-  displayedColumns: string[] = ['ID', 'direccion', 'poblacion', 'codigo_postal', 'estado', 'precio_total'];
-  dataSource = new MatTableDataSource<Pedido>();
+  pedidos: Pedido[] = [];
 
-  @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort !: MatSort;
-
-
-constructor(private serviciosPedidos : ServicioPedidoService){}
+  constructor(private serviciosPedidos: ServicioPedidoService) { }
 
   ngOnInit(): void {
     const aficionado = JSON.parse(localStorage.getItem('aficionado') || '{}');
 
     this.serviciosPedidos.obtenerPedidosAficionado(aficionado.ID).subscribe((pedidos: Pedido[]) => {
-      this.dataSource.data = pedidos
+      this.pedidos = pedidos.sort((a, b) => b.ID - a.ID);
+      this.pedidos = pedidos;
+
+      const tiempoCancelacion = 24 * 60 * 60 * 1000;
+      const fechaCancelacion = Date.now() - tiempoCancelacion;
+
+      this.pedidos.forEach(pedido => {
+        if (pedido.fecha.getTime() < fechaCancelacion && pedido.estado === 'pendiente') {
+          this.serviciosPedidos.cancelarPedido(pedido.ID).subscribe(() => {
+          });
+        }
+      });
     });
-
-  }
-
-  ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator
-    this.dataSource.sort = this.sort
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 }
-

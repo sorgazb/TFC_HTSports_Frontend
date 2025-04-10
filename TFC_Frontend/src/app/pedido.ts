@@ -1,5 +1,6 @@
 export class Pedido {
     ID!:number
+    fecha !: Date
     id_aficionado !: number
     direccion !: string
     poblacion !: string

@@ -30,6 +30,10 @@ export class PerfilUsuarioComponent implements OnInit {
 
   mostrarErrorAficionado : boolean = false
 
+  mostrarErrorNumCaras : boolean = false
+
+  mostrarErrorFaceAPI : boolean = false
+
   usuarioSubject: BehaviorSubject<Usuario | null> = new BehaviorSubject<Usuario | null>(null);
   aficionadoSubject: BehaviorSubject<Aficionado | null> = new BehaviorSubject<Aficionado | null>(null);
 
@@ -116,7 +120,7 @@ export class PerfilUsuarioComponent implements OnInit {
     };
   
     if (this.fileToUpload) {
-      // Primero se comprueba la imagen
+      console.log(this.fileToUpload)
       this.seriviosUsuario.comprobarImagen(this.fileToUpload).subscribe({
         next: (response) => {
           console.log(response.count)
@@ -144,18 +148,14 @@ export class PerfilUsuarioComponent implements OnInit {
               }
             });
           }else{
-            this.mostrarErrorRegistro = true;
+            this.mostrarErrorNumCaras = true;
           }
-
         },
         error: (error) => {
-          if (error.status === 422 || error.status === 400) {
-            this.mostrarErrorRegistro = true;
-          }
+            this.mostrarErrorFaceAPI = true;
         }
       });
     } else {
-      // Si no hay imagen, simplemente se envían los datos de texto
       const formData = new FormData();
       formData.append('nombre', datosUsuarioActualizar.nombre);
       formData.append('correo_electronico', datosUsuarioActualizar.correo_electronico);
@@ -173,6 +173,7 @@ export class PerfilUsuarioComponent implements OnInit {
           }
         }
       });
+      console.log('no hay foto')
     }
   }
   

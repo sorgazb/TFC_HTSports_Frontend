@@ -7,6 +7,9 @@ import { Pedido } from '../pedido';
 import { DetallePedido } from '../detalle-pedido';
 import { Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
+import { translate } from 'ngx-bootstrap-icons';
+import { Aficionado } from '../aficionado';
+import { TranslateService } from '@ngx-translate/core';
 
 declare var paypal: any;
 
@@ -22,7 +25,7 @@ export class PasarelaPagoComponent implements OnInit {
 
   listadoCarrito!: Carrito[];
   total: number = 0;
-  formRegistro!: FormGroup;
+  formAficionado!: FormGroup;
   usarDireccionGuardada: boolean = false;
   pedidoIDCreado!: number;
 
@@ -31,19 +34,24 @@ export class PasarelaPagoComponent implements OnInit {
     mensaje: '',
   };
 
+  aficionado !:Aficionado
+
   constructor(
     private serviciosCarrito: ServicioCarritoService,
     private servicioPedido: ServicioPedidoService,
     private router: Router,
+     private translate: TranslateService
 
   ) {}
 
   ngOnInit(): void {
+
+    this.aficionado = JSON.parse(localStorage.getItem('aficionado') || '{}');
     // Inicializar formulario
-    this.formRegistro = new FormGroup({
-      direccion: new FormControl('', Validators.required),
-      poblacion: new FormControl('', Validators.required),
-      codigoPostal: new FormControl('', Validators.required)
+    this.formAficionado = new FormGroup({
+      direccion : new FormControl('', [Validators.required]),
+      poblacion : new FormControl('', [Validators.required]),
+      codigoPostal : new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(5), Validators.pattern('^[0-9]+$')])
     });
 
     // Obtener carrito y calcular total
@@ -57,7 +65,11 @@ export class PasarelaPagoComponent implements OnInit {
   }
 
   onDireccionSeleccionada() {
-    this.usarDireccionGuardada ? this.formRegistro.disable() : this.formRegistro.enable();
+    this.usarDireccionGuardada ? this.formAficionado.disable() : this.formAficionado.enable();
+  }
+
+  public controlarErroresAficionado(nombreControl : string, nombreError : string){
+    return this.formAficionado.controls[nombreControl].hasError(nombreError)
   }
 
   crearPedido() {
@@ -72,14 +84,21 @@ export class PasarelaPagoComponent implements OnInit {
     }));
 
     const pedido = new Pedido();
-    const aficionado = JSON.parse(localStorage.getItem('aficionado') || '{}');
 
-    if (aficionado) {
-      pedido.id_aficionado = aficionado.ID;
-      pedido.direccion = this.formRegistro.get('direccion')?.value;
-      pedido.poblacion = this.formRegistro.get('poblacion')?.value;
-      pedido.codigo_postal = this.formRegistro.get('codigoPostal')?.value;
+    if(this.usarDireccionGuardada == true){
+      pedido.id_aficionado = this.aficionado.ID
+      pedido.direccion = this.aficionado.direccion
+      pedido.poblacion = this.aficionado.poblacion
+      pedido.codigo_postal = this.aficionado.codigo_postal
+    }else{
+      if (this.aficionado) {
+        pedido.id_aficionado = this.aficionado.ID;
+        pedido.direccion = this.formAficionado.get('direccion')?.value;
+        pedido.poblacion = this.formAficionado.get('poblacion')?.value;
+        pedido.codigo_postal = this.formAficionado.get('codigoPostal')?.value;
+      }
     }
+
 
     this.servicioPedido.crearPedido(pedido).subscribe((pedidoCreado: Pedido) => {
       console.log("Pedido Creado", pedidoCreado);
@@ -87,7 +106,7 @@ export class PasarelaPagoComponent implements OnInit {
 
       this.servicioPedido.agregarProductosPedido(productosCarrito, pedidoCreado.ID).subscribe((detalles: DetallePedido[]) => {
         console.log("Detalles Pedido", detalles);
-        this.renderizarPaypal(); // Renderizar PayPal después de crear pedido y añadir productos
+        this.renderizarPaypal(); 
       });
     });
   }
@@ -111,7 +130,13 @@ export class PasarelaPagoComponent implements OnInit {
           this.servicioPedido.pagarPedido(this.pedidoIDCreado).subscribe(() => {
             console.log("Pedido pagado");
             this.serviciosCarrito.limpiarCarrito();
-            this.mostrarAlerta('Pago aprobado. ¡Gracias por tu compra!', true);
+            if(this.translate.currentLang == 'es'){
+              this.mostrarAlerta('Pago aprobado. ¡Gracias por tu compra!', true);
+            }
+            if(this.translate.currentLang == 'gb'){
+              this.mostrarAlerta('Payment approved. Thank you for your purchase!', true);
+            }
+            
           });
         }
         ,
@@ -121,7 +146,12 @@ export class PasarelaPagoComponent implements OnInit {
           this.servicioPedido.cancelarPedido(this.pedidoIDCreado).subscribe(() => {
             console.log("Pedido cancelado");
           });
-          this.mostrarAlerta('Ocurrió un error al procesar el pago', true );
+          if(this.translate.currentLang == 'es'){
+            this.mostrarAlerta('Ocurrió un error al procesar el pago', true );
+          }
+          if(this.translate.currentLang == 'gb'){
+            this.mostrarAlerta('An error occurred while processing the payment. Please try again.', true);
+          }
 
         }
       }).render(this.paypalElement.nativeElement);

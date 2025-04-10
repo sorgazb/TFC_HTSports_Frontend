@@ -21,11 +21,11 @@
         </div>
 
         <div *ngIf="mostrarErrorTalla" class="mb-3">
-            <nz-alert nzType="error" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="Debes seleccionar una Talla" nzShowIcon></nz-alert>
+            <nz-alert nzType="error" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'selecciona-talla' | translate}}" nzShowIcon></nz-alert>
         </div>
 
         <div *ngIf="mostrarProductoEnCesta" class="mb-3">
-            <nz-alert nzType="success" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="Producto añadido a la cesta" nzShowIcon></nz-alert>
+            <nz-alert nzType="success" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'producto-cesta' | translate}}" nzShowIcon></nz-alert>
         </div>
 
         <div *ngIf="esRopa">

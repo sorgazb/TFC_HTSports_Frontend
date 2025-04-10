@@ -60,11 +60,16 @@ export class ServicioUsuarioService {
     'x-rapidapi-host': 'faceinphoto.p.rapidapi.com',
     'x-rapidapi-key': '537517a32emsh5c0948f57af5a91p182ba2jsn0448a4034897',
   });
-
-    comprobarImagen(image: File): Observable<any> {
-      const formData = new FormData();
-      formData.append('image', image);
   
-      return this.http.post<any>(this.baseUrl, formData, { headers: this.headers });
-    }
+  comprobarImagen(image: File): Observable<any> {
+    const formData = new FormData();
+    formData.append('image', image, image.name);
+  
+    return this.http.post<any>(this.baseUrl, formData, {
+      headers: {
+        'x-rapidapi-host': 'faceinphoto.p.rapidapi.com',
+        'x-rapidapi-key': '537517a32emsh5c0948f57af5a91p182ba2jsn0448a4034897'
+      }
+    });
+  }
 }

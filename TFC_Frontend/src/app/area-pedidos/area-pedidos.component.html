@@ -1,45 +1,36 @@
-<div class="m-10">
-    <div class="overflow-x-auto">
-      <table mat-table [dataSource]="dataSource" class="min-w-full table-auto">
-      
-        <ng-container matColumnDef="ID">
-          <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left text-sm font-medium text-gray-700"> Numero de Pedido </th>
-          <td mat-cell *matCellDef="let element" class="px-6 py-3 text-sm text-gray-900"> {{element.ID}} </td>
-        </ng-container>
-      
-        <ng-container matColumnDef="direccion">
-          <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left text-sm font-medium text-gray-700"> Dirección </th>
-          <td mat-cell *matCellDef="let element" class="px-6 py-3 text-sm text-gray-900"> {{element.direccion}} </td>
-        </ng-container>
-      
-        <ng-container matColumnDef="poblacion">
-          <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left text-sm font-medium text-gray-700"> Población </th>
-          <td mat-cell *matCellDef="let element" class="px-6 py-3 text-sm text-gray-900"> {{element.poblacion}} </td>
-        </ng-container>
-      
-        <ng-container matColumnDef="codigo_postal">
-          <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left text-sm font-medium text-gray-700"> Código Postal </th>
-          <td mat-cell *matCellDef="let element" class="px-6 py-3 text-sm text-gray-900"> {{element.codigo_postal}} </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="estado">
-          <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left text-sm font-medium text-gray-700"> Estado </th>
-          <td mat-cell *matCellDef="let element" class="px-6 py-3 text-sm text-gray-900"> {{element.estado}} </td>
-        </ng-container>
-    
-        <ng-container matColumnDef="precio_total">
-          <th mat-header-cell *matHeaderCellDef class="px-6 py-3 text-left text-sm font-medium text-gray-700"> Precio Total </th>
-          <td mat-cell *matCellDef="let element" class="px-6 py-3 text-sm text-gray-900"> {{element.precio_total}} </td>
-        </ng-container>
-      
-        <tr mat-header-row *matHeaderRowDef="displayedColumns" class="bg-gray-100"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{'pagado': row.estado === 'pagado'}" class="border-b"></tr>
-      </table>
-    </div>
-    
-    <mat-paginator [pageSizeOptions]="[10, 20, 30]"
-                   showFirstLastButtons
-                   aria-label="Select page of periodic elements"
-                   class="mt-4"></mat-paginator>
+<div class="container p-5">
+  <div class="mb-8 text-center">
+    <h1 class="text-2xl font-bold text-azul">{{'area-pedido' | translate}}</h1>
   </div>
-  
+  <table class="text-sm w-full text-black border-2 border-azul">
+    <thead class="text-white uppercase bg-azul">
+      <tr>
+        <th scope="col" class="border-r-2 border-white px-6 py-3">{{'num-pedido' | translate}}</th>
+        <th scope="col" class="border-r-2 border-white px-6 py-3">{{'fecha-pedido' | translate}}</th>
+        <th scope="col" class="border-r-2 border-white px-6 py-3">{{'direccion' | translate}}</th>
+        <th scope="col" class="border-r-2 border-white px-6 py-3">{{'poblacion' | translate}}</th>
+        <th scope="col" class="border-r-2 border-white px-6 py-3">{{'codigo-postal' | translate}}</th>
+        <th scope="col" class="border-r-2 border-white px-6 py-3">{{'estado' | translate}}</th>
+        <th scope="col" class="px-6 py-3">{{"precio-total" | translate}}</th>
+      </tr>
+    </thead>
+    <tbody class="text-center">
+      <tr *ngFor="let pedido of pedidos" class="border border-azul">
+        <td class="px-6 py-4">{{pedido.ID}}</td>
+        <td class="px-6 py-4">{{pedido.fecha | date:'dd/MM/yyyy'}}</td>
+        <td class="px-6 py-4">{{pedido.direccion}}</td>
+        <td class="px-6 py-4">{{pedido.poblacion}}</td>
+        <td class="px-6 py-4">{{pedido.codigo_postal}}</td>
+        <td class="px-6 py-4 uppercase" [ngClass]="{
+          'bg-green-200': pedido.estado === 'pagado' || pedido.estado === 'paid',
+          'bg-red-200': pedido.estado === 'cancelado' || pedido.estado === 'canceled',
+          'bg-blue-200': pedido.estado === 'pendiente' || pedido.estado === 'earring'}">
+          {{pedido.estado}}
+        </td>   
+        <td class="px-6 py-4">{{pedido.precio_total}} €</td>
+      </tr>
+    </tbody>
+</table>
+</div>
+
+
