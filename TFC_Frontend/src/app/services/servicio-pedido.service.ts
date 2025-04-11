@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Pedido } from '../pedido';
+import { Pedido } from '../class/pedido';
 import { Observable } from 'rxjs';
-import { DetallePedido } from '../detalle-pedido';
+import { DetallePedido } from '../class/detalle-pedido';
 import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({

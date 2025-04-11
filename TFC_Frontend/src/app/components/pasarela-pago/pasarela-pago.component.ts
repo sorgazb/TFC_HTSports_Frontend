@@ -1,14 +1,14 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Carrito } from '../carrito';
-import { ServicioCarritoService } from '../services/servicio-carrito.service';
+import { Carrito } from '../../class/carrito';
+import { ServicioCarritoService } from '../../services/servicio-carrito.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ServicioPedidoService } from '../services/servicio-pedido.service';
-import { Pedido } from '../pedido';
-import { DetallePedido } from '../detalle-pedido';
+import { ServicioPedidoService } from '../../services/servicio-pedido.service';
+import { Pedido } from '../../class/pedido';
+import { DetallePedido } from '../../class/detalle-pedido';
 import { Router } from '@angular/router';
 import { ViewportScroller } from '@angular/common';
 import { translate } from 'ngx-bootstrap-icons';
-import { Aficionado } from '../aficionado';
+import { Aficionado } from '../../class/aficionado';
 import { TranslateService } from '@ngx-translate/core';
 
 declare var paypal: any;

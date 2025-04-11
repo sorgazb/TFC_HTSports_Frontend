@@ -10,34 +10,34 @@ import { registerLocaleData } from '@angular/common';
 import es from '@angular/common/locales/es';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { InicioComponent } from './inicio/inicio.component';
-import { HeaderComponent } from './header/header.component';
+import { InicioComponent } from './components/inicio/inicio.component';
+import { HeaderComponent } from './components/header/header.component';
 import {MatIconModule} from '@angular/material/icon';
-import { InicioSesionComponent } from './inicio-sesion/inicio-sesion.component'
+import { InicioSesionComponent } from './components/inicio-sesion/inicio-sesion.component'
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
-import { RegistroComponent } from './registro/registro.component';
+import { RegistroComponent } from './components/registro/registro.component';
 import {NzAlertModule} from 'ng-zorro-antd/alert'
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { MatSelectCountryModule } from "@angular-material-extensions/select-country";
-import { CardIdiomaComponent } from './card-idioma/card-idioma.component';
+import { CardIdiomaComponent } from './components/card-idioma/card-idioma.component';
 import { MatDialogModule } from '@angular/material/dialog'
 import { MatButtonModule } from '@angular/material/button'
 import { NzCarouselModule } from 'ng-zorro-antd/carousel';
-import { LandingPageComponent } from './landing-page/landing-page.component';
-import { ObserveVisibilityDirective } from './observe-visibility.directive';
-import { FooterComponent } from './footer/footer.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { ObserveVisibilityDirective } from './directives/observe-visibility.directive';
+import { FooterComponent } from './components/footer/footer.component';
 import { NgxBootstrapIconsModule, allIcons } from 'ngx-bootstrap-icons';
-import { TiendaComponent } from './tienda/tienda.component';
+import { TiendaComponent } from './components/tienda/tienda.component';
 import { MatPaginatorModule } from '@angular/material/paginator';  
 import { MatTableDataSource } from '@angular/material/table';
-import { ProductoComponent } from './producto/producto.component';
-import { CarritoComponent } from './carrito/carrito.component';
-import { PasarelaPagoComponent } from './pasarela-pago/pasarela-pago.component';
-import { ToggleMenuDirective } from './toggle-menu.directive';
-import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
-import { AreaPedidosComponent } from './area-pedidos/area-pedidos.component';
+import { ProductoComponent } from './components/producto/producto.component';
+import { CarritoComponent } from './components/carrito/carrito.component';
+import { PasarelaPagoComponent } from './components/pasarela-pago/pasarela-pago.component';
+import { ToggleMenuDirective } from './directives/toggle-menu.directive';
+import { PerfilUsuarioComponent } from './components/perfil-usuario/perfil-usuario.component';
+import { AreaPedidosComponent } from './components/area-pedidos/area-pedidos.component';
 import { MatTableModule } from '@angular/material/table';
 
 

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Usuario } from '../usuario';
-import { ServicioUsuarioService } from '../services/servicio-usuario.service';
+import { Usuario } from '../../class/usuario';
+import { ServicioUsuarioService } from '../../services/servicio-usuario.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Aficionado } from '../aficionado';
+import { Aficionado } from '../../class/aficionado';
 import { BehaviorSubject } from 'rxjs';
 
 @Component({

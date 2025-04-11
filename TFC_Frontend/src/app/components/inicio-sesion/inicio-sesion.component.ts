@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { ServicioUsuarioService } from '../services/servicio-usuario.service';
-import { Usuario } from '../usuario';
+import { ServicioUsuarioService } from '../../services/servicio-usuario.service';
+import { Usuario } from '../../class/usuario';
 import { Router } from '@angular/router';
-import { Aficionado } from '../aficionado';
+import { Aficionado } from '../../class/aficionado';
 
 @Component({
   selector: 'app-inicio-sesion',

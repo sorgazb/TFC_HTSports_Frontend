@@ -1,8 +1,8 @@
 import { HttpClient, HttpHeaders} from '@angular/common/http'
 import { Injectable } from '@angular/core'
-import { Usuario } from '../usuario'
+import { Usuario } from '../class/usuario'
 import { catchError, Observable, throwError } from 'rxjs'
-import { Aficionado } from '../aficionado'
+import { Aficionado } from '../class/aficionado'
 
 @Injectable({
   providedIn: 'root'

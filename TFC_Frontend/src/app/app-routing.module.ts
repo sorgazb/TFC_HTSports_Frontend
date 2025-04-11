@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { InicioSesionComponent } from './inicio-sesion/inicio-sesion.component';
-import { RegistroComponent } from './registro/registro.component';
-import { TiendaComponent } from './tienda/tienda.component';
-import { LandingPageComponent } from './landing-page/landing-page.component';
-import { ProductoComponent } from './producto/producto.component';
-import { CarritoComponent } from './carrito/carrito.component';
-import { PasarelaPagoComponent } from './pasarela-pago/pasarela-pago.component';
-import { PerfilUsuarioComponent } from './perfil-usuario/perfil-usuario.component';
-import { AreaPedidosComponent } from './area-pedidos/area-pedidos.component';
+import { InicioSesionComponent } from './components/inicio-sesion/inicio-sesion.component';
+import { RegistroComponent } from './components/registro/registro.component';
+import { TiendaComponent } from './components/tienda/tienda.component';
+import { LandingPageComponent } from './components/landing-page/landing-page.component';
+import { ProductoComponent } from './components/producto/producto.component';
+import { CarritoComponent } from './components/carrito/carrito.component';
+import { PasarelaPagoComponent } from './components/pasarela-pago/pasarela-pago.component';
+import { PerfilUsuarioComponent } from './components/perfil-usuario/perfil-usuario.component';
+import { AreaPedidosComponent } from './components/area-pedidos/area-pedidos.component';
 
 const routes: Routes = [
   {

@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ServicioProductoService } from '../services/servicio-producto.service';
-import { ServicioCarritoService } from '../services/servicio-carrito.service';
+import { ServicioProductoService } from '../../services/servicio-producto.service';
+import { ServicioCarritoService } from '../../services/servicio-carrito.service';
 import { Router } from '@angular/router';
-import { Carrito } from '../carrito';
+import { Carrito } from '../../class/carrito';
 
 
 @Component({
@@ -28,7 +28,6 @@ export class CarritoComponent implements OnInit {
       total += item.producto.precio * item.cantidad;
     });
     return total;
-    console.log(this.productosCarrito)
   }
 
   eliminarProducto(productoId: number, talla: string): void {

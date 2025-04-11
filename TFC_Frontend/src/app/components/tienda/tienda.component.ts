@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { Producto } from '../producto';
-import { ServicioProductoService } from '../services/servicio-producto.service';
-import { Equipo } from '../equipo';
-import { ServicioEquipoService } from '../services/servicio-equipo.service';
+import { Producto } from '../../class/producto';
+import { ServicioProductoService } from '../../services/servicio-producto.service';
+import { Equipo } from '../../class/equipo';
+import { ServicioEquipoService } from '../../services/servicio-equipo.service';
 
 @Component({
   selector: 'app-tienda',

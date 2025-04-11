@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
-import { ServicioProductoService } from '../services/servicio-producto.service';
-import { Producto } from '../producto';
-import { ServicioCarritoService } from '../services/servicio-carrito.service';
+import { ServicioProductoService } from '../../services/servicio-producto.service';
+import { Producto } from '../../class/producto';
+import { ServicioCarritoService } from '../../services/servicio-carrito.service';
 import { PasarelaPagoComponent } from '../pasarela-pago/pasarela-pago.component';
 
 @Component({

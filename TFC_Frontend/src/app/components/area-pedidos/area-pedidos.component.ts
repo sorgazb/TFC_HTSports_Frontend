@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ServicioPedidoService } from '../services/servicio-pedido.service';
-import { Pedido } from '../pedido';
+import { ServicioPedidoService } from '../../services/servicio-pedido.service';
+import { Pedido } from '../../class/pedido';
 import { DatePipe } from '@angular/common';
 
 @Component({

@@ -3,8 +3,8 @@ import { NavigationEnd, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { CardIdiomaComponent } from '../card-idioma/card-idioma.component';
 import { MatDialog } from '@angular/material/dialog';
-import { ServicioCarritoService } from '../services/servicio-carrito.service';
-import { Carrito } from '../carrito';
+import { ServicioCarritoService } from '../../services/servicio-carrito.service';
+import { Carrito } from '../../class/carrito';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
