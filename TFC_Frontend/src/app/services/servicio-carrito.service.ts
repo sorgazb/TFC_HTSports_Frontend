@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import { Carrito } from '../class/carrito';
 import { Producto } from '../class/producto';
 import { BehaviorSubject } from 'rxjs';
-
 @Injectable({
   providedIn: 'root'
 })
+
 export class ServicioCarritoService {
 
   private listadoCarrito: Carrito[] = [];
+
   private carritoSubject = new BehaviorSubject<Carrito[]>([]);
+
   carrito$ = this.carritoSubject.asObservable();
 
   constructor() {

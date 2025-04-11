@@ -4,13 +4,12 @@ import { Directive, ElementRef, Renderer2, Input } from '@angular/core';
   selector: '[appObserveVisibility]'
 })
 export class ObserveVisibilityDirective {
-  @Input('appObserveVisibility') useScale: boolean = false; // Por defecto, no escala
+  @Input('appObserveVisibility') useScale: boolean = false;
 
   constructor(private el: ElementRef, private renderer: Renderer2) {
     const observer = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
-          // Si el elemento es visible, aplicamos la animación de aparición
           this.renderer.addClass(this.el.nativeElement, 'opacity-100');
           this.renderer.addClass(this.el.nativeElement, 'translate-y-0');
 
@@ -19,7 +18,6 @@ export class ObserveVisibilityDirective {
             this.renderer.addClass(this.el.nativeElement, 'scale-100');
           }
         } else {
-          // Si el elemento desaparece, aplicamos la animación inversa
           this.renderer.removeClass(this.el.nativeElement, 'opacity-100');
           this.renderer.addClass(this.el.nativeElement, 'opacity-0');
           this.renderer.addClass(this.el.nativeElement, 'translate-y-10');
@@ -30,10 +28,9 @@ export class ObserveVisibilityDirective {
           }
         }
       },
-      { threshold: 0.3 } // Ajusta el umbral para detectar visibilidad
+      { threshold: 0.3 }
     );
 
-    // Clases iniciales (oculto y opcionalmente más pequeño)
     this.renderer.addClass(this.el.nativeElement, 'opacity-0');
     this.renderer.addClass(this.el.nativeElement, 'translate-y-10');
     this.renderer.addClass(this.el.nativeElement, 'transition-all');

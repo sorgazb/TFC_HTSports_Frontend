@@ -11,6 +11,7 @@ import { Aficionado } from '../class/aficionado'
 export class ServicioUsuarioService {
 
   private apiUrl = 'https://tfc-htsports-api-884687165526.europe-southwest1.run.app/'
+  private apiCarasUrl = 'https://faceinphoto.p.rapidapi.com/faceinphoto/count';
   private endPoint = 'api/usuarios'
 
   constructor(private http: HttpClient) { }
@@ -45,7 +46,6 @@ export class ServicioUsuarioService {
     );
   }
   
-
   actualizarDatosAficionado(id:number,datosActualizar: { telefono: string, direccion: string, poblacion: string, codigo_postal: string }): Observable<Aficionado>{
     return this.http.put<Aficionado>(`${this.apiUrl}${this.endPoint}/aficionado/${id}/datos`, datosActualizar).pipe(
       catchError((error : any) => {
@@ -54,18 +54,10 @@ export class ServicioUsuarioService {
     )
   }
 
-  private baseUrl = 'https://faceinphoto.p.rapidapi.com/faceinphoto/count';
-
-  private headers = new HttpHeaders({
-    'x-rapidapi-host': 'faceinphoto.p.rapidapi.com',
-    'x-rapidapi-key': '537517a32emsh5c0948f57af5a91p182ba2jsn0448a4034897',
-  });
-  
   comprobarImagen(image: File): Observable<any> {
     const formData = new FormData();
     formData.append('image', image, image.name);
-  
-    return this.http.post<any>(this.baseUrl, formData, {
+    return this.http.post<any>(this.apiCarasUrl, formData, {
       headers: {
         'x-rapidapi-host': 'faceinphoto.p.rapidapi.com',
         'x-rapidapi-key': '537517a32emsh5c0948f57af5a91p182ba2jsn0448a4034897'
