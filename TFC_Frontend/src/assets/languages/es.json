@@ -124,5 +124,6 @@
   "elige-opcion" : "Selecciona una opcion",
   "usar-direccion" : "Utilizar direccion del usuario",
   "nueva-direccion" : "Utilizar una nueva direccion",
-  "metodo-pago" : "Selecciona Metodo de pago"
+  "metodo-pago" : "Selecciona Metodo de pago",
+  "sin-stock" : "Sin stock"
 }

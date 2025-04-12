@@ -1,12 +1,15 @@
 <ng-container *ngIf="mostrarTienda">
 
+  <!-- Boton Filtros -->
   <div class="m-5">
     <button (click)="mostrarFiltros = !mostrarFiltros" class="bg-azul text-white px-4 py-2 rounded">
       {{ mostrarFiltros ? ('ocultar-filtros' | translate) : ('mostrar-filtros' | translate) }}
     </button>
   </div>
 
+  <!-- Contenedor Filtros -->
   <div class="overflow-hidden transition-max-height duration-500 ease-in-out grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 m-6" [ngClass]="{ 'max-h-0': !mostrarFiltros, 'max-h-screen': mostrarFiltros }">
+    <!-- Filtro Tipo de Producto -->
     <div>
       <label class="block mb-1 text-azul">{{'filtro-producto' | translate}}</label>
       <select id="tipoProducto" class="w-full border rounded p-2 border-azul text-azul" [(ngModel)]="filtroTipoProducto" (change)="aplicarFiltros()">
@@ -16,6 +19,7 @@
       </select>
     </div>
     
+    <!-- Filtro Equipo -->
     <div>
       <label class="block mb-1 text-azul">{{'filtro-equipo' | translate}}</label>
       <select class="w-full border rounded p-2 border-azul text-azul" [(ngModel)]="filtroEquipo" (change)="aplicarFiltros()">
@@ -24,6 +28,7 @@
       </select>
     </div>
 
+    <!-- Filtro Rango de Precio -->
     <div>
       <label class="block mb-1 text-azul">{{'filtro-precio' | translate}}</label>
       <div class="flex flex-col gap-2">
@@ -32,7 +37,7 @@
       </div>
     </div>
     
-
+    <!-- Ordenador Precio -->
     <div>
       <label class="block mb-1 text-azul">{{'metodo-ordenacion' | translate}}</label>
       <select class="w-full border rounded p-2 border-azul text-azul" [(ngModel)]="ordenPrecio" (change)="aplicarFiltros()">
@@ -41,44 +46,45 @@
         <option value="desc">{{ 'precio-desc' | translate }}</option>
       </select>
     </div>
+  </div>
 
-</div>
-
+  <!-- Contenedor Tienda -->
   <div class="grid grid-cols-1 scroll-smooth p-4">
+    
+    <!-- Titulo Tienda -->
     <div class="flex flex-col md:flex-row items-center gap-2 w-full px-4">
       <hr class="flex-1 border-azul hidden md:block">
-      <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-azul text-center md:text-left">
-        {{ 'tienda' | translate }}
-      </h1>
+      <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-azul text-center md:text-left">{{ 'tienda' | translate }}</h1>
       <hr class="flex-1 border-azul hidden md:block">
     </div>
     <hr class="w-full border-azul md:hidden">
 
+    <!-- Contenedor Productos -->
     <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-10 p-5 mt-3">
       <div *ngFor="let producto of productosPaginados" class="border border-opacity-25 rounded-2xl p-3 grid grid-rows-[1fr,auto,auto,auto] gap-2 h-full">
         <img class="rounded w-full h-auto object-contain" src="{{ producto.imagen }}" alt="Imagen del producto">
         <h1 class="text-center text-lg font-bold tracking-tight text-azul">{{ producto.nombre }}</h1>
         <p class="text-center text">{{'precio' | translate}} {{ producto.precio }}€</p>
-        <p class="bg-red-300 text-center p-2 rounded border-2 border-red-600" *ngIf="producto.stock < 1">Sin Stock</p>
+        <p class="bg-red-300 text-center p-2 rounded border-2 border-red-600" *ngIf="producto.stock < 1">{{'sin-stock' | translate}}</p>
         <button *ngIf="producto.stock > 0" class="p-2 bg-azul text-white w-full rounded" value="{{producto.ID}}" (click)="comprarProducto(producto.ID)">{{'comprar' | translate}}</button>
       </div>
-      
     </div>
 
+    <!-- Paginador -->
     <div class="flex justify-center items-center gap-2 mt-4">
-      <button class="text-azul" (click)="cambiarPagina(1)" [disabled]="currentPage === 1">
+      <button class="text-azul" (click)="cambiarPagina(1)" [disabled]="paginaActual == 1">
         <mat-icon fontIcon="keyboard_double_arrow_left"></mat-icon>
       </button>
-      <button class="text-azul" (click)="cambiarPagina(currentPage - 1)" [disabled]="currentPage === 1">
+      <button class="text-azul" (click)="cambiarPagina(paginaActual - 1)" [disabled]="paginaActual == 1">
         <mat-icon fontIcon="arrow_back_iost"></mat-icon>
       </button>
+    
+      <span class="text-azul">{{'pagina' | translate}} {{ paginaActual }} {{'de' | translate}} {{ totalPaginas }}</span>
 
-      <span class="text-azul">{{'pagina' | translate}} {{ currentPage }} {{'de' | translate}} {{ totalPages }}</span>
-
-      <button class="text-azul" (click)="cambiarPagina(currentPage + 1)" [disabled]="currentPage === totalPages">
+      <button class="text-azul" (click)="cambiarPagina(paginaActual + 1)" [disabled]="paginaActual == totalPaginas">
         <mat-icon fontIcon="arrow_forward_iost"></mat-icon>
       </button>
-      <button class="text-azul" (click)="cambiarPagina(totalPages)" [disabled]="currentPage === totalPages">
+      <button class="text-azul" (click)="cambiarPagina(totalPaginas)" [disabled]="paginaActual == totalPaginas">
         <mat-icon fontIcon="keyboard_double_arrow_right"></mat-icon>
       </button>
     </div>

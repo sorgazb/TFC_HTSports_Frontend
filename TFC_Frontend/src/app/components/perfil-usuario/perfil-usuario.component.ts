@@ -40,7 +40,7 @@ export class PerfilUsuarioComponent implements OnInit {
   fileToUpload: File | null = null;
   apiResponse: any;
 
-  imagenSeleccionada: string | ArrayBuffer | null = null; // Añade esta propiedad arriba
+  imagenSeleccionada: string | ArrayBuffer | null = null;
 
 
   ngOnInit(): void {

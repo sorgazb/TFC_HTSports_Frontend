@@ -124,5 +124,6 @@
   "elige-opcion" : "Select an option",
   "usar-direccion": "Use user's address",
   "nueva-direccion": "Use a new address",
-  "metodo-pago": "Select Payment Method"
+  "metodo-pago": "Select Payment Method",
+  "sin-stock" : "Out of stock"
 }

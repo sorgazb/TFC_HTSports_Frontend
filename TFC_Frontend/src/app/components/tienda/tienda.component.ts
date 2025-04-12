@@ -11,105 +11,89 @@ import { ServicioEquipoService } from '../../services/servicio-equipo.service';
   templateUrl: './tienda.component.html',
   styleUrls: ['./tienda.component.css']
 })
+
 export class TiendaComponent implements OnInit {
 
-  translate!: TranslateService;
+  translate!: TranslateService
 
-  mostrarTienda: boolean = true;
+  mostrarTienda: boolean = true
 
-  productos: Producto[] = [];
-  productosPaginados: Producto[] = [];
-  filtroTipoProducto: string = '';
+  productos: Producto[] = []
   
-  filtroEquipo: number = 0;
-  equipos: Equipo[] = [];
+  equipos: Equipo[] = []
+  
+  mostrarFiltros: boolean = false
+  
+  filtroTipoProducto !: string
+  filtroEquipo !: number
+  filtroPrecioMin !: number
+  filtroPrecioMax !: number
+  ordenPrecio !: string
 
-  filtroPrecioMin: number | null = null;
-  filtroPrecioMax: number | null = null;
+  productosPaginados: Producto[] = []
+  productosPagina : number = 8
+  paginaActual : number = 1
+  totalPaginas !: number
 
-  ordenPrecio: string = '';
-
-  pageSize: number = 8;
-  currentPage: number = 1;
-  totalPages: number = 1;
-
-  mostrarFiltros: boolean = false;
-
-  constructor(
-    translate: TranslateService, 
-    private router: Router, 
-    private serviciosProductos: ServicioProductoService,
-    private serviciosEquipo: ServicioEquipoService
-  ) {
-    this.translate = translate;
+  constructor(translate : TranslateService, private router : Router, private serviciosProductos : ServicioProductoService, private serviciosEquipo : ServicioEquipoService) {
+    this.translate = translate
   }
 
   ngOnInit(): void {
     this.serviciosProductos.obtenerTodosLosProductos().subscribe((productos: Producto[]) => {
-      this.productos = productos;
-      this.aplicarFiltros();
-      this.totalPages = Math.ceil(this.productos.length / this.pageSize);
-      this.actualizarProductosPaginados();
+      this.productos = productos
+      this.totalPaginas = Math.ceil(this.productos.length / this.productosPagina)
+      this.actualizarProductosPaginados()
     });
     this.serviciosEquipo.obtenerTodosLosEquipos().subscribe((equipos: Equipo[]) => {
-      this.equipos = equipos;
+      this.equipos = equipos
     });
   }
 
   actualizarProductosPaginados(): void {
-    const start = (this.currentPage - 1) * this.pageSize;
-    const end = start + this.pageSize;
-    this.productosPaginados = this.productos.slice(start, end);
+    const inicio = (this.paginaActual - 1) * this.productosPagina
+    const fin = inicio + this.productosPagina
+    this.productosPaginados = this.productos.slice(inicio, fin)
   }
 
   cambiarPagina(nuevaPagina: number): void {
-    if (nuevaPagina >= 1 && nuevaPagina <= this.totalPages) {
-      this.currentPage = nuevaPagina;
-      this.actualizarProductosPaginados();
+    if (nuevaPagina >= 1 && nuevaPagina <= this.totalPaginas) {
+      this.paginaActual = nuevaPagina
+      this.actualizarProductosPaginados()
     }
   }
 
   comprarProducto(id: number): void {
-    console.log("Comprar producto con ID: " + id);
-    this.router.navigate(['/producto', id]);
+    this.router.navigate(['/producto', id])
   }
 
   aplicarFiltros(): void {
-    let productosFiltrados = this.productos;
-  
-    // Filtro por tipo de producto
+    let productosFiltrados = this.productos
+
     if (this.filtroTipoProducto) {
-      productosFiltrados = productosFiltrados.filter(p => p.tipo === this.filtroTipoProducto);
+      productosFiltrados = productosFiltrados.filter(p => p.tipo == this.filtroTipoProducto)
     }
-  
-    // Filtro por equipo
+
     if (this.filtroEquipo) {
-      productosFiltrados = productosFiltrados.filter(p => p.id_equipo == this.filtroEquipo);
+      productosFiltrados = productosFiltrados.filter(p => p.id_equipo == this.filtroEquipo)
     }
-  
-    // Filtro por precio mínimo
+
     if (this.filtroPrecioMin != null) {
-      productosFiltrados = productosFiltrados.filter(p => p.precio >= this.filtroPrecioMin!);
+      productosFiltrados = productosFiltrados.filter(p => p.precio >= this.filtroPrecioMin!)
     }
-  
-    // Filtro por precio máximo
+
     if (this.filtroPrecioMax != null) {
-      productosFiltrados = productosFiltrados.filter(p => p.precio <= this.filtroPrecioMax!);
+      productosFiltrados = productosFiltrados.filter(p => p.precio <= this.filtroPrecioMax!)
     }
-  
-    // Ordenar por precio
+
     if (this.ordenPrecio === 'asc') {
-      productosFiltrados = productosFiltrados.sort((a, b) => a.precio - b.precio);
+      productosFiltrados = productosFiltrados.sort((a, b) => a.precio - b.precio)
     } else if (this.ordenPrecio === 'desc') {
-      productosFiltrados = productosFiltrados.sort((a, b) => b.precio - a.precio);
+      productosFiltrados = productosFiltrados.sort((a, b) => b.precio - a.precio)
     }
-  
-    // Actualización de la paginación
-    this.totalPages = Math.max(1, Math.ceil(productosFiltrados.length / this.pageSize));
-    this.currentPage = 1;
-    this.productosPaginados = productosFiltrados.slice(0, this.pageSize);
+
+    this.totalPaginas = Math.max(1, Math.ceil(productosFiltrados.length / this.productosPagina))
+    this.paginaActual = 1;
+    this.productosPaginados = productosFiltrados.slice(0, this.productosPagina)
   }
-  
-  
-  
 }
