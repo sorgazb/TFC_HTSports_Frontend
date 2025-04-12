@@ -49,7 +49,7 @@ export class TiendaComponent implements OnInit {
       this.equipos = equipos
     });
   }
-
+  
   actualizarProductosPaginados(): void {
     const inicio = (this.paginaActual - 1) * this.productosPagina
     const fin = inicio + this.productosPagina
