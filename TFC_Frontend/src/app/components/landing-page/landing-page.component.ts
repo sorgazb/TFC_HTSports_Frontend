@@ -1,5 +1,5 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { AfterViewInit, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, ViewChild } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { filter } from 'rxjs';
@@ -20,7 +20,7 @@ import { filter } from 'rxjs';
     ]),
   ],
 })
-export class LandingPageComponent implements OnInit, AfterViewInit {
+export class LandingPageComponent implements AfterViewInit {
 
   imgCarruselEsp = [
     '../../assets/img/carrusel/tienda_ES.png',
@@ -38,9 +38,8 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
     '../../assets/img/carrusel/tienda_EN.png',
     '../../assets/img/carrusel/tienda_EN.png'
   ];
-  effect = 'scrollx';
 
-  mostrarBarraNav : boolean = false
+  mostrarLandingPage : boolean = true
 
   mostrarInfoAficionado : boolean = false
   mostrarInfoJugador : boolean = false
@@ -48,13 +47,10 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
 
   translate !: TranslateService;
 
-  mostrarLandingPage : boolean = true
-
   @ViewChild('videoPlayer') videoPlayer!: ElementRef<HTMLVideoElement>;
 
   constructor(translate: TranslateService, private router : Router) {
-    this.translate = translate;
-    console.log(this.translate.currentLang == 'es')
+    this.translate = translate
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event) => {
@@ -65,23 +61,20 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
       }
     })
   }
-  ngOnInit(): void {
-    
-  }
 
   ngAfterViewInit(): void {
-    const video = this.videoPlayer.nativeElement;
-    
+    const video = this.videoPlayer.nativeElement
     if (video) {
-      video.muted = true; // Asegurar que está silenciado
-      video.autoplay = true; // Habilitar autoplay
-      video.loop = true; // Habilitar loop
-      video.play().catch(error => {
-        console.log("Autoplay bloqueado:", error);
-      });
+      video.muted = true
+      video.autoplay = true
+      video.loop = true
+      video.play().catch(error => {})
     }
   }
 
+  /*
+  * Metodo para mostrar las funcionalidades de las que podran disfrutar los aficionados.
+  */ 
   funcMostrarInfoAficionado(){
     if(!this.mostrarInfoAficionado){
       this.mostrarInfoAficionado = true
@@ -90,6 +83,9 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /*
+  * Metodo para mostrar las funcionalidades de las que podran disfrutar los jugadores.
+  */ 
   funcMostrarInfoJugador(){
     if(!this.mostrarInfoJugador){
       this.mostrarInfoJugador = true
@@ -98,6 +94,10 @@ export class LandingPageComponent implements OnInit, AfterViewInit {
     }
   }
 
+  /*
+  * Metodo para mostrar las funcionalidades de las que podran disfrutar los miembros
+  * del cuerpo tecnico.
+  */ 
   funMostrarInfoCT(){
     if(!this.mostrarInfoCT){
       this.mostrarInfoCT = true

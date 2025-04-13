@@ -1,31 +1,31 @@
 <div class="min-h-screen flex items-center justify-center m-5c b p-4">
+  <!-- Contenedor Pasarela Pago -->
   <div class="w-full max-w-4xl bg-white border-2 border-azul p-8 rounded-2xl">
     <h2 class="text-2xl font-semibold text-center mb-6 text-azul">{{'direccion-envio' | translate}}</h2>
-
+    <!-- Select Direcciones -->
     <div class="mb-4" *ngIf="aficionado.direccion">
       <label class="block text-sm font-medium text-gray-700 mb-1">{{'elige-opcion' | translate}}</label>
-      <select [(ngModel)]="usarDireccionGuardada" name="direccionSeleccionada"
-              (change)="onDireccionSeleccionada()" 
-              class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-azul">
+      <select [(ngModel)]="usarDireccionGuardada" name="direccionSeleccionada" (change)="seleccionarDireccion()" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-azul">
         <option [ngValue]="true">{{'usar-direccion' | translate}}</option>
         <option [ngValue]="false">{{'nueva-direccion' | translate}}</option>
       </select>
     </div>
 
-    <!-- Formulario nuevo dirección -->
-    <form [formGroup]="formAficionado" *ngIf="!usarDireccionGuardada">
+    <!-- Formulario Nueva Direccion -->
+    <form [formGroup]="formNuevaDireccion" *ngIf="!usarDireccionGuardada">
+      <!-- Direccion -->
       <mat-form-field class="w-full mb-4" appearance="outline" hideRequiredMarker>
         <mat-label class="bg-white p-1">{{'direccion' | translate}}</mat-label>
         <input type="text" matInput formControlName="direccion">
         <mat-error *ngIf="controlarErroresAficionado('direccion', 'required')">{{'introduce-tu' | translate}} <strong>{{'direccion-form' | translate}}</strong></mat-error>
       </mat-form-field>
-
+      <!-- Poblacion -->
       <mat-form-field class="w-full mb-4" appearance="outline" hideRequiredMarker>
         <mat-label class="bg-white p-1">{{'poblacion' | translate}}</mat-label>
         <input type="text" matInput formControlName="poblacion">
         <mat-error *ngIf="controlarErroresAficionado('poblacion', 'required')">{{'introduce-tu' | translate}} <strong>{{'poblacion-form' | translate}}</strong></mat-error>
       </mat-form-field>
-
+      <!-- Codigo Postal -->
       <mat-form-field class="w-full mb-4" appearance="outline" hideRequiredMarker>
         <mat-label class="bg-white p-1">{{'codigo-postal' | translate}}</mat-label>
         <input type="text" matInput formControlName="codigoPostal">
@@ -36,19 +36,13 @@
       </mat-form-field>
 
       <div class="flex justify-center">
-        <button [disabled]="!formAficionado.valid" type="submit"
-        class="bg-azul text-white px-6 py-2 rounded-full shadow"
-        (click)="crearPedido()">
- {{'nueva-direccion' | translate}}
-</button>
+        <button [disabled]="!formNuevaDireccion.valid" type="submit" class="bg-azul text-white px-6 py-2 rounded-full"(click)="crearPedido()">{{'nueva-direccion' | translate}}</button>
       </div>
-
     </form>
 
+    <!-- Boton Confirmar Direccion existente -->
     <div class="flex justify-center">
-      <button *ngIf="usarDireccionGuardada" type="submit"
-      class="bg-azul text-white px-6 py-2 rounded-full shadow"
-      (click)="crearPedido()">{{'usar-direccion' | translate}}</button>
+      <button *ngIf="usarDireccionGuardada" type="submit" class="bg-azul text-white px-6 py-2 rounded-full" (click)="crearPedido()">{{'usar-direccion' | translate}}</button>
     </div>
 
     <!-- PayPal -->
@@ -59,15 +53,7 @@
       </div>
     </div>
 
-    <nz-alert
-    *ngIf="alerta.mostrar"
-    [nzMessage]="alerta.mensaje"
-    nzShowIcon
-    nzCloseable
-    (nzOnClose)="alerta.mostrar = false"
-    class="mb-4 p-5">
-  </nz-alert>
-
-
+    <!-- Alerta -->
+    <nz-alert *ngIf="alerta.mostrar" [nzMessage]="alerta.mensaje" nzShowIcon nzCloseable (nzOnClose)="alerta.mostrar = false" class="mb-4 p-5"></nz-alert>
   </div>
 </div>

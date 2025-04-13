@@ -12,20 +12,20 @@ import { Carrito } from '../../class/carrito';
 })
 export class HeaderComponent implements OnInit {
 
-  @ViewChild('collapseMenu', { static: false }) collapseMenu!: ElementRef;
+  @ViewChild('collapseMenu', { static: false }) collapseMenu!: ElementRef
+
+  productosCarrito: Carrito[] = []
 
   mostrarBarraNav : boolean = true
 
-  btnAbrir !: HTMLElement;
-  btnCerrar !: HTMLElement;
+  btnAbrir !: HTMLElement
+  btnCerrar !: HTMLElement
 
-  cantidadProductos : number = 0;
+  cantidadProductos : number = 0
 
-  carritoVacio : boolean = true;
+  carritoVacio : boolean = true
 
-  productosCarrito: Carrito[] = [];
-
-  isMenuOpen: boolean = false;
+  isMenuOpen: boolean = false
 
   usuario : any = null
   aficionado : any = null
@@ -43,62 +43,53 @@ export class HeaderComponent implements OnInit {
   }
 
   cambiarIdioma(){
-    const dialogo1 = this.dialog.open(CardIdiomaComponent);
+    const cuadroIdioma = this.dialog.open(CardIdiomaComponent)
   }
 
   ngOnInit(): void {
-    // Obtener el token desde sessionStorage
-    const tokenGuardado = sessionStorage.getItem('token');
-    
-    const usuarioGuardado = sessionStorage.getItem('usuario');
+    const tokenGuardado = sessionStorage.getItem('token')
+    const usuarioGuardado = sessionStorage.getItem('usuario')
     
     if (usuarioGuardado) {
-      this.usuario = JSON.parse(usuarioGuardado);
+      this.usuario = JSON.parse(usuarioGuardado)
     }
 
-    // Obtener los datos del aficionado desde localStorage
-    const aficionadoGuardado = localStorage.getItem('aficionado');
+    const aficionadoGuardado = localStorage.getItem('aficionado')
     if (aficionadoGuardado) {
-      this.aficionado = JSON.parse(aficionadoGuardado);
-    }
-    
-    if (this.aficionado) {
-      console.log("Aficionado en sesión:", this.aficionado);
+      this.aficionado = JSON.parse(aficionadoGuardado)
     }
 
-    this.btnAbrir = document.getElementById('btnAbrir') as HTMLElement;
-    this.btnCerrar = document.getElementById('btnCerrar') as HTMLElement;
+    this.btnAbrir = document.getElementById('btnAbrir') as HTMLElement
+    this.btnCerrar = document.getElementById('btnCerrar') as HTMLElement
     this.servicioCarrito.carrito$.subscribe(carrito => {
-      this.productosCarrito = carrito;
-      this.cantidadProductos = carrito.reduce((total, item) => total + item.cantidad, 0);
-    });
+      this.productosCarrito = carrito
+      this.cantidadProductos = carrito.reduce((total, item) => total + item.cantidad, 0)
+    })
   }
   
   handleClick() {
     if (!this.collapseMenu) return;
-    const menu = this.collapseMenu.nativeElement;
-    menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    const menu = this.collapseMenu.nativeElement
+    menu.style.display = menu.style.display === 'block' ? 'none' : 'block'
   }
 
   toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen;
-
+    this.isMenuOpen = !this.isMenuOpen
   }
 
   clickedOutside() {
-    this.isMenuOpen = false;
+    this.isMenuOpen = false
   }
 
   cerrarSesion() {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('usuario');
-    localStorage.removeItem('aficionado');
-    localStorage.removeItem('carrito');
-    this.servicioCarrito.limpiarCarrito();
+    sessionStorage.removeItem('token')
+    sessionStorage.removeItem('usuario')
+    localStorage.removeItem('aficionado')
+    localStorage.removeItem('carrito')
+    this.servicioCarrito.limpiarCarrito()
     this.router.navigate(['/']).then(() => {
-      window.location.reload();
-    });
+      window.location.reload()
+    })
   }
-
 
 }

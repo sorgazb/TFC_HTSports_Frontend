@@ -10,26 +10,26 @@ import { DatePipe } from '@angular/common';
 })
 export class AreaPedidosComponent implements OnInit {
 
-  pedidos: Pedido[] = [];
+  pedidos: Pedido[] = []
 
   constructor(private serviciosPedidos: ServicioPedidoService) { }
 
   ngOnInit(): void {
-    const aficionado = JSON.parse(localStorage.getItem('aficionado') || '{}');
+    const aficionado = JSON.parse(localStorage.getItem('aficionado') || '{}')
 
     this.serviciosPedidos.obtenerPedidosAficionado(aficionado.ID).subscribe((pedidos: Pedido[]) => {
-      this.pedidos = pedidos.sort((a, b) => b.ID - a.ID);
-      this.pedidos = pedidos;
+      this.pedidos = pedidos.sort((a, b) => b.ID - a.ID)
+      this.pedidos = pedidos
 
-      const tiempoCancelacion = 24 * 60 * 60 * 1000;
-      const fechaCancelacion = Date.now() - tiempoCancelacion;
+      const tiempoCancelacion = 24 * 60 * 60 * 1000
+      const fechaCancelacion = Date.now() - tiempoCancelacion
 
       this.pedidos.forEach(pedido => {
         if (pedido.fecha.getTime() < fechaCancelacion && pedido.estado === 'pendiente') {
           this.serviciosPedidos.cancelarPedido(pedido.ID).subscribe(() => {
-          });
+          })
         }
-      });
-    });
+      })
+    })
   }
 }

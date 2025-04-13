@@ -14,14 +14,13 @@ import { ServicioEquipoService } from '../../services/servicio-equipo.service';
 
 export class TiendaComponent implements OnInit {
 
+  productos: Producto[] = []
+  equipos: Equipo[] = []
+  productosPaginados: Producto[] = []
+
   translate!: TranslateService
 
   mostrarTienda: boolean = true
-
-  productos: Producto[] = []
-  
-  equipos: Equipo[] = []
-  
   mostrarFiltros: boolean = false
   
   filtroTipoProducto !: string
@@ -30,7 +29,6 @@ export class TiendaComponent implements OnInit {
   filtroPrecioMax !: number
   ordenPrecio !: string
 
-  productosPaginados: Producto[] = []
   productosPagina : number = 8
   paginaActual : number = 1
   totalPaginas !: number
@@ -44,30 +42,46 @@ export class TiendaComponent implements OnInit {
       this.productos = productos
       this.totalPaginas = Math.ceil(this.productos.length / this.productosPagina)
       this.actualizarProductosPaginados()
-    });
+    })
     this.serviciosEquipo.obtenerTodosLosEquipos().subscribe((equipos: Equipo[]) => {
       this.equipos = equipos
-    });
+    })
   }
   
-  actualizarProductosPaginados(): void {
+  /*
+  * Metodo que renderiza los productos de la pagina en la que se encuentra el
+  * usuario.
+  */
+  actualizarProductosPaginados(){
     const inicio = (this.paginaActual - 1) * this.productosPagina
     const fin = inicio + this.productosPagina
     this.productosPaginados = this.productos.slice(inicio, fin)
   }
 
-  cambiarPagina(nuevaPagina: number): void {
-    if (nuevaPagina >= 1 && nuevaPagina <= this.totalPaginas) {
-      this.paginaActual = nuevaPagina
+  /*
+  * Metodo que actualiza la pagina a la que quiere dirigirse el usuario.
+  * @param {number} => pagina a la que se quiere dirigir el usario.
+  */
+  cambiarPagina(pagina: number){
+    if (pagina >= 1 && pagina <= this.totalPaginas) {
+      this.paginaActual = pagina
       this.actualizarProductosPaginados()
     }
   }
 
-  comprarProducto(id: number): void {
+  /*
+  * Metodo que redirige al usuario a la pagina del producto que ha seleccionado.
+  * @param {number} => id del producto seleccionado.
+  */
+  comprarProducto(id: number) {
     this.router.navigate(['/producto', id])
   }
 
-  aplicarFiltros(): void {
+  /*
+  * Metodo que aplica los filtros establecidos por el usuario a la hora de
+  * mostrar los productos.
+  */
+  aplicarFiltros() {
     let productosFiltrados = this.productos
 
     if (this.filtroTipoProducto) {

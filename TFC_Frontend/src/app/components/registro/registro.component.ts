@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Usuario } from '../../class/usuario';
 import { ServicioUsuarioService } from '../../services/servicio-usuario.service';
 import { Router } from '@angular/router';
@@ -12,13 +12,15 @@ import { Aficionado } from '../../class/aficionado';
 })
 export class RegistroComponent implements OnInit {
 
-  formRegistro!: FormGroup;
-  mostrarPassword: boolean = false;
-  passwordIguales: boolean = false;
-  infoPassword: boolean = false;
-  mostrarErrorPasswords: boolean = false;
-  usuario!: Usuario;
-  aficionado!: Aficionado;
+  usuario!: Usuario
+  aficionado!: Aficionado
+
+  formRegistro!: FormGroup
+
+  mostrarPassword: boolean = false
+  passwordIguales: boolean = false
+  infoPassword: boolean = false
+  mostrarErrorPasswords: boolean = false
   mostrarErrorRegistro : boolean = false
 
   constructor(private serviciosUsuario: ServicioUsuarioService, private route: Router) { }
@@ -29,18 +31,34 @@ export class RegistroComponent implements OnInit {
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/)]),
       validacionPassword: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern(/^(?=.*[A-Z])(?=.*[a-z])(?=.*\d)(?=.*[\W_]).{8,}$/)])
-    });
+    })
   }
 
+  /*
+  * Metodo que comprueba si el input contiene algun error.
+  * @param {string} => nombre del input a controlar.
+  * @param {string} => nombre del error controlado.
+  * @return {FormGroup.control} =>  devuelve si se comple un error.
+  */
   public controlarErrores(nombreControl: string, nombreError: string) {
-    return this.formRegistro.controls[nombreControl].hasError(nombreError);
+    return this.formRegistro.controls[nombreControl].hasError(nombreError)
   }
 
+  /*
+  * Metodo que oculta o muestra la contraseña en el input.
+  */
   public cambiarVisibilidadPassword() {
-    this.mostrarPassword = !this.mostrarPassword;
+    this.mostrarPassword = !this.mostrarPassword
   }
 
-
+  /*
+  * Metodo que registra al usuario, en caso de error en las contraseñas la funcion para,
+  * si no, llama al servicio de resgitrar usario, en caso de que exista el correo electronico
+  * devuelve error, si no llama al servicio de logue crea una sesion para almacenar el Usuario,
+  * redirigiendo al usuario a la pagina de inicio.
+  * @return {boolean} => en caso de las contraseñas no coincidan.
+  * @return {error : 400} => error que devuelve la llamada al servicio en caso de que exista ese correo electronico.
+  */
   public registrarUsuario() {
 
     this.comprobarIgualdadPasswords(this.formRegistro)
@@ -54,10 +72,6 @@ export class RegistroComponent implements OnInit {
     this.usuario.correo_electronico = this.formRegistro.get('email')?.value
     this.usuario.password = this.formRegistro.get('password')?.value
     this.usuario.tipo = 'aficionado'
-    this.usuario.edad = 0
-    this.usuario.posicion = ''
-    this.usuario.equipo_id = 0
-    this.usuario.tipo_cuerpo_tecnico = ''
 
     this.serviciosUsuario.registrarUsuario(this.usuario).subscribe({
       next: (usuarioRegistrado : Usuario) => {
@@ -75,7 +89,7 @@ export class RegistroComponent implements OnInit {
             this.aficionado = aficionadoObtenido
             localStorage.setItem('aficionado', JSON.stringify(this.aficionado))
             this.route.navigate(['/']).then(() => {
-              window.location.reload();
+              window.location.reload()
             })
           })
         })
@@ -88,30 +102,42 @@ export class RegistroComponent implements OnInit {
     })
   }
   
-  
-
+  /*
+  * Metodo que comprueba que las contraseñas del formulario sean iguales.
+  * @param {FormGroup} => formulario de registro
+  */
   public comprobarIgualdadPasswords(formulario: FormGroup) {
-    const password1 = formulario.get('password')?.value;
-    const password2 = formulario.get('validacionPassword')?.value;
+    const password1 = formulario.get('password')?.value
+    const password2 = formulario.get('validacionPassword')?.value
 
-    // Verifica si las contraseñas coinciden
-    if (password1 === password2) {
-      this.passwordIguales = true;
+    if (password1 == password2) {
+      this.passwordIguales = true
     } else {
-      this.passwordIguales = false;
+      this.passwordIguales = false
     }
   }
 
+  /*
+  * Metodo que muestra el texto de ayuda del formato de contraseña
+  * cuando el foco esta en input de contraseña.
+  */
   mostrarInfoPassword() {
-    this.infoPassword = true;
+    this.infoPassword = true
   }
 
+  /*
+  * Metodo que oculta el texto de ayuda del formato de contraseña
+  * cuando el foco no esta en input de contraseña.
+  */
   ocultarInfoPassword() {
-    this.infoPassword = false;
+    this.infoPassword = false
   }
 
+  /*
+  * Metodo para cerrar las alertas que aparecen en la ejecucion.
+  */
   cerrarAlerta() {
-    this.mostrarErrorPasswords = false;
+    this.mostrarErrorPasswords = false
     this.mostrarErrorRegistro = false
   }
 }

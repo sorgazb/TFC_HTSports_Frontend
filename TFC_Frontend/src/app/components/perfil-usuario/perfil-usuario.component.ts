@@ -13,25 +13,17 @@ import { BehaviorSubject } from 'rxjs';
 export class PerfilUsuarioComponent implements OnInit {
 
   usuario !: Usuario
-
   aficionado !: Aficionado
 
   formUsuario !: FormGroup
-
   formAficionado !: FormGroup
 
   mostrarPassword : boolean = false
-
   mostrarErrorRegistro : boolean = false
-
   mostrarUsuarioActualizado : boolean = false
-
   mostrarAficionadoActualizado : boolean = false
-
   mostrarErrorAficionado : boolean = false
-
   mostrarErrorNumCaras : boolean = false
-
   mostrarErrorFaceAPI : boolean = false
 
   usuarioSubject: BehaviorSubject<Usuario | null> = new BehaviorSubject<Usuario | null>(null);
@@ -42,9 +34,7 @@ export class PerfilUsuarioComponent implements OnInit {
 
   imagenSeleccionada: string | ArrayBuffer | null = null;
 
-
   ngOnInit(): void {
-
     let usuarioAux = sessionStorage.getItem('usuario')
     let usuarioSesion = JSON.parse(usuarioAux!)
     this.usuario = usuarioSesion.usuario
@@ -54,7 +44,6 @@ export class PerfilUsuarioComponent implements OnInit {
     let aficionadoSesison = JSON.parse(aficionadoAux!)
     this.aficionado = aficionadoSesison
     this.aficionadoSubject.next(this.aficionado)
-
 
     this.formUsuario = new FormGroup({
       nombre: new FormControl(this.usuario.nombre, [Validators.required, Validators.minLength(3), Validators.maxLength(20), Validators.pattern('^[a-zA-ZáéíóúÁÉÍÓÚñÑ ]+$')]),
@@ -97,8 +86,6 @@ export class PerfilUsuarioComponent implements OnInit {
 
   constructor(private seriviosUsuario : ServicioUsuarioService) { }
 
-  
-
   public controlarErrores(nombreControl : string, nombreError : string){
     return this.formUsuario.controls[nombreControl].hasError(nombreError)
   }
@@ -107,12 +94,11 @@ export class PerfilUsuarioComponent implements OnInit {
     return this.formAficionado.controls[nombreControl].hasError(nombreError)
   }
 
-  obtenerImgPerfil(): string {
+  obtenerImgPerfil() {
     console.log(this.usuario.avatar)
-    return 'data:image/png;base64,'+this.usuario.avatar // Un base64 de ejemplo
+    return 'data:image/png;base64,'+this.usuario.avatar
   }
   
-
   actualizarDatosUsuario() {
     const datosUsuarioActualizar = {
       nombre: this.formUsuario.get('nombre')?.value,
@@ -173,12 +159,8 @@ export class PerfilUsuarioComponent implements OnInit {
           }
         }
       });
-      console.log('no hay foto')
     }
   }
-  
-  
-  
   
   cambiarVisibilidadPassword(){
     this.mostrarPassword = !this.mostrarPassword

@@ -9,20 +9,18 @@ import { filter } from 'rxjs';
   styleUrls: ['./footer.component.css']
 })
 export class FooterComponent {
-
-    mostrarFooter : boolean = true
+  mostrarFooter : boolean = true
   
-    constructor(private router : Router) {
-      this.router.events.pipe(
-        filter(event => event instanceof NavigationEnd)
-      ).subscribe((event) => {
-        if(this.router.url === '/inicioSesison' || this.router.url === '/registro'){
-          this.mostrarFooter = false
-        }else{
-          this.mostrarFooter = true
-        }
-      })
-    }
-  
+  constructor(private router : Router) {      
+    this.router.events.pipe(
+      filter(event => event instanceof NavigationEnd)
+    ).subscribe((event) => {
+      if(this.router.url === '/inicioSesison' || this.router.url === '/registro'){
+        this.mostrarFooter = false
+      }else{
+        this.mostrarFooter = true
+      }
+    })
+  }  
 
 }

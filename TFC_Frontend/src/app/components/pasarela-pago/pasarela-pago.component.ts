@@ -6,8 +6,6 @@ import { ServicioPedidoService } from '../../services/servicio-pedido.service';
 import { Pedido } from '../../class/pedido';
 import { DetallePedido } from '../../class/detalle-pedido';
 import { Router } from '@angular/router';
-import { ViewportScroller } from '@angular/common';
-import { translate } from 'ngx-bootstrap-icons';
 import { Aficionado } from '../../class/aficionado';
 import { TranslateService } from '@ngx-translate/core';
 
@@ -21,59 +19,64 @@ declare var paypal: any;
 
 export class PasarelaPagoComponent implements OnInit {
 
-  @ViewChild('paypal', { static: false }) paypalElement!: ElementRef;
+  @ViewChild('paypal', { static: false }) paypalElement!: ElementRef
 
-  listadoCarrito!: Carrito[];
-  total: number = 0;
-  formAficionado!: FormGroup;
-  usarDireccionGuardada: boolean = false;
-  pedidoIDCreado!: number;
+  listadoCarrito!: Carrito[]
+  aficionado !:Aficionado
 
+  formNuevaDireccion!: FormGroup
+
+  total: number = 0
+  usarDireccionGuardada: boolean = false
+  pedidoIDCreado!: number
+  
   alerta = {
     mostrar: false,
     mensaje: '',
-  };
+  }
 
-  aficionado !:Aficionado
-
-  constructor(
-    private serviciosCarrito: ServicioCarritoService,
-    private servicioPedido: ServicioPedidoService,
-    private router: Router,
-     private translate: TranslateService
-
-  ) {}
+  constructor(private serviciosCarrito: ServicioCarritoService, private servicioPedido: ServicioPedidoService, private router: Router, private translate: TranslateService) {}
 
   ngOnInit(): void {
-
     this.aficionado = JSON.parse(localStorage.getItem('aficionado') || '{}');
-    // Inicializar formulario
-    this.formAficionado = new FormGroup({
+    this.formNuevaDireccion = new FormGroup({
       direccion : new FormControl('', [Validators.required]),
       poblacion : new FormControl('', [Validators.required]),
       codigoPostal : new FormControl('', [Validators.required, Validators.minLength(5), Validators.maxLength(5), Validators.pattern('^[0-9]+$')])
-    });
+    })
 
-    // Obtener carrito y calcular total
     this.listadoCarrito = this.serviciosCarrito.obtenerCarrito();
-    this.total = this.listadoCarrito.reduce((sum, item) => sum + (item.producto.precio * item.cantidad), 0);
-
-    console.log(this.listadoCarrito);
-    console.log(this.total);
-
-    // No renderizamos PayPal aquí
+    this.total = this.listadoCarrito.reduce((sum, item) => sum + (item.producto.precio * item.cantidad), 0)
   }
 
-  onDireccionSeleccionada() {
-    this.usarDireccionGuardada ? this.formAficionado.disable() : this.formAficionado.enable();
-  }
-
+  /*
+  * Metodo que comprueba si el input contiene algun error.
+  * @param {string} => nombre del input a controlar.
+  * @param {string} => nombre del error controlado.
+  * @return {FormGroup.control} =>  devuelve si se comple un error.
+  */
   public controlarErroresAficionado(nombreControl : string, nombreError : string){
-    return this.formAficionado.controls[nombreControl].hasError(nombreError)
+    return this.formNuevaDireccion.controls[nombreControl].hasError(nombreError)
   }
 
+  /*
+  * Metodo que activa o desactiva el formulario para crear una nueva direccion o no.
+  */
+  seleccionarDireccion() {
+    if(this.usarDireccionGuardada == true){
+      this.formNuevaDireccion.disable()
+    }else{
+      this.formNuevaDireccion.enable()
+    }
+  }
+
+  /*
+  * Metodo que procede a llamar al servicio para crear un nuevo pedido incluyendo
+  * en los detalles de ese pedido los productos correspondientes y haciendo la 
+  * llamada al metodo para proceder con el pago.
+  */ 
   crearPedido() {
-    const carrito = this.serviciosCarrito.obtenerCarrito();
+    const carrito = this.serviciosCarrito.obtenerCarrito()
 
     const productosCarrito: DetallePedido[] = carrito.map(productoCarrito => ({
       ID: 0,
@@ -81,7 +84,7 @@ export class PasarelaPagoComponent implements OnInit {
       id_Producto: productoCarrito.producto.ID,
       cantidad: productoCarrito.cantidad,
       precio: productoCarrito.producto.precio
-    }));
+    }))
 
     const pedido = new Pedido();
 
@@ -93,25 +96,25 @@ export class PasarelaPagoComponent implements OnInit {
     }else{
       if (this.aficionado) {
         pedido.id_aficionado = this.aficionado.ID;
-        pedido.direccion = this.formAficionado.get('direccion')?.value;
-        pedido.poblacion = this.formAficionado.get('poblacion')?.value;
-        pedido.codigo_postal = this.formAficionado.get('codigoPostal')?.value;
+        pedido.direccion = this.formNuevaDireccion.get('direccion')?.value
+        pedido.poblacion = this.formNuevaDireccion.get('poblacion')?.value
+        pedido.codigo_postal = this.formNuevaDireccion.get('codigoPostal')?.value
       }
     }
 
-
     this.servicioPedido.crearPedido(pedido).subscribe((pedidoCreado: Pedido) => {
-      console.log("Pedido Creado", pedidoCreado);
-      this.pedidoIDCreado = pedidoCreado.ID;
-
+      this.pedidoIDCreado = pedidoCreado.ID
       this.servicioPedido.agregarProductosPedido(productosCarrito, pedidoCreado.ID).subscribe((detalles: DetallePedido[]) => {
-        console.log("Detalles Pedido", detalles);
-        this.renderizarPaypal(); 
+        this.pasarelaPaypal()
       });
     });
   }
 
-  renderizarPaypal() {
+  /*
+  * Metodo que hace la llamada a la API Paypal Developers,
+  * la cual permite realizar pagos reales en la web.
+  */ 
+  pasarelaPaypal() {
       paypal.Buttons({
         createOrder: (data: any, actions: any) => {
           return actions.order.create({
@@ -122,52 +125,44 @@ export class PasarelaPagoComponent implements OnInit {
                 value: this.total.toFixed(2)
               }
             }]
-          });
+          })
         },
         onApprove: async (data: any, actions: any) => {
-          const order = await actions.order.capture();
-          console.log("Pago aprobado:", order);
+          const order = await actions.order.capture()
           this.servicioPedido.pagarPedido(this.pedidoIDCreado).subscribe(() => {
-            console.log("Pedido pagado");
-            this.serviciosCarrito.limpiarCarrito();
+            this.serviciosCarrito.limpiarCarrito()
             if(this.translate.currentLang == 'es'){
-              this.mostrarAlerta('Pago aprobado. ¡Gracias por tu compra!', true);
+              this.mostrarAlerta('Pago aprobado. ¡Gracias por tu compra!')
             }
             if(this.translate.currentLang == 'gb'){
-              this.mostrarAlerta('Payment approved. Thank you for your purchase!', true);
+              this.mostrarAlerta('Payment approved. Thank you for your purchase!')
             }
-            
-          });
-        }
-        ,
+          })
+        },
         onError: (err: any) => {
-          console.error("Error en el pago:", err);
-
           this.servicioPedido.cancelarPedido(this.pedidoIDCreado).subscribe(() => {
-            console.log("Pedido cancelado");
-          });
+          })
           if(this.translate.currentLang == 'es'){
-            this.mostrarAlerta('Ocurrió un error al procesar el pago', true );
+            this.mostrarAlerta('Ocurrió un error al procesar el pago')
           }
           if(this.translate.currentLang == 'gb'){
-            this.mostrarAlerta('An error occurred while processing the payment. Please try again.', true);
+            this.mostrarAlerta('An error occurred while processing the payment. Please try again.')
           }
-
         }
-      }).render(this.paypalElement.nativeElement);
+      }).render(this.paypalElement.nativeElement)
   }
 
-  mostrarAlerta(mensaje: string, redireccionar: boolean = false) {
-
+  /*
+  * Metodo para mostrar una alerta con el resultado del pago. Una vez transcurridos 5 segundos
+  * redirige al usario a la pagina principal.
+  * @param {string} => Contenido del mensaje de la alerta.
+  */
+  mostrarAlerta(mensaje: string) {
     this.alerta.mensaje = mensaje
     this.alerta.mostrar = true
-
-    if (redireccionar) {
-      setTimeout(() => {
-        this.router.navigate(['/']);
-      }, 5000); // ⏱️ espera 3 segundos
-    }
+    
+    setTimeout(() => {
+      this.router.navigate(['/'])
+    }, 5000)
   }
 }
-
-

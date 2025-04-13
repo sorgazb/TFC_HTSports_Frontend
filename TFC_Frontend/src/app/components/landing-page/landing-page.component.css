@@ -1,14 +1,13 @@
-.typing-demo{
+.animacionVideo{
     width: 22ch;
-    animation: typing 4.5s steps(30) infinite,
-    blink 0.5s step-end infinite alternate;
+    animation: escritura 4.5s steps(30) infinite,
+    cursor 0.5s step-end infinite alternate;
     white-space: nowrap;
     overflow: hidden;
-    /* border-right: 5px solid; */
     font-size: 2em;
 }
 
-.typing-1{
+.texto1{
     font-family: "Bungee", serif;
     font-weight: 400;
     font-style: normal;
@@ -16,7 +15,7 @@
     color: white;
 }
 
-.typing-2{
+.texto2{
     font-family: "Bungee", serif;
     font-weight: 400;
     font-style: normal;
@@ -26,10 +25,10 @@
     color: transparent;
 }
 
-@keyframes typing {
+@keyframes escritura {
     from { width: 0; }
 }
 
-@keyframes blink {
+@keyframes cursor {
     50% { border-color: transparent; }
 }

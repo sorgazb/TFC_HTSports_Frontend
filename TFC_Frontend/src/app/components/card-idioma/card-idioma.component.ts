@@ -10,11 +10,8 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./card-idioma.component.css']
 })
 export class CardIdiomaComponent {
-
-  constructor(public dialogRef: MatDialogRef<CardIdiomaComponent>, @Inject(MAT_DIALOG_DATA) public data:any, private translate: TranslateService){}
-    selectedCountry: string = '';
   
-  predefinedCountries: Country[] = [
+  idiomas: Country[] = [
     {
       name: 'Español',
       alpha2Code: 'es',
@@ -31,7 +28,7 @@ export class CardIdiomaComponent {
     }
   ];
   
-  defaultValue: Country = {
+  idiomaPorDefecto: Country = {
     name: 'Español',
     alpha2Code: 'es',
     alpha3Code: 'ESP',
@@ -39,11 +36,20 @@ export class CardIdiomaComponent {
     callingCode: '+49'
   };
 
-  onCountrySelected(country: Country) {
+  constructor(public dialogRef: MatDialogRef<CardIdiomaComponent>, @Inject(MAT_DIALOG_DATA) public data:any, private translate: TranslateService){}
+
+  /*
+  * Metodo que cambia el idioma de la web.
+  * @param {Country} => idioma
+  */ 
+  cambiarIdioma(country: Country) {
     const idioma = country.alpha2Code
     this.translate.use(idioma)
   }
 
+  /*
+  * Metodo para cerrar el cuadro de dialogo.
+  */
   confirmar() {
     this.dialogRef.close();
   }
