@@ -95,7 +95,6 @@ export class PerfilUsuarioComponent implements OnInit {
   }
 
   obtenerImgPerfil() {
-    console.log(this.usuario.avatar)
     return 'data:image/png;base64,'+this.usuario.avatar
   }
   
@@ -109,7 +108,6 @@ export class PerfilUsuarioComponent implements OnInit {
       console.log(this.fileToUpload)
       this.seriviosUsuario.comprobarImagen(this.fileToUpload).subscribe({
         next: (response) => {
-          console.log(response.count)
           if(response.count == 1){
             const formData = new FormData();
             formData.append('nombre', datosUsuarioActualizar.nombre);

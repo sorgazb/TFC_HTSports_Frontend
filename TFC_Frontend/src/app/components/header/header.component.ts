@@ -24,8 +24,7 @@ export class HeaderComponent implements OnInit {
   cantidadProductos : number = 0
 
   carritoVacio : boolean = true
-
-  isMenuOpen: boolean = false
+  menuDesplegado: boolean = false
 
   usuario : any = null
   aficionado : any = null
@@ -40,10 +39,6 @@ export class HeaderComponent implements OnInit {
         this.mostrarBarraNav = true
       }
     })
-  }
-
-  cambiarIdioma(){
-    const cuadroIdioma = this.dialog.open(CardIdiomaComponent)
   }
 
   ngOnInit(): void {
@@ -66,21 +61,40 @@ export class HeaderComponent implements OnInit {
       this.cantidadProductos = carrito.reduce((total, item) => total + item.cantidad, 0)
     })
   }
+
+  /*
+  * Metodo que hace una llamada a la card material para cambiar el idioma de la web.
+  */
+  cambiarIdioma(){
+    const cuadroIdioma = this.dialog.open(CardIdiomaComponent)
+  }
   
-  handleClick() {
+  /*
+   * Metodo para mostrar u ocultar el menu de navegacion (en moviles).
+   */
+  mostrarNav() {
     if (!this.collapseMenu) return;
     const menu = this.collapseMenu.nativeElement
     menu.style.display = menu.style.display === 'block' ? 'none' : 'block'
   }
 
-  toggleMenu() {
-    this.isMenuOpen = !this.isMenuOpen
+  /*
+   * Metodo que muestra el menu de Usuario.
+   */
+  menuOpciones() {
+    this.menuDesplegado = !this.menuDesplegado
   }
 
-  clickedOutside() {
-    this.isMenuOpen = false
+  /*
+  * Metodo que cierra el menu de Usuario.
+  */ 
+  clickFuera() {
+    this.menuDesplegado = false
   }
 
+  /*
+  * Metodo que borra todas las sesiones y local storages creadas.
+  */
   cerrarSesion() {
     sessionStorage.removeItem('token')
     sessionStorage.removeItem('usuario')
