@@ -40,7 +40,6 @@ import { PerfilUsuarioComponent } from './components/perfil-usuario/perfil-usuar
 import { AreaPedidosComponent } from './components/area-pedidos/area-pedidos.component';
 import { MatTableModule } from '@angular/material/table';
 
-
 registerLocaleData(es);
 
 @NgModule({
@@ -86,7 +85,7 @@ registerLocaleData(es);
     MatButtonModule,
     NzCarouselModule,
     NgxBootstrapIconsModule.pick(allIcons),
-    MatPaginatorModule,
+    MatPaginatorModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: es_ES }

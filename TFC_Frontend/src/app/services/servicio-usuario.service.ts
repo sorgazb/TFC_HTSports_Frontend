@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core'
 import { Usuario } from '../class/usuario'
 import { catchError, Observable, throwError } from 'rxjs'
 import { Aficionado } from '../class/aficionado'
+import { environment } from '../environments/environment'
 
 @Injectable({
   providedIn: 'root'
@@ -11,10 +12,11 @@ import { Aficionado } from '../class/aficionado'
 export class ServicioUsuarioService {
 
   private apiUrl = 'https://tfc-htsports-api-884687165526.europe-southwest1.run.app/'
-  private apiCarasUrl = 'https://faceinphoto.p.rapidapi.com/faceinphoto/count';
+  private apiCarasUrl = 'http://'+environment.FACEINPHOTO_HOST+':'+environment.FACEINPHOTO_PORT+'/faceinphoto/count';
   private endPoint = 'api/usuarios'
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) { 
+  }
 
   registrarUsuario(usuario: Usuario): Observable<Usuario> {
     return this.http.post<Usuario>(`${this.apiUrl}${this.endPoint}/registrar`, usuario).pipe(
@@ -59,8 +61,7 @@ export class ServicioUsuarioService {
     formData.append('image', image, image.name);
     return this.http.post<any>(this.apiCarasUrl, formData, {
       headers: {
-        'x-rapidapi-host': 'faceinphoto.p.rapidapi.com',
-        'x-rapidapi-key': '537517a32emsh5c0948f57af5a91p182ba2jsn0448a4034897'
+        'X-RapidAPI-Proxy-Secret': environment.FACEINPHOTO_PROXY
       }
     });
   }

@@ -96,5 +96,4 @@ export class InicioSesionComponent implements OnInit{
   public cerrarAlerta(){
     this.mostrarError = false
   }
-
 }
