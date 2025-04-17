@@ -11,7 +11,8 @@ import { environment } from '../environments/environment'
 
 export class ServicioUsuarioService {
 
-  private apiUrl = 'https://tfc-htsports-api-884687165526.europe-southwest1.run.app/'
+  // private apiUrl = 'https://tfc-htsports-api-884687165526.europe-southwest1.run.app/'
+  private apiUrl = 'http://localhost:8080/'
   private apiCarasUrl = 'http://'+environment.FACEINPHOTO_HOST+':'+environment.FACEINPHOTO_PORT+'/faceinphoto/count';
   private endPoint = 'api/usuarios'
 

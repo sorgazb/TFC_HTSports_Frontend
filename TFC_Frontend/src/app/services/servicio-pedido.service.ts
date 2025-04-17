@@ -11,7 +11,8 @@ import { TranslateService } from '@ngx-translate/core';
 
 export class ServicioPedidoService {
 
-  private apiUrl = 'https://tfc-htsports-api-884687165526.europe-southwest1.run.app/'
+  // private apiUrl = 'https://tfc-htsports-api-884687165526.europe-southwest1.run.app/'
+  private apiUrl = 'http://localhost:8080/'
   private endPoint = 'api/pedidos'
 
   constructor(private http : HttpClient, private translate: TranslateService) { }
