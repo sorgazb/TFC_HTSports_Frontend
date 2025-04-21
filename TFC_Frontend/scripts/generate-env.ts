@@ -8,10 +8,14 @@ if (!fs.existsSync(envDir)) {
   fs.mkdirSync(envDir, { recursive: true });
 }
 
+// Agrega las propiedades necesarias a las variables de entorno
 const envContent = `
 export const environment = {
   production: ${process.env['ENV_PROD'] === 'true'},
-  apiUrl: '${process.env['ENV_API_URL']}'
+  apiUrl: '${process.env['ENV_API_URL']}',
+  FACEINPHOTO_HOST: '${process.env['FACEINPHOTO_HOST']}',
+  FACEINPHOTO_PORT: '${process.env['FACEINPHOTO_PORT']}',
+  FACEINPHOTO_PROXY: '${process.env['FACEINPHOTO_PROXY']}'
 };`;
 
 const devPath = path.join(envDir, 'environment.ts');
