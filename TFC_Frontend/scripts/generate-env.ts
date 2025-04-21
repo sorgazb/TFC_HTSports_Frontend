@@ -17,7 +17,6 @@ export const environment = {
 const devPath = path.join(envDir, 'environment.ts');
 const prodPath = path.join(envDir, 'environment.prod.ts');
 
-
 console.log('Generando environment.ts en:', devPath);
 console.log('Generando environment.prod.ts en:', prodPath);
 
