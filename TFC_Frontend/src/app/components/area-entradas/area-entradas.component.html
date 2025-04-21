@@ -1,0 +1,34 @@
+<div class="container mx-auto p-5 flex flex-col items-center justify-center">
+    <div class="mb-8 text-center">
+      <h1 class="text-2xl font-bold text-azul">{{'area-entradas' | translate}}</h1>
+    </div>
+    <!-- Tabla Entradas Aficionado -->
+    <table class="text-sm w-full text-black border-2 border-azul">
+      <thead class="text-white uppercase bg-azul">
+        <tr>
+          <th scope="col" class="border-r-2 border-white px-6 py-3">{{'num-entrada' | translate}}</th>
+          <th scope="col" class="border-r-2 border-white px-6 py-3">{{'id-partido' | translate}}</th>
+          <th scope="col" class="border-r-2 border-white px-6 py-3">{{'precio-entrada' | translate}}</th>
+          <th scope="col" class="border-r-2 border-white px-6 py-3">{{'zona' | translate}}</th>
+          <th scope="col" class="border-r-2 border-white px-6 py-3">{{'estado' | translate}}</th>
+        </tr>
+      </thead>
+      <tbody class="text-center">
+        <tr *ngFor="let entrada of entradas" class="border border-azul">
+          <td class="px-6 py-4">{{entrada.ID}}</td>
+          <td class="px-6 py-4 cursor-pointer" (click)="consultarPartido(entrada.id_Partido)">{{entrada.id_Partido}} 🔎</td>
+          <td class="px-6 py-4">{{entrada.precio}} €</td>
+          <td class="px-6 py-4">{{entrada.zona.toUpperCase()}}</td>
+          <td class="px-6 py-4 uppercase" [ngClass]="{
+            'bg-green-200': entrada.estado === 'pagada' || entrada.estado === 'paid',
+            'bg-red-200': entrada.estado === 'cancelada' || entrada.estado === 'canceled',
+            'bg-blue-200': entrada.estado === 'usada' || entrada.estado === 'used'}">
+            {{entrada.estado}}
+          </td>   
+        </tr>
+      </tbody>
+  </table>
+  </div>
+  
+  
+  

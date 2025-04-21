@@ -41,6 +41,10 @@
                                 <mat-icon fontIcon="inventory_2"></mat-icon>
                                 <span>{{'area-pedidos' | translate}}</span>
                             </div>
+                            <div class="hover:bg-gray-100 px-4 py-2 rounded cursor-pointer flex items-center gap-2" *ngIf="usuario.usuario.tipo === 'aficionado'" routerLink="areaEntradas">
+                                <mat-icon fontIcon="confirmation_number"></mat-icon>
+                                <span>{{'area-entradas' | translate}}</span>
+                            </div>
                               <div class="hover:bg-red-300 px-4 py-2 rounded cursor-pointer flex items-center gap-2 text-red-600" (click)="cerrarSesion()">
                                 <mat-icon fontIcon="cancel"></mat-icon>
                                 <span>{{'cerrar-sesion' | translate}}</span>
@@ -57,6 +61,12 @@
                         <a *ngIf="aficionado && usuario" routerLink="tienda" class="btnInicioSesion">
                             <mat-icon fontIcon="shopping_cart"></mat-icon>
                             <span>{{'tienda' | translate}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a *ngIf="usuario" routerLink="partidos" class="btnInicioSesion">
+                            <mat-icon fontIcon="stadium"></mat-icon>
+                            <span>{{'partidos' | translate}}</span>
                         </a>
                     </li>
                 </ul>

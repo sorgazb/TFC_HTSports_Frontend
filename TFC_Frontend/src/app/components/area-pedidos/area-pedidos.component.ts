@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ServicioPedidoService } from '../../services/servicio-pedido.service';
 import { Pedido } from '../../class/pedido';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-area-pedidos',
@@ -25,7 +24,7 @@ export class AreaPedidosComponent implements OnInit {
       const fechaCancelacion = Date.now() - tiempoCancelacion
 
       this.pedidos.forEach(pedido => {
-        if (pedido.fecha.getTime() < fechaCancelacion && pedido.estado === 'pendiente') {
+        if (new Date(pedido.fecha).getTime() < fechaCancelacion && pedido.estado === 'pendiente') {
           this.serviciosPedidos.cancelarPedido(pedido.ID).subscribe(() => {
           })
         }

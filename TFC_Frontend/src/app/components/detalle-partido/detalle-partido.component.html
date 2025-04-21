@@ -1,0 +1,106 @@
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-5 items-center">
+  <!-- Informacion Equipos -->
+  <div class="flex flex-col items-center space-y-4">
+    <div class="flex justify-center items-center space-x-6">
+      <!-- Equipo Local -->
+      <div class="flex flex-col items-center">
+        <h1 class="text-xl font-semibold text-center">{{ partido.equipos[0].nombre }}</h1>
+        <img [src]="partido.equipos[0].escudo" alt="" class="w-32 h-32 object-contain" />
+      </div>
+      <!-- Resultado -->
+      <span *ngIf="partido.estado ==='enjuego' || partido.estado === 'Enjame'" class="font-bold text-azul text-xl animate-pulse">{{ partido.resultado }}</span>
+      <span *ngIf="partido.estado ==='finalizado' || partido.estado === 'finished'" class="font-bold text-azul text-xl">{{ partido.resultado }}</span>
+      <!-- Equipo Visitante -->
+      <div class="flex flex-col items-center">
+        <h1 class="text-xl font-semibold text-center">{{ partido.equipos[1].nombre }}</h1>
+        <img [src]="partido.equipos[1].escudo" alt="" class="w-32 h-32 object-contain" />
+      </div>
+    </div>
+  </div>
+  <!-- Informacion Partido -->
+  <div class="text-center lg:text-left">
+    <h2 class="text-2xl font-bold text-azul mb-4">{{'detallesPartido' | translate}}</h2>
+    <div class="flex flex-col space-y-2">
+      <p>{{'estadio' | translate}} {{partido.equipos[0].estadio}}</p>
+      <p>{{'fecha' | translate}} {{ partido.fecha | date: 'dd/MM/yyyy'}}</p>
+      <p>{{'hora' | translate}} {{partido.fecha | date: 'HH:mm'}}</p>
+      <p>{{'clima' | translate}} {{partido.clima.toUpperCase()}}</p>
+      <p>{{'asistencia' | translate}} {{partido.asistencia}}</p>
+    </div>
+  </div>
+</div>
+<div>
+  <!-- Contenedor Estadisticas y Alineaciones -->
+  <mat-tab-group>
+    <!-- Estadisticas Equipos -->
+    <mat-tab label="{{'estadisticasEquipos' | translate}}">
+      <div class="grid grid-cols-2">
+        <!-- Equipo Local -->
+        <div class="flex flex-col items-center justify-center space-y-2 p-5">
+          <h1 class="text-xl font-semibold">{{ partido.equipos[0].nombre }}</h1>
+          <img [src]="partido.equipos[0].escudo" alt="" class="w-32 h-32 object-contain" />
+          <!-- Posesion -->
+          <div class="flex flex-col items-center justify-center space-y-2">
+            <p class="text-lg font-semibold">{{'posesion' | translate}} {{ actuacionesEquipos[0].posesion }}%</p>                     
+            <mat-progress-spinner class="example-margin" [color]="color" [mode]="mode" [value]="actuacionesEquipos[0].posesion"></mat-progress-spinner>
+          </div>                 
+        </div>
+        <!-- Equipo Visitante -->
+        <div class="flex flex-col items-center justify-center space-y-2 p-5">
+          <h1 class="text-xl font-semibold">{{ partido.equipos[1].nombre }}</h1>
+          <img [src]="partido.equipos[1].escudo" alt="" class="w-32 h-32 object-contain" />
+          <!-- Posesion -->
+          <div class="flex flex-col items-center justify-center space-y-2">
+            <p class="text-lg font-semibold">{{'posesion' | translate}} {{ actuacionesEquipos[1].posesion }}%</p>
+            <mat-progress-spinner class="example-margin" [color]="color" [mode]="mode" [value]="actuacionesEquipos[1].posesion"></mat-progress-spinner>
+          </div>  
+        </div>
+      </div>
+      <!-- Contenedor Estadisticas Totales -->
+      <div class="flex flex-col items-center justify-center w-full my-5 px-5 space-y-6">
+        <!-- Tiros -->
+        <div class="w-full max-w-xl space-y-1">
+          <h1 class="text-center font-semibold text-sm text-gray-700">{{'tirosTotales' | translate}}</h1>
+          <div class="bg-gray-200 rounded overflow-hidden h-6 flex shadow">
+            <div class="bg-azul text-white text-xs h-full flex items-center justify-center" [ngStyle]="{ width: porcentajeTirosTotalesEquipo1 + '%' }">{{ actuacionesEquipos[0].tiros_totales }}</div>
+            <div class="bg-red-600 text-white text-xs h-full flex items-center justify-center" [ngStyle]="{ width: porcentajeTirosTotalesEquipo2 + '%' }">{{ actuacionesEquipos[1].tiros_totales }}</div>
+          </div>
+        </div>
+        <!-- Tiros Porteria -->
+        <div class="w-full max-w-xl space-y-1">
+          <h1 class="text-center font-semibold text-sm text-gray-700">{{'tirosPorteria' | translate}}</h1>
+          <div class="bg-gray-200 rounded overflow-hidden h-6 flex shadow">
+            <div class="bg-azul text-white text-xs h-full flex items-center justify-center" [ngStyle]="{ width: porcentajeTirosPorteriaEquipo1 + '%' }">{{ actuacionesEquipos[0].tiros_porteria }}</div>
+            <div class="bg-red-600 text-white text-xs h-full flex items-center justify-center"[ngStyle]="{ width: porcentajeTirosPorteriaEquipo2 + '%' }">{{ actuacionesEquipos[1].tiros_porteria }}</div>
+          </div>
+        </div>
+        <!-- Faltas -->
+        <div class="w-full max-w-xl space-y-1">
+          <h1 class="text-center font-semibold text-sm text-gray-700">{{'faltasRecibidas' | translate}}</h1>
+          <div class="bg-gray-200 rounded overflow-hidden h-6 flex shadow">
+            <div class="bg-azul text-white text-xs h-full flex items-center justify-center" [ngStyle]="{ width: porcentajeFaltasRealizadasEquipo1 + '%' }">{{ actuacionesEquipos[0].faltas_realizadas }}</div>
+            <div class="bg-red-600 text-white text-xs h-full flex items-center justify-center" [ngStyle]="{ width: porcentajeFaltasRealizadasEquipo2 + '%' }">{{ actuacionesEquipos[1].faltas_realizadas }}</div>
+          </div>
+        </div>
+        <!-- Corners a Favor -->
+        <div class="w-full max-w-xl space-y-1">
+          <h1 class="text-center font-semibold text-sm text-gray-700">{{'cornersFavor' | translate}}</h1>
+          <div class="bg-gray-200 rounded overflow-hidden h-6 flex shadow">
+            <div class="bg-azul text-white text-xs h-full flex items-center justify-center" [ngStyle]="{ width: porcentajeCornersFavorEquipo1 + '%' }">{{ actuacionesEquipos[0].corners_favor }}</div>
+            <div class="bg-red-600 text-white text-xs h-full flex items-center justify-center" [ngStyle]="{ width: porcentajeCornersFavorEquipo2 + '%' }">{{ actuacionesEquipos[1].corners_favor }}</div>
+          </div>
+        </div>
+        <!-- Corners Contra -->
+        <div class="w-full max-w-xl space-y-1">
+          <h1 class="text-center font-semibold text-sm text-gray-700">{{'cornersContra' | translate}}</h1>
+          <div class="bg-gray-200 rounded overflow-hidden h-6 flex shadow">
+            <div class="bg-azul text-white text-xs h-full flex items-center justify-center" [ngStyle]="{ width: porcentajeCornersContraEquipo1 + '%' }">{{ actuacionesEquipos[0].corners_contra }}</div>
+            <div class="bg-red-600 text-white text-xs h-full flex items-center justify-center" [ngStyle]="{ width: porcentajeCornersContraEquipo2 + '%' }">{{ actuacionesEquipos[1].corners_contra }}</div>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+    <!-- Alineaciones -->
+    <mat-tab label="{{'alineaciones' | translate}}"> Content 2 </mat-tab>
+  </mat-tab-group>
+</div>

@@ -1,127 +1,116 @@
 <div class="flex items-center justify-center overflow-hidden p-6 bg-gray-50 min-h-screen">
-    <div class="w-full md:w-4/5 lg:w-3/5 xl:w-1/2 bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
-
-      <div class="mb-8 text-center">
-        <h1 class="text-2xl font-bold text-azul">{{'perfil-usuario' | translate}}</h1>
-      </div>
-
-      <form [formGroup]="formUsuario" (ngSubmit)="actualizarDatosUsuario()" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-2">
-          <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
-              <mat-label class="bg-white p-1">{{'Nombre' | translate}}</mat-label>
-              <input type="text" matInput formControlName="nombre">
-              <mat-error *ngIf="controlarErrores('nombre', 'required')">{{'introduce-tu' | translate}} <strong>{{'nombre' | translate}}</strong></mat-error>
-              <mat-error *ngIf="controlarErrores('nombre','minlength') && !controlarErrores('nombre','pattern')">{{'nombre-debe' | translate}} <strong>{{'tres-o-mas' | translate}}</strong></mat-error>
-              <mat-error *ngIf="controlarErrores('nombre','maxlength') && !controlarErrores('nombre','pattern')">{{'nombre-supera' | translate}} <strong>{{'maximo-caracteres'  | translate}}</strong></mat-error>
-              <mat-error *ngIf="controlarErrores('nombre','pattern') && (!controlarErrores('nombre','minlength') || !controlarErrores('nombre','maxlength'))">{{'nombre-no-puede-contener' | translate}} <strong>{{'numeros-caracteres' | translate}}</strong></mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
-            <mat-label class="bg-white p-1">{{'Correo-Electronico' | translate}}</mat-label>
-            <input type="email" matInput formControlName="email">
-            <mat-error *ngIf="controlarErrores('email', 'required')">{{'introduce-una-direccion' | translate}} <strong>{{'correo-electronico' | translate}}</strong></mat-error>
-            <mat-error *ngIf="controlarErrores('email','email')">{{'direccion-correo' | translate}} <strong>{{'no-valida' | translate}}</strong></mat-error>
-          </mat-form-field>
-
-          <div class="md:col-span-2 flex flex-col items-center gap-2">
-            <label class="text-sm font-semibold text-azul">{{ 'avatar' | translate }}</label>
-            
-            <label for="avatarInput" class="cursor-pointer flex items-center justify-center w-36 h-36 rounded-full border-2  border-azul bg-gray-50 overflow-hidden">
-              <ng-container *ngIf="imagenSeleccionada; else mostrarAvatarActual">
-                <img [src]="imagenSeleccionada" alt="Avatar" class="w-full h-full object-cover rounded-full" />
-              </ng-container>
-  
-              <ng-template #mostrarAvatarActual>
-                <ng-container *ngIf="usuario.avatar; else placeholderAvatar">
-                  <img src="data:image/jpeg;base64,{{usuario.avatar}}" alt="Imagen" class="w-full h-full object-cover rounded-full" />
-                </ng-container>
-              </ng-template>
-  
-              <ng-template #placeholderAvatar>
-                <mat-icon>person-outline</mat-icon>
-              </ng-template>
-            </label>
-            
-            <input id="avatarInput" type="file" (change)="onFileSelected($event)" class="hidden"/>
-            <span class="text-xs text-black italic">{{ 'selecciona-imagen' | translate }}</span>
-          </div>
-
-          <div class="md:col-span-2">
-            <div *ngIf="mostrarErrorRegistro">
-              <nz-alert nzType="error" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'err-ru' | translate}}" nzDescription="{{'text-err-ru' | translate}}" nzShowIcon></nz-alert>
-            </div>
-
-            <div *ngIf="mostrarErrorNumCaras">
-              <nz-alert nzType="error" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'err-num-caras' | translate}}" nzDescription="{{'text-err-num-caras' | translate}}" nzShowIcon></nz-alert>
-            </div>
-  
-            <div *ngIf="mostrarErrorFaceAPI">
-              <nz-alert nzType="error" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'err-face-api' | translate}}" nzDescription="{{'text-err-face-api' | translate}}" nzShowIcon></nz-alert>
-            </div>
-
-            <div *ngIf="mostrarUsuarioActualizado">
-              <nz-alert nzType="success" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'usuario-actualizado' | translate}}" nzDescription="{{'text-usuario-actualizado' | translate}}" nzShowIcon></nz-alert>
-            </div>
-          </div>
-
-        <div class="md:col-span-2 flex justify-center">
-          <button type="submit" [disabled]="!formUsuario.valid" class="bg-azul text-white px-6 py-2 rounded-full shadow">
-            {{'actualizar-usuario' | translate}}
-          </button>
-        </div>
-      </form>
-      
-      <div class="my-8 text-center">
-        <h1 class="text-2xl font-bold text-azul">{{'direccion-envio' | translate}}</h1>
-      </div>
-
-      <form [formGroup]="formAficionado" (ngSubmit)="actualizarDatosAficionado()" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-2">
-          <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
-              <mat-label class="bg-white p-1">{{'telefono' | translate}}</mat-label>
-              <input type="text" matInput [(ngModel)]="aficionado.telefono" formControlName="telefono">
-              <mat-error *ngIf="controlarErroresAficionado('telefono', 'required')">{{'introduce-tu' | translate}} <strong>{{'telefono-form' | translate}}</strong></mat-error>
-              <mat-error *ngIf="controlarErroresAficionado('telefono', 'minlength') && !controlarErroresAficionado('telefono','pattern')"><strong>{{'formato-incorrecto' | translate}}</strong></mat-error>
-              <mat-error *ngIf="controlarErroresAficionado('telefono', 'maxlength') && !controlarErroresAficionado('telefono','pattern')"><strong>{{'formato-incorrecto' | translate}}</strong></mat-error>
-              <mat-error *ngIf="controlarErroresAficionado('telefono', 'pattern') && (!controlarErroresAficionado('telefono','minlength') || !controlarErroresAficionado('telefono','maxlength'))">{{'introduce' | translate}} <strong>{{'solo-numeros' | translate}}</strong></mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
-            <mat-label class="bg-white p-1">{{'direccion' | translate}}</mat-label>
-            <input type="text" [(ngModel)]="aficionado.direccion"  matInput formControlName="direccion">
-            <mat-error *ngIf="controlarErroresAficionado('direccion', 'required')">{{'introduce-tu' | translate}} <strong>{{'direccion-form' | translate}}</strong></mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
-            <mat-label class="bg-white p-1">{{'poblacion' | translate}}</mat-label>
-            <input type="text" [(ngModel)]="aficionado.poblacion"  matInput formControlName="poblacion">
-            <mat-error *ngIf="controlarErroresAficionado('poblacion', 'required')">{{'introduce-tu' | translate}} <strong>{{'poblacion-form' | translate}}</strong></mat-error>
-          </mat-form-field>
-
-          <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
-            <mat-label class="bg-white p-1">{{'codigo-postal' | translate}}</mat-label>
-            <input type="text" [(ngModel)]="aficionado.codigo_postal"  matInput formControlName="codigoPostal">
-            <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'required')">{{'introduce-tu' | translate}} <strong>{{'codigo-postal-form' | translate}}</strong></mat-error>
-            <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'minlength') && !controlarErroresAficionado('codigoPostal','pattern')"><strong>{{'formato-incorrecto' | translate}}</strong></mat-error>
-            <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'maxlength') && !controlarErroresAficionado('codigoPostal','pattern')"><strong>{{'formato-incorrecto' | translate}}</strong></mat-error>
-            <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'pattern') && (!controlarErroresAficionado('codigoPostal','minlength') || !controlarErroresAficionado('codigoPostal','maxlength'))">{{'introduce' | translate}} <strong>{{'solo-numeros' | translate}}</strong></mat-error>
-          </mat-form-field>
-
-          <div class="md:col-span-2">
-            <div *ngIf="mostrarErrorAficionado">
-              <nz-alert nzType="error" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'error-aficionado' | translate}}" nzDescription="{{'text-error-aficionado' | translate}}" nzShowIcon></nz-alert>
-            </div>
-  
-            <div *ngIf="mostrarAficionadoActualizado">
-              <nz-alert nzType="success" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'aficionado-actualizado' | translate}}" nzDescription="{{'text-aficionado-actualizado' | translate}}" nzShowIcon></nz-alert>
-            </div>
-          </div>
-
-        <div class="md:col-span-2 flex justify-center">
-          <button type="submit" [disabled]="!formAficionado.valid" class="bg-azul text-white px-6 py-2 rounded-full shadow">
-            {{'actualizar-direccion' | translate}}
-          </button>
-        </div>
-
-      </form>
+  <div class="w-full md:w-4/5 lg:w-3/5 xl:w-1/2 bg-white rounded-2xl shadow-lg p-8 border border-gray-200">
+    <!-- Informacion Usuario -->
+    <div class="mb-8 text-center">
+      <h1 class="text-2xl font-bold text-azul">{{'perfil-usuario' | translate}}</h1>
     </div>
+    <!-- Datos Usuario -->
+    <form [formGroup]="formUsuario" (ngSubmit)="actualizarDatosUsuario()" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-2">
+      <!-- Nombre -->
+      <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
+        <mat-label class="bg-white p-1">{{'Nombre' | translate}}</mat-label>
+        <input type="text" matInput formControlName="nombre">
+        <mat-error *ngIf="controlarErrores('nombre', 'required')">{{'introduce-tu' | translate}} <strong>{{'nombre' | translate}}</strong></mat-error>
+        <mat-error *ngIf="controlarErrores('nombre','minlength') && !controlarErrores('nombre','pattern')">{{'nombre-debe' | translate}} <strong>{{'tres-o-mas' | translate}}</strong></mat-error>
+        <mat-error *ngIf="controlarErrores('nombre','maxlength') && !controlarErrores('nombre','pattern')">{{'nombre-supera' | translate}} <strong>{{'maximo-caracteres'  | translate}}</strong></mat-error>
+        <mat-error *ngIf="controlarErrores('nombre','pattern') && (!controlarErrores('nombre','minlength') || !controlarErrores('nombre','maxlength'))">{{'nombre-no-puede-contener' | translate}} <strong>{{'numeros-caracteres' | translate}}</strong></mat-error>
+      </mat-form-field>
+      <!-- Correo Electronico -->
+      <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
+        <mat-label class="bg-white p-1">{{'Correo-Electronico' | translate}}</mat-label>
+        <input type="email" matInput formControlName="email">
+        <mat-error *ngIf="controlarErrores('email', 'required')">{{'introduce-una-direccion' | translate}} <strong>{{'correo-electronico' | translate}}</strong></mat-error>
+        <mat-error *ngIf="controlarErrores('email','email')">{{'direccion-correo' | translate}} <strong>{{'no-valida' | translate}}</strong></mat-error>
+      </mat-form-field>
+      <!-- Avartar -->
+      <div class="md:col-span-2 flex flex-col items-center gap-2">
+        <label class="text-sm font-semibold text-azul">{{ 'avatar' | translate }}</label>
+        <label for="avatarInput" class="cursor-pointer flex items-center justify-center w-36 h-36 rounded-full border-2  border-azul bg-gray-50 overflow-hidden">
+          <ng-container *ngIf="imagenSeleccionada; else mostrarAvatarActual">
+            <img [src]="imagenSeleccionada" alt="Avatar" class="w-full h-full object-cover rounded-full" />
+          </ng-container>
+          <ng-template #mostrarAvatarActual>
+            <ng-container *ngIf="usuario.avatar; else placeholderAvatar">
+              <img src="data:image/jpeg;base64,{{usuario.avatar}}" alt="Imagen" class="w-full h-full object-cover rounded-full" />
+            </ng-container>
+          </ng-template>
+          <ng-template #placeholderAvatar>
+            <mat-icon>person-outline</mat-icon>
+          </ng-template>
+        </label>
+        <input id="avatarInput" type="file" (change)="cambiasImagen($event)" class="hidden"/>
+        <span class="text-xs text-black italic">{{ 'selecciona-imagen' | translate }}</span>
+      </div>
+      <!-- Alertas Usuario -->
+      <div class="md:col-span-2">
+        <div *ngIf="mostrarErrorRegistro">
+          <nz-alert nzType="error" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'err-ru' | translate}}" nzDescription="{{'text-err-ru' | translate}}" nzShowIcon></nz-alert>
+        </div>
+        <div *ngIf="mostrarErrorNumCaras">
+          <nz-alert nzType="error" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'err-num-caras' | translate}}" nzDescription="{{'text-err-num-caras' | translate}}" nzShowIcon></nz-alert>
+        </div>
+        <div *ngIf="mostrarErrorFaceAPI">
+          <nz-alert nzType="error" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'err-face-api' | translate}}" nzDescription="{{'text-err-face-api' | translate}}" nzShowIcon></nz-alert>
+        </div>
+        <div *ngIf="mostrarUsuarioActualizado">
+          <nz-alert nzType="success" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'usuario-actualizado' | translate}}" nzDescription="{{'text-usuario-actualizado' | translate}}" nzShowIcon></nz-alert>
+        </div>
+      </div>
+      <!-- Validar Cambios -->
+      <div class="md:col-span-2 flex justify-center">
+        <button type="submit" [disabled]="!formUsuario.valid" class="bg-azul text-white px-6 py-2 rounded-full shadow">{{'actualizar-usuario' | translate}}</button>
+      </div>
+    </form>
+    <!-- Informacion Aficionado -->
+    <div class="my-8 text-center">
+      <h1 class="text-2xl font-bold text-azul">{{'direccion-envio' | translate}}</h1>
+    </div>
+    <!-- Datos Aficionado -->
+    <form [formGroup]="formAficionado" (ngSubmit)="actualizarDatosAficionado()" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-2">
+      <!-- Telefono -->
+      <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
+        <mat-label class="bg-white p-1">{{'telefono' | translate}}</mat-label>
+        <input type="text" matInput [(ngModel)]="aficionado.telefono" formControlName="telefono">
+        <mat-error *ngIf="controlarErroresAficionado('telefono', 'required')">{{'introduce-tu' | translate}} <strong>{{'telefono-form' | translate}}</strong></mat-error>
+        <mat-error *ngIf="controlarErroresAficionado('telefono', 'minlength') && !controlarErroresAficionado('telefono','pattern')"><strong>{{'formato-incorrecto' | translate}}</strong></mat-error>
+        <mat-error *ngIf="controlarErroresAficionado('telefono', 'maxlength') && !controlarErroresAficionado('telefono','pattern')"><strong>{{'formato-incorrecto' | translate}}</strong></mat-error>
+        <mat-error *ngIf="controlarErroresAficionado('telefono', 'pattern') && (!controlarErroresAficionado('telefono','minlength') || !controlarErroresAficionado('telefono','maxlength'))">{{'introduce' | translate}} <strong>{{'solo-numeros' | translate}}</strong></mat-error>
+      </mat-form-field>
+      <!-- Direccion -->
+      <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
+        <mat-label class="bg-white p-1">{{'direccion' | translate}}</mat-label>
+        <input type="text" [(ngModel)]="aficionado.direccion"  matInput formControlName="direccion">
+        <mat-error *ngIf="controlarErroresAficionado('direccion', 'required')">{{'introduce-tu' | translate}} <strong>{{'direccion-form' | translate}}</strong></mat-error>
+      </mat-form-field>
+      <!-- Poblacion -->
+      <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
+        <mat-label class="bg-white p-1">{{'poblacion' | translate}}</mat-label>
+        <input type="text" [(ngModel)]="aficionado.poblacion"  matInput formControlName="poblacion">
+        <mat-error *ngIf="controlarErroresAficionado('poblacion', 'required')">{{'introduce-tu' | translate}} <strong>{{'poblacion-form' | translate}}</strong></mat-error>
+      </mat-form-field>
+      <!-- Codigo Postal -->
+      <mat-form-field class="w-full" appearance="outline" hideRequiredMarker>
+        <mat-label class="bg-white p-1">{{'codigo-postal' | translate}}</mat-label>
+        <input type="text" [(ngModel)]="aficionado.codigo_postal"  matInput formControlName="codigoPostal">
+        <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'required')">{{'introduce-tu' | translate}} <strong>{{'codigo-postal-form' | translate}}</strong></mat-error>
+        <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'minlength') && !controlarErroresAficionado('codigoPostal','pattern')"><strong>{{'formato-incorrecto' | translate}}</strong></mat-error>
+        <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'maxlength') && !controlarErroresAficionado('codigoPostal','pattern')"><strong>{{'formato-incorrecto' | translate}}</strong></mat-error>
+        <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'pattern') && (!controlarErroresAficionado('codigoPostal','minlength') || !controlarErroresAficionado('codigoPostal','maxlength'))">{{'introduce' | translate}} <strong>{{'solo-numeros' | translate}}</strong></mat-error>
+      </mat-form-field>
+      <!-- Errores Aficionado -->
+      <div class="md:col-span-2">
+        <div *ngIf="mostrarErrorAficionado">
+          <nz-alert nzType="error" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'error-aficionado' | translate}}" nzDescription="{{'text-error-aficionado' | translate}}" nzShowIcon></nz-alert>
+        </div>
+        <div *ngIf="mostrarAficionadoActualizado">
+          <nz-alert nzType="success" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'aficionado-actualizado' | translate}}" nzDescription="{{'text-aficionado-actualizado' | translate}}" nzShowIcon></nz-alert>
+        </div>
+      </div>
+      <!-- Validar datos Aficionado -->
+      <div class="md:col-span-2 flex justify-center">
+        <button type="submit" [disabled]="!formAficionado.valid" class="bg-azul text-white px-6 py-2 rounded-full shadow">{{'actualizar-direccion' | translate}}</button>
+      </div>
+    </form>
   </div>
+</div>
   

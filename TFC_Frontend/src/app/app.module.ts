@@ -39,7 +39,16 @@ import { ToggleMenuDirective } from './directives/toggle-menu.directive';
 import { PerfilUsuarioComponent } from './components/perfil-usuario/perfil-usuario.component';
 import { AreaPedidosComponent } from './components/area-pedidos/area-pedidos.component';
 import { MatTableModule } from '@angular/material/table';
-
+import { PartidosComponent } from './components/partidos/partidos.component';
+import { CompraEntradasComponent } from './components/compra-entradas/compra-entradas.component';
+import { DetallePartidoComponent } from './components/detalle-partido/detalle-partido.component';
+import {MatTabsModule} from '@angular/material/tabs';
+import {MatProgressSpinner, MatProgressSpinnerModule, ProgressSpinnerMode} from '@angular/material/progress-spinner';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import {MatTooltipModule} from '@angular/material/tooltip';
+import { QRCodeModule } from 'angularx-qrcode';
+import { AreaEntradasComponent } from './components/area-entradas/area-entradas.component';
 registerLocaleData(es);
 
 @NgModule({
@@ -60,10 +69,16 @@ registerLocaleData(es);
     ToggleMenuDirective,
     PerfilUsuarioComponent,
     AreaPedidosComponent,
+    PartidosComponent,
+    CompraEntradasComponent,
+    DetallePartidoComponent,
+    AreaEntradasComponent,
   ],
   imports: [
     BrowserModule,
+    MatTooltipModule,
     MatTableModule,
+    MatTabsModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
@@ -72,6 +87,7 @@ registerLocaleData(es);
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,
+    QRCodeModule,
     NzAlertModule,
     TranslateModule.forRoot({
       loader :{
@@ -85,7 +101,10 @@ registerLocaleData(es);
     MatButtonModule,
     NzCarouselModule,
     NgxBootstrapIconsModule.pick(allIcons),
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatProgressSpinnerModule,
+    MatSliderModule,
+    MatProgressBarModule
   ],
   providers: [
     { provide: NZ_I18N, useValue: es_ES }

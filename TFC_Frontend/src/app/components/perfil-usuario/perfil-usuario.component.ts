@@ -26,13 +26,12 @@ export class PerfilUsuarioComponent implements OnInit {
   mostrarErrorNumCaras : boolean = false
   mostrarErrorFaceAPI : boolean = false
 
-  usuarioSubject: BehaviorSubject<Usuario | null> = new BehaviorSubject<Usuario | null>(null);
-  aficionadoSubject: BehaviorSubject<Aficionado | null> = new BehaviorSubject<Aficionado | null>(null);
+  usuarioSubject: BehaviorSubject<Usuario | null> = new BehaviorSubject<Usuario | null>(null)
+  aficionadoSubject: BehaviorSubject<Aficionado | null> = new BehaviorSubject<Aficionado | null>(null)
 
-  fileToUpload: File | null = null;
-  apiResponse: any;
+  imagenASubir: File | null = null
 
-  imagenSeleccionada: string | ArrayBuffer | null = null;
+  imagenSeleccionada: string | ArrayBuffer | null = null
 
   ngOnInit(): void {
     let usuarioAux = sessionStorage.getItem('usuario')
@@ -86,84 +85,101 @@ export class PerfilUsuarioComponent implements OnInit {
 
   constructor(private seriviosUsuario : ServicioUsuarioService) { }
 
+  /*
+  * Metodo que comprueba si el input contiene algun error.
+  * @param {string} => nombre del input a controlar.
+  * @param {string} => nombre del error controlado.
+  * @return {FormGroup.control} =>  devuelve si se comple un error.
+  */
   public controlarErrores(nombreControl : string, nombreError : string){
     return this.formUsuario.controls[nombreControl].hasError(nombreError)
   }
 
+  /*
+  * Metodo que comprueba si el input contiene algun error.
+  * @param {string} => nombre del input a controlar.
+  * @param {string} => nombre del error controlado.
+  * @return {FormGroup.control} =>  devuelve si se comple un error.
+  */
   public controlarErroresAficionado(nombreControl : string, nombreError : string){
     return this.formAficionado.controls[nombreControl].hasError(nombreError)
   }
 
+  /*
+  * Metodo que obtiene la foto de la base de datos y la transforma a un formato utilizable en el frontend.
+  */
   obtenerImgPerfil() {
     return 'data:image/png;base64,'+this.usuario.avatar
   }
   
+  /*
+  * Metodo que actualiza los datos del usuario y actualiza la session.
+  */
   actualizarDatosUsuario() {
     const datosUsuarioActualizar = {
       nombre: this.formUsuario.get('nombre')?.value,
       correo_electronico: this.formUsuario.get('email')?.value
-    };
+    }
   
-    if (this.fileToUpload) {
-      console.log(this.fileToUpload)
-      this.seriviosUsuario.comprobarImagen(this.fileToUpload).subscribe({
+    if (this.imagenASubir) {
+      console.log(this.imagenASubir)
+      this.seriviosUsuario.comprobarImagen(this.imagenASubir).subscribe({
         next: (response) => {
           if(response.count == 1){
             const formData = new FormData();
-            formData.append('nombre', datosUsuarioActualizar.nombre);
-            formData.append('correo_electronico', datosUsuarioActualizar.correo_electronico);
-            formData.append('avatar', this.fileToUpload!);
+            formData.append('nombre', datosUsuarioActualizar.nombre)
+            formData.append('correo_electronico', datosUsuarioActualizar.correo_electronico)
+            formData.append('avatar', this.imagenASubir!)
     
             this.seriviosUsuario.actualizarDatosUsuario(this.usuario.ID, formData).subscribe({
               next: () => {
-                this.mostrarUsuarioActualizado = true;
+                this.mostrarUsuarioActualizado = true
                 this.usuario = {
                   ...this.usuario,
                   ...datosUsuarioActualizar,
-                  avatar: this.fileToUpload!
-                };
-                this.usuarioSubject.next(this.usuario);
-                sessionStorage.setItem('usuario', JSON.stringify({ usuario: this.usuario }));
+                  avatar: this.imagenASubir!
+                }
+                this.usuarioSubject.next(this.usuario)
+                sessionStorage.setItem('usuario', JSON.stringify({ usuario: this.usuario }))
               },
               error: (error) => {
                 if (error.status === 400) {
-                  this.mostrarErrorRegistro = true;
+                  this.mostrarErrorRegistro = true
                 }
               }
             });
           }else{
-            this.mostrarErrorNumCaras = true;
+            this.mostrarErrorNumCaras = true
           }
         },
         error: (error) => {
-            this.mostrarErrorFaceAPI = true;
+            this.mostrarErrorFaceAPI = true
         }
       });
     } else {
       const formData = new FormData();
-      formData.append('nombre', datosUsuarioActualizar.nombre);
-      formData.append('correo_electronico', datosUsuarioActualizar.correo_electronico);
+      formData.append('nombre', datosUsuarioActualizar.nombre)
+      formData.append('correo_electronico', datosUsuarioActualizar.correo_electronico)
   
       this.seriviosUsuario.actualizarDatosUsuario(this.usuario.ID, formData).subscribe({
         next: () => {
-          this.mostrarUsuarioActualizado = true;
-          this.usuario = { ...this.usuario, ...datosUsuarioActualizar };
-          this.usuarioSubject.next(this.usuario);
-          sessionStorage.setItem('usuario', JSON.stringify({ usuario: this.usuario }));
+          this.mostrarUsuarioActualizado = true
+          this.usuario = { ...this.usuario, ...datosUsuarioActualizar }
+          this.usuarioSubject.next(this.usuario)
+          sessionStorage.setItem('usuario', JSON.stringify({ usuario: this.usuario }))
         },
         error: (error) => {
           if (error.status === 400) {
-            this.mostrarErrorRegistro = true;
+            this.mostrarErrorRegistro = true
           }
         }
       });
     }
   }
-  
-  cambiarVisibilidadPassword(){
-    this.mostrarPassword = !this.mostrarPassword
-  }
 
+  /*
+  * Metodo que actualiza los datos del aficionado y actualiza el localStorage.
+  */
   actualizarDatosAficionado(){
     const datosAficionadoActualizar = {
       telefono: this.formAficionado.get('telefono')?.value,
@@ -193,6 +209,9 @@ export class PerfilUsuarioComponent implements OnInit {
     })
   }
 
+  /*
+  * Metodo para cerrar las alertas que aparecen en la ejecucion.
+  */
   cerrarAlerta() {
     this.mostrarErrorRegistro = false
     this.mostrarUsuarioActualizado = false
@@ -200,10 +219,13 @@ export class PerfilUsuarioComponent implements OnInit {
     this.mostrarErrorAficionado = false
   }
 
-  onFileSelected(event: any) {
+  /*
+  * Metodo que renderiza la imagen seleccionada por el usuario.
+  */
+  cambiasImagen(event: any) {
     const file: File = event.target.files[0];
     if (file) {
-      this.fileToUpload = file;
+      this.imagenASubir = file;
   
       const reader = new FileReader();
       reader.onload = () => {
