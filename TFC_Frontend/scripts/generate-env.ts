@@ -1,7 +1,7 @@
 const fs = require('fs');
 const path = require('path');
 
-const envDir = path.join(__dirname, '../src/environments');
+const envDir = path.join(__dirname, '../src/app/environments');
 
 // 1. Crear carpeta environments si no existe
 if (!fs.existsSync(envDir)) {
