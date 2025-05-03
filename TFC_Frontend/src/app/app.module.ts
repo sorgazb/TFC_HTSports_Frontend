@@ -49,6 +49,10 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import {MatTooltipModule} from '@angular/material/tooltip';
 import { QRCodeModule } from 'angularx-qrcode';
 import { AreaEntradasComponent } from './components/area-entradas/area-entradas.component';
+import { PlantillaComponent } from './components/plantilla/plantilla.component';
+import { AlienacionesComponent } from './components/alienaciones/alienaciones.component';
+import { DragDropModule } from '@angular/cdk/drag-drop';
+
 registerLocaleData(es);
 
 @NgModule({
@@ -73,12 +77,15 @@ registerLocaleData(es);
     CompraEntradasComponent,
     DetallePartidoComponent,
     AreaEntradasComponent,
+    PlantillaComponent,
+    AlienacionesComponent,
   ],
   imports: [
     BrowserModule,
     MatTooltipModule,
     MatTableModule,
     MatTabsModule,
+    DragDropModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,

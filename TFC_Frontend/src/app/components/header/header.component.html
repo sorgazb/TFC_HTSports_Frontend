@@ -64,9 +64,21 @@
                         </a>
                     </li>
                     <li>
-                        <a *ngIf="usuario" routerLink="partidos" class="btnInicioSesion">
+                        <a *ngIf="aficionado && usuario" routerLink="partidos" class="btnInicioSesion">
                             <mat-icon fontIcon="stadium"></mat-icon>
                             <span>{{'partidos' | translate}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a *ngIf="(cuerpoTecnico || jugador) && usuario" routerLink="misPartidos" class="btnInicioSesion">
+                            <mat-icon fontIcon="sports_soccer"></mat-icon>
+                            <span>{{'mis-partidos' | translate}}</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a *ngIf="(cuerpoTecnico || jugador) && usuario" routerLink="miEquipo" class="btnInicioSesion">
+                            <mat-icon fontIcon="groups"></mat-icon>
+                            <span>{{'equipo' | translate}}</span>
                         </a>
                     </li>
                 </ul>

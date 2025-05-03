@@ -154,5 +154,14 @@
   "zona" : "Zona",
   "precio-entrada" : "Precio Entrada",
   "id-partido" : "Partido",
-  "aforo-completo" : "Aforo Completo"
+  "aforo-completo" : "Aforo Completo",
+  "mis-partidos" : "Mis Partidos",
+  "equipo" : "Equipo",
+  "porteros" : "Porteros",
+  "defensas" : "Defensas",
+  "centrocampistas" : "Centro Campistas",
+  "delanteros" : "Delanteros",
+  "plazas" : "Plazas",
+  "jugadores" : "Jugadores",
+  "cuerpo-tecnico" : "Cuerpo Tecnico"
 }

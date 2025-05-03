@@ -4,6 +4,8 @@ import { Usuario } from '../class/usuario'
 import { catchError, Observable, throwError } from 'rxjs'
 import { Aficionado } from '../class/aficionado'
 import { environment } from '../environments/environment'
+import { CuerpoTecnico } from '../class/cuerpo-tecnico'
+import { Jugador } from '../class/jugador'
 
 @Injectable({
   providedIn: 'root'
@@ -34,13 +36,21 @@ export class ServicioUsuarioService {
       })
     )
   }
+
+  obtenerUsuario(correo_electronico: string): Observable<Usuario> {
+    return this.http.get<Usuario>(`${this.apiUrl}${this.endPoint}/usuario/${correo_electronico}`)
+  }
   
   obtenerAficionado(id: number): Observable<Aficionado> {
     return this.http.get<Aficionado>(`${this.apiUrl}${this.endPoint}/aficionado/${id}`)
   }
 
-  obtenerUsuario(correo_electronico: string): Observable<Usuario> {
-    return this.http.get<Usuario>(`${this.apiUrl}${this.endPoint}/usuario/${correo_electronico}`)
+  obtenerCuerpoTecnico(id: number): Observable<CuerpoTecnico>{
+    return this.http.get<CuerpoTecnico>(`${this.apiUrl}${this.endPoint}/cuerpoTecnico/${id}`)
+  }
+
+  obtenerJugador(id: number): Observable<Jugador>{
+    return this.http.get<Jugador>(`${this.apiUrl}${this.endPoint}/jugador/${id}`)
   }
 
   actualizarDatosUsuario(id: number, datos: FormData): Observable<Usuario> {
@@ -55,6 +65,14 @@ export class ServicioUsuarioService {
         return throwError(() => error)
       })
     )
+  }
+
+  obtenerJugadores(equipoId: number): Observable<Jugador[]> {
+    return this.http.get<Jugador[]>(`${this.apiUrl}${this.endPoint}/equipo/${equipoId}/jugadores`);
+  }
+
+  obtenerCuerposTecnicos(equipoId: number): Observable<CuerpoTecnico[]> {
+    return this.http.get<CuerpoTecnico[]>(`${this.apiUrl}${this.endPoint}/equipo/${equipoId}/cuerpotecnico`);
   }
 
   comprobarImagen(image: File): Observable<any> {

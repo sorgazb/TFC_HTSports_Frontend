@@ -18,4 +18,8 @@ export class ServicioEquipoService {
   obtenerTodosLosEquipos():Observable<Equipo[]>{
     return this.http.get<Equipo[]>(`${this.apiUrl}${this.endPoint}`)
   }
+
+  obtenerEquipoPorId(id : number):Observable<Equipo>{
+    return this.http.get<Equipo>(`${this.apiUrl}${this.endPoint}/${id}`)
+  }
 }

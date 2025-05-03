@@ -27,6 +27,7 @@
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
     "angularx-qrcode": "^15.0.1",
+    "html2canvas": "^1.4.1",
     "image-map-resizer": "^1.0.10",
     "ng-zorro-antd": "^15.1.1",
     "ngx-bootstrap-icons": "^1.9.3",

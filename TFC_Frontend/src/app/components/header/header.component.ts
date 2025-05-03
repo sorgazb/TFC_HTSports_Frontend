@@ -28,6 +28,8 @@ export class HeaderComponent implements OnInit {
 
   usuario : any = null
   aficionado : any = null
+  cuerpoTecnico : any = null
+  jugador : any = null
 
   constructor (private router : Router, public dialog: MatDialog, private servicioCarrito: ServicioCarritoService) {
     this.router.events.pipe(
@@ -52,6 +54,16 @@ export class HeaderComponent implements OnInit {
     const aficionadoGuardado = localStorage.getItem('aficionado')
     if (aficionadoGuardado) {
       this.aficionado = JSON.parse(aficionadoGuardado)
+    }
+
+    const cuerpoTecnicoGuardado = localStorage.getItem('cuerpoTecnico')
+    if (cuerpoTecnicoGuardado) {
+      this.cuerpoTecnico = JSON.parse(cuerpoTecnicoGuardado)
+    }
+
+    const jugadorGuardado = localStorage.getItem('jugador')
+    if(jugadorGuardado){
+      this.jugador = JSON.parse(jugadorGuardado)
     }
 
     this.btnAbrir = document.getElementById('btnAbrir') as HTMLElement
@@ -99,6 +111,8 @@ export class HeaderComponent implements OnInit {
     sessionStorage.removeItem('token')
     sessionStorage.removeItem('usuario')
     localStorage.removeItem('aficionado')
+    localStorage.removeItem('cuerpoTecnico')
+    localStorage.removeItem('jugador')
     localStorage.removeItem('carrito')
     this.servicioCarrito.limpiarCarrito()
     this.router.navigate(['/']).then(() => {

@@ -1,0 +1,96 @@
+<div *ngIf="isLoading" class="flex justify-center items-center min-h-screen">
+  <div class="flex flex-col items-center">
+    <div class="spinner-border animate-spin inline-block w-12 h-12 border-4 border-t-transparent border-azul rounded-full" role="status"></div>
+    <p class="mt-4 text-lg text-azul">Cargando Plantilla...</p>
+  </div>
+</div>
+
+<div *ngIf="!isLoading" class="p-4">
+
+  <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+
+    <div class="col-span-1">
+      <div>
+        <label class="text-azul text-lg font-semibold">Sistema de juego:</label>
+        <select class="border-azul border-2 text-azul rounded p-2 w-full" [(ngModel)]="sistemaSeleccionado" (change)="cambiarSistema()">
+          <option *ngFor="let sistemaJuego of sistemasDeJuego" [value]="sistemaJuego">{{sistemaJuego}}</option>
+        </select>
+      </div>
+
+      <div>
+        <label class="text-azul text-lg font-semibold">Selecciona Posicion:</label>
+        <select class="border-azul border-2 text-azul rounded p-2 w-full" [(ngModel)]="posicionSeleccionada" (change)="seleccionarPosicion()">
+          <option *ngFor="let posicion of posiciones" [value]="posicion">{{posicion}}</option>
+        </select>
+      </div>
+
+      <div id="listaJugadores"
+           cdkDropList
+           [cdkDropListData]="jugadoresPosicion"
+           [cdkDropListConnectedTo]="dropListIds"
+           class="grid grid-cols-2 gap-2 bg-gray-500 p-4 rounded mt-2"
+           (cdkDropListDropped)="drop($event)">
+        <div *ngFor="let jugador of jugadoresPosicion" cdkDrag class="m-2 cursor-move">
+
+          <div class="bg-gradient-to-br from-indigo-100 to-blue-700 rounded-xl p-3 text-white text-center">
+            <div class="relative">
+              <div class="flex justify-center">
+                <img src="{{jugador.avatar}}" class="w-24 h-24 [mask-image:linear-gradient(to_bottom,black_90%,transparent_100%)]">
+              </div>
+              <div class="absolute top-0 right-0 bg-black text-xs p-2 rounded-bl-lg">{{jugador.dorsal}}</div>
+            </div>
+            <h2 class="text-lg text-white">{{jugador.nombre}}</h2>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="lg:col-span-2 col-span-1">
+
+      <div class="bg-green-700 h-full p-5 rounded-lg" #capture>
+        <div class="grid gap-2 grid-rows-{{filas.length}}">
+          <div *ngFor="let fila of filas" class="flex justify-center gap-2">
+            <div *ngFor="let columna of fila"
+              id="{{columna.id}}"
+              cdkDropList
+              [cdkDropListData]="alineacion[columna.id]"
+              [cdkDropListConnectedTo]="dropListIds"
+              (cdkDropListDropped)="drop($event)"
+              class="bg-green-300 bg-opacity-40 rounded-md w-16 h-16 lg:w-24 lg:h-32 xl:w-40 xl:h-48 p-1 flex-none flex items-center justify-center sm:m-2">
+              
+              <div *ngFor="let jugador of alineacion[columna.id]" cdkDrag 
+              class="w-full h-full p-1 flex items-center justify-center relative">
+
+                <button (click)="quitarJugador(columna.id, jugador); $event.stopPropagation()"
+                  class="absolute top-1 right-1 w-5 h-5 text-[10px] flex items-center justify-center 
+                  bg-red-600 hover:bg-red-700 text-white rounded-full z-10">×
+                </button>
+
+                <div class="bg-gradient-to-br from-indigo-100 to-blue-700 rounded-xl p-3 text-white text-center">
+                  <div class="relative">
+                    <div class="flex justify-center">
+                      <img src="{{jugador.avatar}}" 
+                      class="max-w-full max-h-full object-contain" 
+                      alt="Avatar">                    
+                    </div>
+                    <div class="absolute top-0 right-0 bg-black text-xs p-2 rounded-bl-lg hidden xl:inline">{{jugador.dorsal}}</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <button (click)="captureField()">Guardar imagen</button>
+
+<!-- Aquí aparece la foto tras la captura -->
+<img
+  *ngIf="capturaDataUrl"
+  [src]="capturaDataUrl"
+  alt="Foto alineación"
+  class="mt-4 border"
+/>
+</div>

@@ -13,6 +13,8 @@ import { PartidosComponent } from './components/partidos/partidos.component';
 import { DetallePartidoComponent } from './components/detalle-partido/detalle-partido.component';
 import { CompraEntradasComponent } from './components/compra-entradas/compra-entradas.component';
 import { AreaEntradasComponent } from './components/area-entradas/area-entradas.component';
+import { PlantillaComponent } from './components/plantilla/plantilla.component';
+import { AlienacionesComponent } from './components/alienaciones/alienaciones.component';
 
 const routes: Routes = [
   {
@@ -66,6 +68,14 @@ const routes: Routes = [
   {
     path: 'areaEntradas',
     component: AreaEntradasComponent
+  },
+  {
+    path: 'miEquipo',
+    component: PlantillaComponent
+  },
+  {
+    path: 'alienaciones',
+    component: AlienacionesComponent
   }
 ];
 

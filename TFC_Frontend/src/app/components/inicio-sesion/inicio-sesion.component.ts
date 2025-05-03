@@ -4,6 +4,8 @@ import { ServicioUsuarioService } from '../../services/servicio-usuario.service'
 import { Usuario } from '../../class/usuario';
 import { Router } from '@angular/router';
 import { Aficionado } from '../../class/aficionado';
+import { CuerpoTecnico } from 'src/app/class/cuerpo-tecnico';
+import { Jugador } from 'src/app/class/jugador';
 
 @Component({
   selector: 'app-inicio-sesion',
@@ -14,6 +16,8 @@ export class InicioSesionComponent implements OnInit{
 
   usuario !: Usuario
   aficionado !: Aficionado
+  cuerpoTecnico !: CuerpoTecnico
+  jugador !: Jugador
 
   formLogin !: FormGroup
 
@@ -71,16 +75,35 @@ export class InicioSesionComponent implements OnInit{
         if(sessionStorage.getItem('usuario') != null){
           let usarioLogin = sessionStorage.getItem('usuario')
           let usuarioParseado = JSON.parse(usarioLogin!)
-          idUsuario = usuarioParseado.usuario.ID          
+          idUsuario = usuarioParseado.usuario.ID 
+          this.usuario = usuarioParseado.usuario         
         }
-  
-        this.serviciosUsuario.obtenerAficionado(idUsuario).subscribe((aficionadoObtenido: Aficionado) => {
-          this.aficionado = aficionadoObtenido;
-          localStorage.setItem('aficionado', JSON.stringify(this.aficionado));
-          this.router.navigate(['/']).then(() => {
-            window.location.reload()
+
+        if(this.usuario.tipo == 'aficionado'){
+          this.serviciosUsuario.obtenerAficionado(idUsuario).subscribe((aficionadoObtenido: Aficionado) => {
+            this.aficionado = aficionadoObtenido;
+            localStorage.setItem('aficionado', JSON.stringify(this.aficionado));
+            this.router.navigate(['/']).then(() => {
+              window.location.reload()
+            })
           })
-        })
+        }else if(this.usuario.tipo == 'cuerpotecnico'){
+          this.serviciosUsuario.obtenerCuerpoTecnico(idUsuario).subscribe((cuerpoTecnicoObtenido: CuerpoTecnico) => {
+            this.cuerpoTecnico = cuerpoTecnicoObtenido
+            localStorage.setItem('cuerpoTecnico', JSON.stringify(this.cuerpoTecnico))
+            this.router.navigate(['/']).then(() => {
+              window.location.reload()
+            })
+          })
+        }else{
+          this.serviciosUsuario.obtenerJugador(idUsuario).subscribe((jugadorObtenido: Jugador) => {
+            this.jugador = jugadorObtenido
+            localStorage.setItem('jugador', JSON.stringify(this.cuerpoTecnico))
+            this.router.navigate(['/']).then(() => {
+              window.location.reload()
+            })
+          })
+        }
       },
       error: (error) => {
         if(error.status == 400){

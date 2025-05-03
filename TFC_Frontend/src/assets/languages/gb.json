@@ -154,5 +154,14 @@
   "zona" : "Zone",
   "precio-entrada" : "Ticket Price",
   "id-partido" : "Match",
-  "aforo-completo" : "Full Capacity"
+  "aforo-completo" : "Full Capacity",
+  "mis-partidos" : "My Matches",
+  "equipo" : "Team",
+  "porteros" : "Goalkeepers",
+  "defensas" : "Defenders",
+  "centrocampistas" : "Midfielders",
+  "delanteros" : "Forwards",
+  "plazas" : "Seats",
+  "jugadores" : "Players",
+  "cuerpo-tecnico" : "Coaching Staff"
 }
