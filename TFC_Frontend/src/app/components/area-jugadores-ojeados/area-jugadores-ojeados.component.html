@@ -1,0 +1,66 @@
+<div>
+    <!-- Botones Flitrar y Registrar Nuevo Jugador -->
+    <div class="flex">
+        <div class="m-5">
+            <button (click)="mostrarFiltros = !mostrarFiltros" class="bg-azul text-white px-4 py-2 rounded">
+                {{ mostrarFiltros ? ('ocultar-filtros' | translate) : ('mostrar-filtros' | translate) }}
+            </button>
+        </div>
+        <div *ngIf="cuerpoTecnico.tipo === 'ojeador'" class="m-5">
+            <button (click)="registrarNuevoJugador()" class="bg-azul text-white px-4 py-2 rounded">
+                {{'registrar-jugador' | translate }}
+            </button>
+        </div>
+    </div>
+    
+    <!-- Contenedor Filtros -->
+    <div class="overflow-hidden transition-max-height duration-500 ease-in-out grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 m-6" [ngClass]="{ 'max-h-0': !mostrarFiltros, 'max-h-screen': mostrarFiltros }">
+    
+        <!-- Filtro Posicion -->
+        <div>
+            <label class="block mb-1 text-azul">{{'filtro-posicion' | translate}}</label>
+            <select class="w-full border rounded p-2 border-azul text-azul" [(ngModel)]="filtroPosicion" (change)="aplicarFiltros()">
+                <option value="">{{ 'todos_las_posiciones' | translate }}</option>
+                <div *ngIf="this.translate.currentLang == 'es'">
+                    <option *ngFor="let posicion of posiciones" [value]="posicion.toLocaleLowerCase()">{{ posicion }}</option>
+                </div>
+                <div *ngIf="this.translate.currentLang == 'gb'">
+                    <option *ngFor="let posicion of posicionesEng" [value]="posicion.toLocaleLowerCase()">{{ posicion }}</option>
+                </div>
+            </select>
+        </div>
+    
+        <!-- Ordenador Valoracion -->
+        <div>
+            <label class="block mb-1 text-azul">{{'metodo-ordenacion' | translate}}</label>
+            <select class="w-full border rounded p-2 border-azul text-azul" [(ngModel)]="ordenValoracion" (change)="aplicarFiltros()">
+                <option value="">{{ 'metodo-ordenacion' | translate }}</option>
+                <option value="asc">{{ 'valoracion-asc' | translate }}</option>
+                <option value="desc">{{ 'valoracion-desc' | translate }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div>
+
+    </div>
+
+    <!-- Paginador -->
+    <div class="flex justify-center items-center gap-2 mt-4">
+      <button class="text-azul" (click)="cambiarPagina(1)" [disabled]="paginaActual == 1">
+        <mat-icon fontIcon="keyboard_double_arrow_left"></mat-icon>
+      </button>
+      <button class="text-azul" (click)="cambiarPagina(paginaActual - 1)" [disabled]="paginaActual == 1">
+        <mat-icon fontIcon="arrow_back_iost"></mat-icon>
+      </button>
+    
+      <span class="text-azul">{{'pagina' | translate}} {{ paginaActual }} {{'de' | translate}} {{ totalPaginas }}</span>
+
+      <button class="text-azul" (click)="cambiarPagina(paginaActual + 1)" [disabled]="paginaActual == totalPaginas">
+        <mat-icon fontIcon="arrow_forward_iost"></mat-icon>
+      </button>
+      <button class="text-azul" (click)="cambiarPagina(totalPaginas)" [disabled]="paginaActual == totalPaginas">
+        <mat-icon fontIcon="keyboard_double_arrow_right"></mat-icon>
+      </button>
+    </div>
+</div>

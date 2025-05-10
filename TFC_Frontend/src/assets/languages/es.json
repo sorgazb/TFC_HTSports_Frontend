@@ -190,5 +190,11 @@
   "tarjetas-rojas" : "Tarjetas Rojas 🟥: ",
   "faltas-realizadas" : "Faltas Realizadas: ",
   "duelos-ganados" : "Duelos Ganados: ",
-  "rol" : "Rol:"
+  "rol" : "Rol:",
+  "area-ojeador" : "Red Ojeadores",
+  "registrar-jugador" : "Registrar Jugador",
+  "filtro-posicion" : "Filtra por Posicion",
+  "valoracion-asc" : "Valoracion Ascendente",
+  "valoracion-desc" : "Valoracion Descendente",
+  "todos_las_posiciones" : "Todas las Posiciones"
 }

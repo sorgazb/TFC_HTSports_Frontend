@@ -108,6 +108,13 @@
                             <span>{{'equipo' | translate}}</span>
                         </a>
                     </li>
+                    <!-- Area Ojeador -->
+                    <li>
+                        <a *ngIf="usuario && cuerpoTecnico" routerLink="areaojeador" class="btnInicioSesion">
+                            <mat-icon fontIcon="search"></mat-icon>
+                            <span>{{'area-ojeador' | translate}}</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
             <!-- Boton abrir menu sm -->

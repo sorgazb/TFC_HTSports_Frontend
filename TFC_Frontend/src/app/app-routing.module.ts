@@ -19,6 +19,7 @@ import { PerfilJugadorComponent } from './components/perfil-jugador/perfil-jugad
 import { PartidosEquipoComponent } from './components/partidos-equipo/partidos-equipo.component';
 import { AccesoDenegadoComponent } from './components/acceso-denegado/acceso-denegado.component';
 import { PerfilCuerpoTecnicoComponent } from './components/perfil-cuerpo-tecnico/perfil-cuerpo-tecnico.component';
+import { AreaJugadoresOjeadosComponent } from './components/area-jugadores-ojeados/area-jugadores-ojeados.component';
 
 const routes: Routes = [
   {
@@ -93,10 +94,14 @@ const routes: Routes = [
     path : 'error',
     component: AccesoDenegadoComponent
   },
-    {
+  {
     path: 'cuerpoTecnico/:id',
     component: PerfilCuerpoTecnicoComponent
   },
+  {
+    path: 'areaojeador',
+    component: AreaJugadoresOjeadosComponent
+  }
 ];
 
 @NgModule({

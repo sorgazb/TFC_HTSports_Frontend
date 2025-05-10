@@ -190,5 +190,11 @@
   "tarjetas-rojas": "Red Cards 🟥:",
   "faltas-realizadas": "Fouls Committed:",
   "duelos-ganados": "Duels Won:",
-  "rol": "Role:"
+  "rol": "Role:",
+  "area-ojeador" : "Scout Area",
+  "registrar-jugador": "Register Player",
+  "filtro-posicion": "Filter by Position",
+  "valoracion-asc": "Rating Ascending",
+  "valoracion-desc": "Rating Descending",
+  "todas_las_posiciones": "All Positions"
 }

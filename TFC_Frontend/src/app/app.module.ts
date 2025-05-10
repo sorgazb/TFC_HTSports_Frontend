@@ -57,6 +57,11 @@ import { CountUpModule } from 'ngx-countup';
 import { PartidosEquipoComponent } from './components/partidos-equipo/partidos-equipo.component';
 import { AccesoDenegadoComponent } from './components/acceso-denegado/acceso-denegado.component';
 import { PerfilCuerpoTecnicoComponent } from './components/perfil-cuerpo-tecnico/perfil-cuerpo-tecnico.component';
+import { AreaJugadoresOjeadosComponent } from './components/area-jugadores-ojeados/area-jugadores-ojeados.component';
+import { CardJugadorOjeadoRegistrarComponent } from './components/card-jugador-ojeado-registrar/card-jugador-ojeado-registrar.component';
+import { CardJugadorOjeadoComponent } from './components/card-jugador-ojeado/card-jugador-ojeado.component';
+import { MatOptionModule } from '@angular/material/core';
+
 
 registerLocaleData(es);
 
@@ -88,12 +93,16 @@ registerLocaleData(es);
     PartidosEquipoComponent,
     AccesoDenegadoComponent,
     PerfilCuerpoTecnicoComponent,
+    AreaJugadoresOjeadosComponent,
+    CardJugadorOjeadoRegistrarComponent,
+    CardJugadorOjeadoComponent,
   ],
   imports: [
     BrowserModule,
     MatTooltipModule,
     MatTableModule,
     MatTabsModule,
+    MatOptionModule,
     DragDropModule,
     AppRoutingModule,
     BrowserAnimationsModule,

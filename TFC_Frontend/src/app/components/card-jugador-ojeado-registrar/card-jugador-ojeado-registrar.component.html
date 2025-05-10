@@ -1,0 +1,53 @@
+<div>
+  <h1 class="bg-azul text-white p-5 text-center text-xl">
+    {{ 'registrar-jugador' | translate }}
+  </h1>
+  <div mat-dialog-content>
+    <form [formGroup]="formNuevoJugador" (ngSubmit)="registrarJugador()" class="grid grid-cols-2 gap-4 p-2">
+        <!-- Nombre -->
+        <mat-form-field class="col-span-2 w-full" appearance="outline" hideRequiredMarker>
+            <mat-label class="bg-white p-1">{{ 'Nombre' | translate }}</mat-label>
+            <input type="text" matInput formControlName="nombre"/>
+            <mat-error *ngIf="controlarErrores('nombre', 'required')">
+                {{ 'introduce-tu' | translate }} <strong>{{ 'nombre' | translate }}</strong>
+            </mat-error>
+        </mat-form-field>
+
+        <!-- Avatar -->
+        <div class="col-span-2 flex flex-col items-center gap-2">
+            <label class="text-sm font-semibold text-azul">{{ 'avatar' | translate }}</label>
+            <label for="avatarInput" class="cursor-pointer flex items-center justify-center w-36 h-36 rounded-full border-2 border-azul bg-gray-50 overflow-hidden">
+            <ng-container *ngIf="imagenSeleccionada">
+                <img [src]="imagenSeleccionada" alt="Avatar" class="w-full h-full object-cover rounded-full"/>
+            </ng-container>
+            </label>
+            <input id="avatarInput" type="file" (change)="cambiasImagen($event)" class="hidden"/>
+            <span class="text-xs text-black italic">{{ 'selecciona-imagen' | translate }}</span>
+        </div>
+
+        <!-- Nacionalidad -->
+        <div class="flex justify-center">
+            <mat-select-country class="w-2/3 max-w-sm" appearance="outline" label="{{ 'idioma' | translate }}" (onCountrySelected)="onCountrySelected($event)"></mat-select-country>
+        </div>
+        
+        <!-- Posicion -->
+        <div class="flex justify-center">
+            <select class="w-full border rounded border-azul">
+                <div *ngIf="this.translate.currentLang == 'es'">
+                    <option *ngFor="let posicion of posiciones" [value]="posicion.toLocaleLowerCase()">{{ posicion }}</option>
+                </div>
+                <div *ngIf="this.translate.currentLang == 'gb'">
+                    <option *ngFor="let posicion of posicionesEng" [value]="posicion.toLocaleLowerCase()">{{ posicion }}</option>
+                </div>
+            </select>
+        </div>
+        
+        <!-- Boton Registrar Jugador -->
+        <div class="col-span-2 flex justify-center">
+            <button type="submit" [disabled]="!formNuevoJugador.valid" class="bg-azul text-white px-6 py-2 rounded-full shadow">
+                {{ 'actualizar-usuario' | translate }}
+            </button>
+      </div>
+    </form>
+  </div>
+</div>
