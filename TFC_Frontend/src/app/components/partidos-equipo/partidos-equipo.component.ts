@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Route, Router } from '@angular/router';
 import { CuerpoTecnico } from 'src/app/class/cuerpo-tecnico';
 import { Equipo } from 'src/app/class/equipo';
+import { Jugador } from 'src/app/class/jugador';
 import { Partido } from 'src/app/class/partido';
 import { Usuario } from 'src/app/class/usuario';
 import { ServicioEquipoService } from 'src/app/services/servicio-equipo.service';
@@ -16,6 +17,7 @@ export class PartidosEquipoComponent implements OnInit{
 
   usuario !: Usuario
   cuerpoTecnico !: CuerpoTecnico
+  jugador !: Jugador
 
   partidosEquipo !: Partido[]
 
@@ -38,7 +40,9 @@ export class PartidosEquipoComponent implements OnInit{
     }
     
     if(!localStorage.getItem('cuerpoTecnico')){
-      this.router.navigate(['/error'])
+      if(!localStorage.getItem('jugador')){
+        this.router.navigate(['/error'])
+      }
     }
 
     let usuarioAux = sessionStorage.getItem('usuario')
@@ -49,12 +53,39 @@ export class PartidosEquipoComponent implements OnInit{
     let cuerpoTecnicoSesion = JSON.parse(cuerpoTecnicoAux!)
     this.cuerpoTecnico = cuerpoTecnicoSesion
 
-    this.serviciosPartido.obtenerPartidosEquipo(this.cuerpoTecnico.equipo_id).subscribe((partidos: any[])=>{
+    let jugadorAux = localStorage.getItem('jugador')
+    let jugadorSesison = JSON.parse(jugadorAux!)
+    this.jugador = jugadorSesison
+
+    let idEquipo = 0
+
+    if(this.cuerpoTecnico){
+      idEquipo = this.cuerpoTecnico.equipo_id
+    }
+
+    if(this.jugador){
+      idEquipo = this.jugador.equipo_id
+    }
+
+    this.serviciosPartido.obtenerPartidosEquipo(idEquipo).subscribe((partidos: any[])=>{
       this.partidosEquipo = partidos.map(item => {
         const partido = item.partido as Partido
         partido.equipos = item.equipos
         partido.fecha = new Date(partido.fecha)     
         return partido
+      })
+      const tiempoCancelacion = 100 * 60 * 1000
+      this.partidosEquipo.forEach(partido => {
+        const fechaPartido = new Date(partido.fecha).getTime()
+        const fechaLimite = fechaPartido + tiempoCancelacion
+        if (partido.estado === 'programado') {
+          if(Date.now() === fechaPartido || Date.now() > fechaPartido){
+            this.serviciosPartido.jugarPartido(partido.ID).subscribe(() => {})
+          }
+        }
+        if (Date.now() > fechaLimite && (partido.estado === 'enjuego' || partido.estado === 'programado')) {
+          this.serviciosPartido.finalizarPartido(partido.ID).subscribe(() => {})
+        }
       })
       this.totalPaginas = Math.ceil(this.partidosEquipo.length / this.partidosPagina)
       this.actualizarPartidosPaginados()

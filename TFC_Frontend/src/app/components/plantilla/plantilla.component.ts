@@ -18,6 +18,7 @@ export class PlantillaComponent implements OnInit{
   cuerpoTecnicoPlantilla : CuerpoTecnico[] = []
   usuario !: Usuario
   cuerpoTecnico !: CuerpoTecnico
+
   
   cargando: boolean = true
 
@@ -66,6 +67,7 @@ export class PlantillaComponent implements OnInit{
           this.delanteros.push(jugador)
         }
       }
+      console.log(this.jugadoresPlantilla)
       this.cargando = false
     })
 
@@ -76,7 +78,7 @@ export class PlantillaComponent implements OnInit{
   * @param {number} id del jugador seleccionado
   */
   perfilJugador(idJugador : number){
+    console.log(idJugador)
     this.router.navigate(['/jugador', idJugador])
-
   }
 }

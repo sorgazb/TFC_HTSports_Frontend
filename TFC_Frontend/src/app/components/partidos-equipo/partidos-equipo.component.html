@@ -80,7 +80,7 @@
             <span>{{partido.asistencia}}</span>
           </div>
           <div class="text-center">
-            <a *ngIf="partido.estado === 'programado' || partido.estado === 'programmed'" (click)="establecerAlineacion(partido.ID)" class="bg-white flex items-center justify-center p-1 rounded text-azul hover:bg-blue-200">
+            <a *ngIf="(partido.estado === 'programado' || partido.estado === 'programmed') && cuerpoTecnico  && cuerpoTecnico.tipo === 'entrenador'" (click)="establecerAlineacion(partido.ID)" class="bg-white flex items-center justify-center p-1 rounded text-azul hover:bg-blue-200">
               <mat-icon>sports</mat-icon>
               <span>{{'establecer-alineacion' | translate}}</span>
             </a>

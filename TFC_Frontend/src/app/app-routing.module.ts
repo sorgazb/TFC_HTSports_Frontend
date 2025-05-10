@@ -18,6 +18,7 @@ import { AlienacionesComponent } from './components/alienaciones/alienaciones.co
 import { PerfilJugadorComponent } from './components/perfil-jugador/perfil-jugador.component';
 import { PartidosEquipoComponent } from './components/partidos-equipo/partidos-equipo.component';
 import { AccesoDenegadoComponent } from './components/acceso-denegado/acceso-denegado.component';
+import { PerfilCuerpoTecnicoComponent } from './components/perfil-cuerpo-tecnico/perfil-cuerpo-tecnico.component';
 
 const routes: Routes = [
   {
@@ -91,7 +92,11 @@ const routes: Routes = [
   {
     path : 'error',
     component: AccesoDenegadoComponent
-  }
+  },
+    {
+    path: 'cuerpoTecnico/:id',
+    component: PerfilCuerpoTecnicoComponent
+  },
 ];
 
 @NgModule({

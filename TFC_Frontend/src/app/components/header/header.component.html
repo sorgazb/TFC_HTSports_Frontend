@@ -39,12 +39,12 @@
                                     <span>{{'perfil' | translate}}</span>
                                 </div> 
                                 <!-- Perfil Cuerpo Tecnico -->
-                                <div class="hover:bg-gray-100 px-4 py-2 rounded cursor-pointer flex items-center gap-2" *ngIf="usuario.usuario.tipo === 'cuerpotecnico'" routerLink="">
+                                <div class="hover:bg-gray-100 px-4 py-2 rounded cursor-pointer flex items-center gap-2" *ngIf="usuario.usuario.tipo === 'cuerpotecnico'" [routerLink]="'cuerpoTecnico/'+cuerpoTecnico.ID">
                                     <mat-icon fontIcon="person_outline"></mat-icon>
                                     <span>{{'perfil' | translate}}</span>
                                 </div>
                                 <!-- Perfil Jugador -->
-                                <div class="hover:bg-gray-100 px-4 py-2 rounded cursor-pointer flex items-center gap-2" *ngIf="usuario.usuario.tipo === 'jugador'" routerLink="">
+                                <div class="hover:bg-gray-100 px-4 py-2 rounded cursor-pointer flex items-center gap-2" *ngIf="usuario.usuario.tipo === 'jugador'" [routerLink]="'jugador/'+jugador.id">
                                     <mat-icon fontIcon="person_outline"></mat-icon>
                                     <span>{{'perfil' | translate}}</span>
                                 </div>                                 
@@ -88,14 +88,22 @@
                     </li>
                     <!-- Partidos Equipo -->
                     <li *ngIf="(cuerpoTecnico || jugador)">
-                        <a *ngIf="usuario" [routerLink]="'partidos/equipo/'+cuerpoTecnico.equipo_id" class="btnInicioSesion">
+                        <a *ngIf="usuario  && cuerpoTecnico" [routerLink]="'partidos/equipo/'+cuerpoTecnico.equipo_id" class="btnInicioSesion">
+                            <mat-icon fontIcon="sports_soccer"></mat-icon>
+                            <span>{{'mis-partidos' | translate}}</span>
+                        </a>
+                        <a *ngIf="usuario  && jugador" [routerLink]="'partidos/equipo/'+jugador.equipo_id" class="btnInicioSesion">
                             <mat-icon fontIcon="sports_soccer"></mat-icon>
                             <span>{{'mis-partidos' | translate}}</span>
                         </a>
                     </li>
                     <!-- Plantilla Equipo -->
                     <li *ngIf="(cuerpoTecnico || jugador)">
-                        <a *ngIf="usuario" [routerLink]="'miEquipo/'+cuerpoTecnico.equipo_id" class="btnInicioSesion">
+                        <a *ngIf="usuario && cuerpoTecnico" [routerLink]="'miEquipo/'+cuerpoTecnico.equipo_id" class="btnInicioSesion">
+                            <mat-icon fontIcon="groups"></mat-icon>
+                            <span>{{'equipo' | translate}}</span>
+                        </a>
+                        <a *ngIf="usuario  && jugador" [routerLink]="'miEquipo/'+jugador.equipo_id" class="btnInicioSesion">
                             <mat-icon fontIcon="groups"></mat-icon>
                             <span>{{'equipo' | translate}}</span>
                         </a>

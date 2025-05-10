@@ -50,28 +50,21 @@ export class PartidosComponent {
           partido.fecha = new Date(partido.fecha)     
           return partido
         })
-        
         const tiempoCancelacion = 100 * 60 * 1000
-
-        // this.partidos.forEach(partido => {
-        //   const fechaPartido = new Date(partido.fecha).getTime()
-        //   const fechaLimite = fechaPartido + tiempoCancelacion
-        
-        //   if (partido.estado === 'programado') {
-        //     if(Date.now() === fechaPartido || Date.now() > fechaPartido){
-        //       this.serviciosPartido.jugarPartido(partido.ID).subscribe(() => {
-        //       })
-        //     }
-        //   }
-
-        //   if (Date.now() > fechaLimite && (partido.estado === 'enjuego' || partido.estado === 'programado')) {
-        //     this.serviciosPartido.finalizarPartido(partido.ID).subscribe(() => {
-        //     })
-        //   }
-
-
-        // })
-    
+        this.partidos.forEach(partido => {
+          const fechaPartido = new Date(partido.fecha).getTime()
+          const fechaLimite = fechaPartido + tiempoCancelacion
+          if (partido.estado === 'programado') {
+            if(Date.now() === fechaPartido || Date.now() > fechaPartido){
+              this.serviciosPartido.jugarPartido(partido.ID).subscribe(() => {
+              })
+            }
+          }
+          if (Date.now() > fechaLimite && (partido.estado === 'enjuego' || partido.estado === 'programado')) {
+            this.serviciosPartido.finalizarPartido(partido.ID).subscribe(() => {
+            })
+          }
+        })
         this.totalPaginas = Math.ceil(this.partidos.length / this.partidosPagina)
         this.actualizarPartidosPaginados()
       })

@@ -1,9 +1,10 @@
 export class Jugador {
-    id!: number;
-    nombre!: string;
-    edad!: number;
-    dorsal!: number;
-    posicion!: string;
-    avatar !: string;
-    id_usuario !: number;
+    id!: number
+    nombre!: string
+    edad!: number
+    dorsal!: number
+    posicion!: string
+    avatar !: string
+    id_usuario !: number
+    equipo_id !: number
 }

@@ -79,6 +79,10 @@ export class ServicioUsuarioService {
     return this.http.get<Jugador>(`${this.apiUrl}${this.endPoint}/equipo/jugadores/${jugadorId}`)
   }
 
+    obtenerCuerpoTecnicoPlantilla(cuerpoTecnicoId: number): Observable<CuerpoTecnico>{
+    return this.http.get<CuerpoTecnico>(`${this.apiUrl}${this.endPoint}/equipo/cuerpotecnico/${cuerpoTecnicoId}`)
+  }
+
   comprobarImagen(image: File): Observable<any> {
     const formData = new FormData();
     formData.append('image', image, image.name);

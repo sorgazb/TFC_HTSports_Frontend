@@ -6,6 +6,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ServicioCarritoService } from '../../services/servicio-carrito.service';
 import { Carrito } from '../../class/carrito';
 import { CuerpoTecnico } from 'src/app/class/cuerpo-tecnico';
+import { Jugador } from 'src/app/class/jugador';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -30,7 +31,7 @@ export class HeaderComponent implements OnInit {
   usuario : any = null
   aficionado : any = null
   cuerpoTecnico !: CuerpoTecnico
-  jugador : any = null
+  jugador !: Jugador
 
   constructor (private router : Router, public dialog: MatDialog, private servicioCarrito: ServicioCarritoService) {
     this.router.events.pipe(
@@ -64,7 +65,10 @@ export class HeaderComponent implements OnInit {
 
     const jugadorGuardado = localStorage.getItem('jugador')
     if(jugadorGuardado){
-      this.jugador = JSON.parse(jugadorGuardado)
+      const datos = JSON.parse(jugadorGuardado)
+      datos.id = datos.ID
+      delete datos.ID
+      this.jugador = datos
     }
 
     this.btnAbrir = document.getElementById('btnAbrir') as HTMLElement

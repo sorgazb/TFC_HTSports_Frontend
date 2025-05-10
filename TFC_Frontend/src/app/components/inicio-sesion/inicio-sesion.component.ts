@@ -98,7 +98,7 @@ export class InicioSesionComponent implements OnInit{
         }else{
           this.serviciosUsuario.obtenerJugador(idUsuario).subscribe((jugadorObtenido: Jugador) => {
             this.jugador = jugadorObtenido
-            localStorage.setItem('jugador', JSON.stringify(this.cuerpoTecnico))
+            localStorage.setItem('jugador', JSON.stringify(this.jugador))
             this.router.navigate(['/']).then(() => {
               window.location.reload()
             })

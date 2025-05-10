@@ -56,6 +56,7 @@ import { PerfilJugadorComponent } from './components/perfil-jugador/perfil-jugad
 import { CountUpModule } from 'ngx-countup';
 import { PartidosEquipoComponent } from './components/partidos-equipo/partidos-equipo.component';
 import { AccesoDenegadoComponent } from './components/acceso-denegado/acceso-denegado.component';
+import { PerfilCuerpoTecnicoComponent } from './components/perfil-cuerpo-tecnico/perfil-cuerpo-tecnico.component';
 
 registerLocaleData(es);
 
@@ -86,6 +87,7 @@ registerLocaleData(es);
     PerfilJugadorComponent,
     PartidosEquipoComponent,
     AccesoDenegadoComponent,
+    PerfilCuerpoTecnicoComponent,
   ],
   imports: [
     BrowserModule,
