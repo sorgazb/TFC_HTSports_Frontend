@@ -38,6 +38,15 @@ export class TiendaComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    
+    if(!sessionStorage.getItem('usuario')){
+      this.router.navigate(['/error'])
+    }
+
+    if(!localStorage.getItem('aficionado')){
+      this.router.navigate(['/error'])
+    }
+
     this.serviciosProductos.obtenerTodosLosProductos().subscribe((productos: Producto[]) => {
       this.productos = productos
       this.totalPaginas = Math.ceil(this.productos.length / this.productosPagina)

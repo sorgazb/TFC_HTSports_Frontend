@@ -34,13 +34,22 @@ export class PartidosComponent {
     }
   
     ngOnInit(): void {
+
+      if(!sessionStorage.getItem('usuario')){
+        this.router.navigate(['/error'])
+      }
+      
+      if(!localStorage.getItem('aficionado')){
+        this.router.navigate(['/error'])
+      }
+
       this.serviciosPartido.obtenerPartidos().subscribe((partidos: any[]) => {
         this.partidos = partidos.map(item => {
           const partido = item.partido as Partido
           partido.equipos = item.equipos
-          partido.fecha = new Date(partido.fecha);        
+          partido.fecha = new Date(partido.fecha)     
           return partido
-        });
+        })
         
         const tiempoCancelacion = 100 * 60 * 1000
 
@@ -65,10 +74,10 @@ export class PartidosComponent {
     
         this.totalPaginas = Math.ceil(this.partidos.length / this.partidosPagina)
         this.actualizarPartidosPaginados()
-      });
+      })
       this.serviciosEquipo.obtenerTodosLosEquipos().subscribe((equipos: Equipo[]) => {
         this.equipos = equipos
-      });
+      })
     }
     
     /*

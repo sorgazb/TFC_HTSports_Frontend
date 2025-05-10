@@ -5,6 +5,7 @@ import { CardIdiomaComponent } from '../card-idioma/card-idioma.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ServicioCarritoService } from '../../services/servicio-carrito.service';
 import { Carrito } from '../../class/carrito';
+import { CuerpoTecnico } from 'src/app/class/cuerpo-tecnico';
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
@@ -28,7 +29,7 @@ export class HeaderComponent implements OnInit {
 
   usuario : any = null
   aficionado : any = null
-  cuerpoTecnico : any = null
+  cuerpoTecnico !: CuerpoTecnico
   jugador : any = null
 
   constructor (private router : Router, public dialog: MatDialog, private servicioCarrito: ServicioCarritoService) {

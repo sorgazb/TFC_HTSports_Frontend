@@ -4,6 +4,7 @@ import { ProgressSpinnerMode } from '@angular/material/progress-spinner';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ActuacionEquipoPartido } from 'src/app/class/actuacion-equipo-partido';
+import { Alienacion } from 'src/app/class/alienacion';
 import { Partido } from 'src/app/class/partido';
 import { ServicioEquipoService } from 'src/app/services/servicio-equipo.service';
 import { ServicioPartidoService } from 'src/app/services/servicio-partido.service';
@@ -26,6 +27,8 @@ export class DetallePartidoComponent implements OnInit, AfterViewInit, OnDestroy
   }
 
   actuacionesEquipos : ActuacionEquipoPartido[] = []
+
+  alienacionesPartido : Alienacion[] = []
 
   translate!: TranslateService
 
@@ -50,9 +53,17 @@ export class DetallePartidoComponent implements OnInit, AfterViewInit, OnDestroy
   }
     
   ngOnInit(): void {
+
+    if(!sessionStorage.getItem('usuario')){
+      this.router.navigate(['/error'])
+    }
+
     let idPartido = Number(this.router.url.split('/').pop())
     this.serviciosPartido.obtenerPartido(idPartido).subscribe((partido: any) => {
       this.actuacionesEquipos = partido.actuaciones
+      for(let actuacion of partido.actuaciones){
+        this.alienacionesPartido.push(actuacion.alineacion)
+      }
       let infoPartido = partido.partido
       let equiposPartido = partido.equipos
       this.partido.ID = infoPartido.ID
@@ -64,7 +75,7 @@ export class DetallePartidoComponent implements OnInit, AfterViewInit, OnDestroy
       this.partido.equipos = equiposPartido
       
       this.generarEstadisticasEquipos()
-    });
+    })
   }
 
   ngAfterViewInit(): void {
@@ -94,7 +105,7 @@ export class DetallePartidoComponent implements OnInit, AfterViewInit, OnDestroy
     
     const totalTiros = this.actuacionesEquipos[0].tiros_totales + this.actuacionesEquipos[1].tiros_totales
     this.porcentajeTirosTotalesEquipo1 = (this.actuacionesEquipos[0].tiros_totales / totalTiros) * 100
-    this.porcentajeTirosTotalesEquipo2 = (this.actuacionesEquipos[1].tiros_totales / totalTiros) * 100;
+    this.porcentajeTirosTotalesEquipo2 = (this.actuacionesEquipos[1].tiros_totales / totalTiros) * 100
 
     const totalTirosPorteria = this.actuacionesEquipos[0].tiros_porteria + this.actuacionesEquipos[1].tiros_porteria
     this.porcentajeTirosPorteriaEquipo1 = (this.actuacionesEquipos[0].tiros_porteria / totalTirosPorteria) * 100

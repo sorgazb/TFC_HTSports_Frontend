@@ -52,6 +52,10 @@ import { AreaEntradasComponent } from './components/area-entradas/area-entradas.
 import { PlantillaComponent } from './components/plantilla/plantilla.component';
 import { AlienacionesComponent } from './components/alienaciones/alienaciones.component';
 import { DragDropModule } from '@angular/cdk/drag-drop';
+import { PerfilJugadorComponent } from './components/perfil-jugador/perfil-jugador.component';
+import { CountUpModule } from 'ngx-countup';
+import { PartidosEquipoComponent } from './components/partidos-equipo/partidos-equipo.component';
+import { AccesoDenegadoComponent } from './components/acceso-denegado/acceso-denegado.component';
 
 registerLocaleData(es);
 
@@ -79,6 +83,9 @@ registerLocaleData(es);
     AreaEntradasComponent,
     PlantillaComponent,
     AlienacionesComponent,
+    PerfilJugadorComponent,
+    PartidosEquipoComponent,
+    AccesoDenegadoComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,6 +103,7 @@ registerLocaleData(es);
     MatInputModule,
     QRCodeModule,
     NzAlertModule,
+    CountUpModule,
     TranslateModule.forRoot({
       loader :{
         provide : TranslateLoader,

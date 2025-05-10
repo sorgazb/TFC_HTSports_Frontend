@@ -3,13 +3,17 @@ import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/dr
 import { Jugador } from 'src/app/class/jugador';
 import { CuerpoTecnico } from 'src/app/class/cuerpo-tecnico';
 import { Usuario } from 'src/app/class/usuario';
-import { Equipo } from 'src/app/class/equipo';
 import { ServicioUsuarioService } from 'src/app/services/servicio-usuario.service';
 import { ServicioEquipoService } from 'src/app/services/servicio-equipo.service';
 import html2canvas from 'html2canvas';
+import { Router } from '@angular/router';
+import { Alienacion } from 'src/app/class/alienacion';
+import { ServicioAlineacionService } from 'src/app/services/servicio-alineacion.service';
+import { ServicioPartidoService } from 'src/app/services/servicio-partido.service';
+import { TranslateService } from '@ngx-translate/core';
 
-interface Cell {
-  pos: string;
+interface Casillas {
+  posicion: string;
   id: string;
 }
 
@@ -19,30 +23,37 @@ interface Cell {
   styleUrls: ['./alienaciones.component.css']
 })
 export class AlienacionesComponent implements OnInit {
-
-  @ViewChild('capture', { static: false }) 
-campo!: ElementRef<HTMLElement>;
-
-
-public capturaDataUrl: string | null = null;
+  
+  @ViewChild('capture', { static: false }) campo!: ElementRef<HTMLElement>
+  
+  public capturaDataUrl: string | null = null
   
   usuario !: Usuario
   cuerpoTecnico !: CuerpoTecnico
+  
+  alienacionPartido: Alienacion = {
+    ID: 0,
+    id_Cuerpo_Tecnico: 0,
+    sistema_juego: '',
+    alineacion: '',
+    imagen_alineacion: ''
+  }
 
-  jugadoresPlantilla : Jugador[] = [];
+  nombreAlienacion = ''
+
+  alineacionesEquipo !: Alienacion[]
+  jugadoresPlantilla : Jugador[] = []
   porteros : Jugador[] = []
   defensas : Jugador[] = []
   centrocampistas : Jugador[] = []
   delanteros : Jugador[] = []
 
+  alienacionSeleccionada !: Alienacion
+
   jugadoresPosicion : Jugador[] = []
 
-  isLoading: boolean = true;
-
-  // Sistemas y formaciones
-  sistemasDeJuego = ['4-4-2','4-3-3','4-2-3-1','3-5-2','3-4-3','5-3-2','4-1-4-1'];
-  sistemaSeleccionado = '4-4-2';
-  
+  sistemasDeJuego = ['4-4-2','4-3-3','4-2-3-1','3-5-2','3-4-3','5-3-2','4-1-4-1']
+  sistemaSeleccionado = '4-4-2'
   formaciones: { [key: string]: string[][] } = {
     '4-4-2': [['POR'], ['DEF','DEF','DEF','DEF'], ['MED','MED','MED','MED'], ['DEL','DEL']],
     '4-3-3': [['POR'], ['DEF','DEF','DEF','DEF'], ['MED','MED','MED'], ['DEL','DEL','DEL']],
@@ -51,26 +62,36 @@ public capturaDataUrl: string | null = null;
     '3-4-3': [['POR'], ['DEF','DEF','DEF'], ['MED','MED','MED','MED'], ['DEL','DEL','DEL']],
     '5-3-2': [['POR'], ['DEF','DEF','DEF','DEF','DEF'], ['MED','MED','MED'], ['DEL','DEL']],
     '4-1-4-1': [['POR'], ['DEF','DEF','DEF','DEF'], ['MED'], ['MED','MED','MED','MED'], ['DEL']]
-  };
+  }
 
-  posiciones = ['Porteros', 'Defensas', 'Centrocampistas', 'Delanteros'];
+  posiciones = ['Porteros', 'Defensas', 'Centrocampistas', 'Delanteros']
+  posicionesEng = ['Goalkeepers', 'Defenders', 'Midfielders', 'Forwards']
   posicionSeleccionada = 'Porteros'
 
+  filas: Casillas[][] = []
+  alineacion: { [cellId: string]: Jugador[] } = {}
 
+  lista: string[] = []
 
-  // Estructura para el campo
-  filas: Cell[][] = [];
-  // Almacena jugadores por celda
-  alineacion: { [cellId: string]: Jugador[] } = {};
-  // IDs de todas las listas para conectar drag&drop
-  dropListIds: string[] = [];
+  translate !: TranslateService;
+  cargando: boolean = true
   
   ngOnInit(): void {
-    this.buildField();
-    
+    this.cargarCampo()
+  
     let usuarioAux = sessionStorage.getItem('usuario')
+    if(!usuarioAux){
+      this.router.navigate(['/error'])
+      this.cargando = false
+    }
+
     let usuarioSesion = JSON.parse(usuarioAux!)
     this.usuario = usuarioSesion.usuario
+
+    if(this.usuario.tipo != 'cuerpotecnico'){
+      this.router.navigate(['/error'])
+      this.cargando = false
+    }
   
     let cuerpoTecnicoAux = localStorage.getItem('cuerpoTecnico')
     let cuerpoTecnicoSesion = JSON.parse(cuerpoTecnicoAux!)
@@ -89,100 +110,176 @@ public capturaDataUrl: string | null = null;
           this.delanteros.push(jugador)
         }
       }
-      this.isLoading = false;
+      this.cargando = false
     })
-
     this.cargarJugadoresPosicion(this.posicionSeleccionada)
+
+    this.servicioAlineacion.obtenerAlienacionesEquipo(this.cuerpoTecnico.ID).subscribe((alineaciones : Alienacion[])=>{
+      this.alineacionesEquipo = alineaciones
+    })
   }
 
-  constructor(private servicioUsuario : ServicioUsuarioService, private servicioEquipos : ServicioEquipoService, private ngZone: NgZone){}
-    
+  constructor(private servicioUsuario : ServicioUsuarioService, private servicioEquipos : ServicioEquipoService, private ngZone: NgZone, 
+    private router : Router, private servicioAlineacion : ServicioAlineacionService, private servicioPartido : ServicioPartidoService, 
+    translate: TranslateService){
+      this.translate = translate
+    }
+  
+  /*
+  * Metodo que hace una llamada al metodo de cargar campo cuando el usuario cambia
+  * el sistema de juego en el area de creacion de
+  */
   cambiarSistema() {
-    this.buildField();
+    this.cargarCampo()
   }
 
-
+  /*
+  * Metodo que hace una llamada al metodo que cagar los jugadores 
+  * de la posicion seleccionada por el usuario
+  */
   seleccionarPosicion(){
     this.cargarJugadoresPosicion(this.posicionSeleccionada)
   }
 
+  /*
+  * Metodo que carga en area de posicion los jugadores de la 
+  * posicion especificada por el usuario
+  */ 
   cargarJugadoresPosicion(poscion: string){
-    if(poscion == 'Porteros'){
+    if(poscion == 'Porteros' || poscion == 'Goalkeepers'){
       this.jugadoresPosicion = this.porteros
-    }else if(poscion == 'Defensas'){
+    }else if(poscion == 'Defensas' || poscion == 'Defenders'){
       this.jugadoresPosicion = this.defensas
-    }else if(poscion == 'Centrocampistas'){
+    }else if(poscion == 'Centrocampistas' || poscion == 'Midfielders'){
       this.jugadoresPosicion = this.centrocampistas
-    }else if(poscion == 'Delanteros'){
+    }else if(poscion == 'Delanteros' || poscion == 'Forwards'){
       this.jugadoresPosicion = this.delanteros
     }
   }
 
-  private buildField() {
-    // Reconstruye rows, alineacion y dropListIds
-    this.filas = [];
-    this.alineacion = {};
-    this.dropListIds = ['jugadoresPlantilla'];
 
-    const matriz = this.formaciones[this.sistemaSeleccionado];
-    matriz.forEach((fila, rowIndex) => {
-      const rowCells: Cell[] = [];
-      fila.forEach((pos, colIndex) => {
-        const cellId = `${this.sistemaSeleccionado}-${rowIndex}-${colIndex}`;
-        rowCells.push({ pos, id: cellId });
-        this.alineacion[cellId] = [];
-        this.dropListIds.push(cellId);
-      });
-      this.filas.push(rowCells);
-    });
+  /*
+  * Metodo que carga en el campo la formacion  
+  * especificada por el usuario
+  */ 
+  cargarCampo() {
+    this.filas = []
+    this.alineacion = {}
+    this.lista = ['jugadoresPlantilla']
+
+    const matriz = this.formaciones[this.sistemaSeleccionado]
+    matriz.forEach((fila, indiceFila) => {
+      const casillasFila: Casillas[] = []
+      fila.forEach((posicion, indiceColumna) => {
+        const idCasilla = `${this.sistemaSeleccionado}-${indiceFila}-${indiceColumna}`
+        casillasFila.push({ posicion, id: idCasilla })
+        this.alineacion[idCasilla] = []
+        this.lista.push(idCasilla)
+      })
+      this.filas.push(casillasFila)
+    })
   }
 
+  /*
+  * Metodo de Angular Material que es el 
+  * encargado de la funcionalidad Drag And Drop
+  * @param {event} => envento de tipo Jugador.
+  */ 
   drop(event: CdkDragDrop<Jugador[]>) {
-    // Si arrastramos dentro de la misma lista, reordenamos
     if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-  
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex)
     } else {
-      // Si es una celda de campo, sólo permitimos la transferencia
-      // si aún no hay ningún jugador en ella
-      const destino = event.container.data;
+      const destino = event.container.data
       if (destino.length === 0) {
         transferArrayItem(
           event.previousContainer.data,
           destino,
           event.previousIndex,
           event.currentIndex
-        );
+        )
       }
-      // si ya hay un jugador, no hacemos nada
     }
   }
+  
+  /*
+  * Metodo que borra de la alineacion al Jugador
+  * seleccionado y le manda de vuelta al array de posiciones correspondiente
+  * @param {event} => envento de tipo Jugador.
+  */ 
+  quitarJugador(indiceCelda: string, jugador: Jugador) {
+    const arrayJugador = this.alineacion[indiceCelda]
+    const indiceJugador = arrayJugador.indexOf(jugador)
+    if (indiceJugador > -1) {
+      arrayJugador.splice(indiceJugador, 1)
+    }
 
-  /**
- * Quita un jugador de la celda y lo devuelve a la lista lateral.
- */
-quitarJugador(cellId: string, jugador: Jugador) {
-  // 1) Eliminar de la alineación
-  const arr = this.alineacion[cellId];
-  const idx = arr.indexOf(jugador);
-  if (idx > -1) {
-    arr.splice(idx, 1);
+    if(jugador.posicion == 'portero'){
+      this.porteros.push(jugador)
+    }else if(jugador.posicion == 'defensa'){
+      this.defensas.push(jugador)
+    }else if(jugador.posicion == 'centrocampista'){
+      this.centrocampistas.push(jugador)
+    }else{
+      this.delanteros.push(jugador)
+    }    
+  }
+  
+  /*
+  * Metodo que se encarga de establecer la alineacion para el partido seleccionado,
+  * en el caso de que el usuario haya seleccionado una alineacion existente directamente
+  * se asignara al partido, y en caso de que cree una nueva se procedera a la creacion de
+  * la misma para despues asignarla al partido.
+  */
+  establecerAlienacion(){
+    let idPartido = Number(this.router.url.split('/').pop())
+    if(this.alienacionSeleccionada == null){
+      this.captureField().then(() => {
+        const alineacion = {
+          id_Cuerpo_Tecnico: this.cuerpoTecnico.ID,
+          sistema_juego: this.sistemaSeleccionado,
+          alineacion: this.nombreAlienacion,
+          imagen_alineacion: this.alienacionPartido.imagen_alineacion
+        }
+        this.servicioAlineacion.crearAlineacion(alineacion as any).subscribe(alineacion => {
+            this.servicioPartido.actualizarAlineacionEquipo(idPartido, this.cuerpoTecnico.equipo_id, alineacion.ID).subscribe()
+          })
+      })
+    }else{
+      this.servicioPartido.actualizarAlineacionEquipo(idPartido, this.cuerpoTecnico.equipo_id, this.alienacionSeleccionada.ID).subscribe(()=>{})
+    }
+  }
+  
+  /*
+   * Metodo que realiza una captura la alineacion con PNG mediante la libreria html2canvas
+   */
+  async captureField(): Promise<void> {
+    const element = this.campo.nativeElement
+    const canvas = await html2canvas(element, { useCORS: true })
+    const dataUrl = canvas.toDataURL('image/png')
+    this.ngZone.run(() => {
+      this.capturaDataUrl = dataUrl
+      this.alienacionPartido.imagen_alineacion = dataUrl.split(',')[1]
+    })
+  }
+  
+  /*
+   * Metodo que convierte un Data URL (Base64) en un File
+   * @param {string} Data URL
+   * @param {string} Nombre que recibirá el File
+   * @returns {File} con el contenido decodificado
+   */
+  dataURLtoFile(dataUrl: string, filename: string): File {
+    const arr = dataUrl.split(',')
+    const mimeMatch = arr[0].match(/:(.*?);/)
+    const mime = mimeMatch ? mimeMatch[1] : 'image/png'
+    const bstr = atob(arr[1])
+    let n = bstr.length
+    const u8arr = new Uint8Array(n)
+    
+    while (n--) {
+      u8arr[n] = bstr.charCodeAt(n)
+    }
+    return new File([u8arr], filename, { type: mime })
   }
 
-  // 2) Volver a la lista de jugadores disponibles
-  this.jugadoresPosicion.push(jugador);
-}
-
-async captureField() {
-  console.log('Capturando el campo...');
-  const element = this.campo.nativeElement;
-  const canvas = await html2canvas(element, { useCORS: true });    // :contentReference[oaicite:1]{index=1}
-  const dataUrl = canvas.toDataURL('image/png');                   // :contentReference[oaicite:2]{index=2}
-
-  // 1) Asigno para que Angular renderice el <img>
-  //    Si hay problemas de CD, lo pongo dentro de NgZone.run()
-  this.ngZone.run(() => {
-    this.capturaDataUrl = dataUrl;
-  });
-}
 }

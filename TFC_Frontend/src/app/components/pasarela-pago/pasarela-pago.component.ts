@@ -38,6 +38,15 @@ export class PasarelaPagoComponent implements OnInit {
   constructor(private serviciosCarrito: ServicioCarritoService, private servicioPedido: ServicioPedidoService, private router: Router, private translate: TranslateService) {}
 
   ngOnInit(): void {
+    
+    if(!sessionStorage.getItem('usuario')){
+      this.router.navigate(['/error'])
+    }
+
+    if(!localStorage.getItem('aficionado')){
+      this.router.navigate(['/error'])
+    }
+
     this.aficionado = JSON.parse(localStorage.getItem('aficionado') || '{}');
     this.formNuevaDireccion = new FormGroup({
       direccion : new FormControl('', [Validators.required]),

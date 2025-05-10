@@ -101,6 +101,21 @@
       </div>
     </mat-tab>
     <!-- Alineaciones -->
-    <mat-tab label="{{'alineaciones' | translate}}"> Content 2 </mat-tab>
+    <mat-tab label="{{'alineaciones' | translate}}">
+      <div class="flex flex-col items-center justify-center gap-8 p-5">
+        <!-- Alineación Equipo Local -->
+        <div class="w-full max-w-xl flex flex-col items-center space-y-2 shadow-lg rounded-2xl bg-white p-4">
+          <h2 class="text-xl font-semibold text-center text-azul">{{ partido.equipos[0].nombre }}</h2>
+          <img 
+            [src]="'data:image/jpeg;base64,' + alienacionesPartido[0].imagen_alineacion" class="w-full h-auto object-contain rounded-lg"/>
+        </div>
+        <!-- Alineación Equipo Visitante -->
+        <div class="w-full max-w-xl flex flex-col items-center space-y-2 shadow-lg rounded-2xl bg-white p-4">
+          <h2 class="text-xl font-semibold text-center text-azul">{{ partido.equipos[1].nombre }}</h2>
+          <img 
+            [src]="'data:image/jpeg;base64,' + alienacionesPartido[1].imagen_alineacion" class="w-full h-auto object-contain rounded-lg"/>
+        </div>
+      </div>
+    </mat-tab>
   </mat-tab-group>
 </div>

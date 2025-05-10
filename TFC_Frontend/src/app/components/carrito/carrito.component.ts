@@ -17,6 +17,15 @@ export class CarritoComponent implements OnInit {
   constructor(private router: Router, private serviciosProductos : ServicioProductoService, private servicioCarrito: ServicioCarritoService) { }
 
   ngOnInit(): void {
+
+    if(!sessionStorage.getItem('usuario')){
+      this.router.navigate(['/error'])
+    }
+
+    if(!localStorage.getItem('aficionado')){
+      this.router.navigate(['/error'])
+    }
+    
     this.productosCarrito = this.servicioCarrito.obtenerCarrito()
   }
 

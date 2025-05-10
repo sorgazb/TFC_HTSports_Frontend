@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CuerpoTecnico } from 'src/app/class/cuerpo-tecnico';
 import { Equipo } from 'src/app/class/equipo';
 import { Jugador } from 'src/app/class/jugador';
@@ -17,7 +18,8 @@ export class PlantillaComponent implements OnInit{
   cuerpoTecnicoPlantilla : CuerpoTecnico[] = []
   usuario !: Usuario
   cuerpoTecnico !: CuerpoTecnico
-  isLoading: boolean = true;  // Variable para controlar el estado de carga
+  
+  cargando: boolean = true
 
   porteros : Jugador[] = []
   defensas : Jugador[] = []
@@ -26,9 +28,13 @@ export class PlantillaComponent implements OnInit{
 
   equipo !: Equipo
 
-  constructor(private servicioUsuario : ServicioUsuarioService, private servicioEquipos : ServicioEquipoService){}
+  constructor(private servicioUsuario : ServicioUsuarioService, private servicioEquipos : ServicioEquipoService, private router: Router){}
 
   ngOnInit(): void {
+    if(!sessionStorage.getItem('usuario')){
+      this.router.navigate(['/error'])
+    }
+    
     let usuarioAux = sessionStorage.getItem('usuario')
     let usuarioSesion = JSON.parse(usuarioAux!)
     this.usuario = usuarioSesion.usuario
@@ -43,10 +49,7 @@ export class PlantillaComponent implements OnInit{
 
     this.servicioUsuario.obtenerCuerposTecnicos(this.cuerpoTecnico.equipo_id).subscribe((cuerpoTecnico : CuerpoTecnico[]) => {
       this.cuerpoTecnicoPlantilla = cuerpoTecnico
-      console.log(this.cuerpoTecnicoPlantilla)
     })
-
-    console.log(this.cuerpoTecnicoPlantilla)
 
     this.servicioUsuario.obtenerJugadores(this.cuerpoTecnico.equipo_id).subscribe((jugadores : Jugador[]) => {
       this.jugadoresPlantilla = jugadores
@@ -61,8 +64,17 @@ export class PlantillaComponent implements OnInit{
           this.delanteros.push(jugador)
         }
       }
-      this.isLoading = false;
+      this.cargando = false
     })
+
+  }
+
+  /*
+  * Metodo que dirige al usuario al perfil del jugador seleccionado
+  * @param {number} id del jugador seleccionado
+  */
+  perfilJugador(idJugador : number){
+    this.router.navigate(['/jugador', idJugador])
 
   }
 }

@@ -1,5 +1,5 @@
 export class CuerpoTecnico {
-    id!: number;
+    ID!: number;
     nombre!: string;
     edad!: number;
     tipo !: string;

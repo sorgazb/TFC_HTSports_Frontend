@@ -68,11 +68,15 @@ export class ServicioUsuarioService {
   }
 
   obtenerJugadores(equipoId: number): Observable<Jugador[]> {
-    return this.http.get<Jugador[]>(`${this.apiUrl}${this.endPoint}/equipo/${equipoId}/jugadores`);
+    return this.http.get<Jugador[]>(`${this.apiUrl}${this.endPoint}/equipo/${equipoId}/jugadores`)
   }
 
   obtenerCuerposTecnicos(equipoId: number): Observable<CuerpoTecnico[]> {
-    return this.http.get<CuerpoTecnico[]>(`${this.apiUrl}${this.endPoint}/equipo/${equipoId}/cuerpotecnico`);
+    return this.http.get<CuerpoTecnico[]>(`${this.apiUrl}${this.endPoint}/equipo/${equipoId}/cuerpotecnico`)
+  }
+
+  obtenerJugadorPlantilla(jugadorId: number): Observable<Jugador>{
+    return this.http.get<Jugador>(`${this.apiUrl}${this.endPoint}/equipo/jugadores/${jugadorId}`)
   }
 
   comprobarImagen(image: File): Observable<any> {
@@ -82,6 +86,6 @@ export class ServicioUsuarioService {
       headers: {
         'X-RapidAPI-Proxy-Secret': environment.FACEINPHOTO_PROXY
       }
-    });
+    })
   }
 }

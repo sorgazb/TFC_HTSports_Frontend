@@ -36,6 +36,15 @@ export class ProductoComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    
+    if(!sessionStorage.getItem('usuario')){
+      this.router.navigate(['/error'])
+    }
+
+    if(!localStorage.getItem('aficionado')){
+      this.router.navigate(['/error'])
+    }
+
     this.serviciosProductos.obtenerProductoPorId(Number(this.router.url.split('/').pop())).subscribe((producto: Producto) => {
       this.producto.ID = producto.ID
       this.producto.nombre = producto.nombre

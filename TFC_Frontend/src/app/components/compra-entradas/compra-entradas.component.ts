@@ -60,6 +60,15 @@ export class CompraEntradasComponent implements OnInit {
   }
 
   ngOnInit(): void {
+
+    if(!sessionStorage.getItem('usuario')){
+      this.router.navigate(['/error'])
+    }
+
+    if(!localStorage.getItem('aficionado')){
+      this.router.navigate(['/error'])
+    }
+
     let idPartido = Number(this.router.url.split('/').pop())
     this.serviciosPartido.obtenerPartido(idPartido).subscribe((partido: any) => {
       let infoPartido = partido.partido
@@ -93,7 +102,7 @@ export class CompraEntradasComponent implements OnInit {
     })
     setTimeout(() => {
       this.pasarelaPaypal()
-    }, 0);
+    }, 0)
   }
 
   /*
@@ -111,7 +120,7 @@ export class CompraEntradasComponent implements OnInit {
     })
     setTimeout(() => {
       this.pasarelaPaypal()
-    }, 0);
+    }, 0)
   }
 
   /*
@@ -129,7 +138,7 @@ export class CompraEntradasComponent implements OnInit {
     })
     setTimeout(() => {
       this.pasarelaPaypal()
-    }, 0);
+    }, 0)
   }
 
   /*
@@ -147,7 +156,7 @@ export class CompraEntradasComponent implements OnInit {
     })
     setTimeout(() => {
       this.pasarelaPaypal();
-    }, 0);
+    }, 0)
   }
 
   /*
@@ -292,9 +301,9 @@ export class CompraEntradasComponent implements OnInit {
             color: '#274a80'
           }
         }
-      };  
+      }
       pdfMake.createPdf(docDefinition).download(`entrada-${entrada.ID}.pdf`)
-    }).catch(error => {});
+    }).catch(error => {})
   }
   
   /*
@@ -319,8 +328,8 @@ export class CompraEntradasComponent implements OnInit {
       img.onerror = (error) => {
         console.error('Error cargando imagen:', url, error)
         reject(error)
-      };
-    });
+      }
+    })
   }
 }
 

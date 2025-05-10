@@ -4,6 +4,7 @@ import { ServicioUsuarioService } from '../../services/servicio-usuario.service'
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Aficionado } from '../../class/aficionado';
 import { BehaviorSubject } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-perfil-usuario',
@@ -34,6 +35,15 @@ export class PerfilUsuarioComponent implements OnInit {
   imagenSeleccionada: string | ArrayBuffer | null = null
 
   ngOnInit(): void {
+    
+    if(!sessionStorage.getItem('usuario')){
+      this.router.navigate(['/error'])
+    }
+
+    if(!localStorage.getItem('aficionado')){
+      this.router.navigate(['/error'])
+    }
+
     let usuarioAux = sessionStorage.getItem('usuario')
     let usuarioSesion = JSON.parse(usuarioAux!)
     this.usuario = usuarioSesion.usuario
@@ -83,7 +93,7 @@ export class PerfilUsuarioComponent implements OnInit {
     })
   }
 
-  constructor(private seriviosUsuario : ServicioUsuarioService) { }
+  constructor(private seriviosUsuario : ServicioUsuarioService, private router : Router) { }
 
   /*
   * Metodo que comprueba si el input contiene algun error.

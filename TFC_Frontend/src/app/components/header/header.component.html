@@ -1,6 +1,6 @@
 <div *ngIf="mostrarBarraNav" class="">
     <!-- Contenedor Header -->
-    <header class="top-0 z-50 w-full shadow-md py-4 px-4 sm:px-10 bg-azul tracking-wide">
+     <header class="top-0 z-50 w-full shadow-md py-4 px-4 sm:px-10 bg-azul tracking-wide">
         <div class='flex flex-wrap items-center justify-between gap-5 w-full'>
             <!-- Logo LG -->
             <a href="" class="max-sm:hidden">
@@ -33,50 +33,69 @@
                                 <span>{{usuario.usuario.nombre}}</span>
                             </div>
                             <div *ngIf="menuDesplegado" class=" mt-2 bg-white rounded-lg shadow-inner p-4 space-y-2 text-azul w-full lg:absolute lg:top-full lg:left-0 lg:mt-2 lg:w-48 lg:shadow-lg lg:z-50">
-                                <div class="hover:bg-gray-100 px-4 py-2 rounded cursor-pointer flex items-center gap-2" routerLink="perfilUsuario">
-                                <mat-icon fontIcon="person_outline"></mat-icon>
-                                <span>{{'perfil' | translate}}</span>
-                            </div>                               
-                            <div class="hover:bg-gray-100 px-4 py-2 rounded cursor-pointer flex items-center gap-2" *ngIf="usuario.usuario.tipo === 'aficionado'" routerLink="areaPedidos">
-                                <mat-icon fontIcon="inventory_2"></mat-icon>
-                                <span>{{'area-pedidos' | translate}}</span>
-                            </div>
-                            <div class="hover:bg-gray-100 px-4 py-2 rounded cursor-pointer flex items-center gap-2" *ngIf="usuario.usuario.tipo === 'aficionado'" routerLink="areaEntradas">
-                                <mat-icon fontIcon="confirmation_number"></mat-icon>
-                                <span>{{'area-entradas' | translate}}</span>
-                            </div>
-                              <div class="hover:bg-red-300 px-4 py-2 rounded cursor-pointer flex items-center gap-2 text-red-600" (click)="cerrarSesion()">
-                                <mat-icon fontIcon="cancel"></mat-icon>
-                                <span>{{'cerrar-sesion' | translate}}</span>
-                              </div>
+                                <!-- Perfil Aficionado -->
+                                <div class="hover:bg-gray-100 px-4 py-2 rounded cursor-pointer flex items-center gap-2" *ngIf="usuario.usuario.tipo === 'aficionado'" routerLink="perfilUsuario">
+                                    <mat-icon fontIcon="person_outline"></mat-icon>
+                                    <span>{{'perfil' | translate}}</span>
+                                </div> 
+                                <!-- Perfil Cuerpo Tecnico -->
+                                <div class="hover:bg-gray-100 px-4 py-2 rounded cursor-pointer flex items-center gap-2" *ngIf="usuario.usuario.tipo === 'cuerpotecnico'" routerLink="">
+                                    <mat-icon fontIcon="person_outline"></mat-icon>
+                                    <span>{{'perfil' | translate}}</span>
+                                </div>
+                                <!-- Perfil Jugador -->
+                                <div class="hover:bg-gray-100 px-4 py-2 rounded cursor-pointer flex items-center gap-2" *ngIf="usuario.usuario.tipo === 'jugador'" routerLink="">
+                                    <mat-icon fontIcon="person_outline"></mat-icon>
+                                    <span>{{'perfil' | translate}}</span>
+                                </div>                                 
+                                <!-- Area Pedidos -->
+                                <div class="hover:bg-gray-100 px-4 py-2 rounded cursor-pointer flex items-center gap-2" *ngIf="usuario.usuario.tipo === 'aficionado'" routerLink="areaPedidos">
+                                    <mat-icon fontIcon="inventory_2"></mat-icon>
+                                    <span>{{'area-pedidos' | translate}}</span>
+                                </div>
+                                <!-- Area Entradas Partidos -->
+                                <div class="hover:bg-gray-100 px-4 py-2 rounded cursor-pointer flex items-center gap-2" *ngIf="usuario.usuario.tipo === 'aficionado'" routerLink="areaEntradas">
+                                    <mat-icon fontIcon="confirmation_number"></mat-icon>
+                                    <span>{{'area-entradas' | translate}}</span>
+                                </div>
+                                <!-- Cerrar Sesion -->
+                                <div class="hover:bg-red-300 px-4 py-2 rounded cursor-pointer flex items-center gap-2 text-red-600" (click)="cerrarSesion()">
+                                    <mat-icon fontIcon="cancel"></mat-icon>
+                                    <span>{{'cerrar-sesion' | translate}}</span>
+                                </div>
                             </div>
                         </div>
                     </li>
+                    <!-- Cambiar Idioma -->
                     <li>
                         <button (click)="cambiarIdioma()" class="btnInicioSesion flex items-center space-x-2">
                             <mat-icon fontIcon="language"></mat-icon>{{'cambiar-idioma' | translate}}
                         </button>
                     </li>
-                    <li>
-                        <a *ngIf="aficionado && usuario" routerLink="tienda" class="btnInicioSesion">
+                    <!-- Tienda -->
+                    <li *ngIf="aficionado">
+                        <a *ngIf="usuario" routerLink="tienda" class="btnInicioSesion">
                             <mat-icon fontIcon="shopping_cart"></mat-icon>
                             <span>{{'tienda' | translate}}</span>
                         </a>
                     </li>
-                    <li>
-                        <a *ngIf="aficionado && usuario" routerLink="partidos" class="btnInicioSesion">
+                    <!-- Partidos Aficionado -->
+                    <li *ngIf="aficionado">
+                        <a *ngIf="usuario" routerLink="partidos" class="btnInicioSesion">
                             <mat-icon fontIcon="stadium"></mat-icon>
                             <span>{{'partidos' | translate}}</span>
                         </a>
                     </li>
-                    <li>
-                        <a *ngIf="(cuerpoTecnico || jugador) && usuario" routerLink="misPartidos" class="btnInicioSesion">
+                    <!-- Partidos Equipo -->
+                    <li *ngIf="(cuerpoTecnico || jugador)">
+                        <a *ngIf="usuario" [routerLink]="'partidos/equipo/'+cuerpoTecnico.equipo_id" class="btnInicioSesion">
                             <mat-icon fontIcon="sports_soccer"></mat-icon>
                             <span>{{'mis-partidos' | translate}}</span>
                         </a>
                     </li>
-                    <li>
-                        <a *ngIf="(cuerpoTecnico || jugador) && usuario" routerLink="miEquipo" class="btnInicioSesion">
+                    <!-- Plantilla Equipo -->
+                    <li *ngIf="(cuerpoTecnico || jugador)">
+                        <a *ngIf="usuario" routerLink="miEquipo" class="btnInicioSesion">
                             <mat-icon fontIcon="groups"></mat-icon>
                             <span>{{'equipo' | translate}}</span>
                         </a>

@@ -1,0 +1,77 @@
+<div class="grid grid-cols-2 grid-rows-3 gap-6 p-6 max-w-3xl mx-auto">
+    <div class="flex items-center justify-center col-span-1">
+      <img src="{{jugador.avatar}}" alt="{{jugador.nombre}}" class="w-auto h-auto object-cover [mask-image:linear-gradient(to_bottom,black_90%,transparent_100%)]"/>
+    </div>
+    <!-- Informacion Jugador -->
+    <div class="flex flex-col justify-center space-y-2 col-span-1">
+      <h1 class="text-9xl text-azul font-extrabold" [countUp]="jugador.dorsal"></h1>
+      <h1 class="text-2xl font-bold text-azul">{{jugador.nombre}}</h1>
+      <span class="font-bold text-yellow-600">{{jugador.posicion.toUpperCase()}}</span>
+      <span class="text-black">{{'edad' | translate}} {{jugador.edad}}</span>
+    </div>
+    <!-- Area Minutos -->
+    <div class="col-span-2 md:col-span-1 bg-blue-100 rounded-xl p-4 shadow">
+      <h3 class="text-xl font-semibold text-azul">{{'minutos' | translate}}</h3>
+      <div class="py-3 flex items-center justify-between">
+        <span class="text-azul font-semibold text-base">{{'minutos-jugados' | translate}}</span>
+        <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.minutos"></span>
+      </div>
+    </div>
+    <!-- Estadisticas Portero -->
+    <div *ngIf="jugador.posicion == 'portero'" class="col-span-2 md:col-span-1 bg-blue-100 rounded-xl p-4 shadow">
+      <h3 class="text-xl font-semibold text-azul">{{'estadisticas-porteria' | translate}}</h3>
+      <div class="py-3 flex items-center justify-between">
+        <span class="text-azul font-semibold text-base">{{'paradas-realizadas' | translate}}</span>
+        <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.paradas"></span>
+      </div>
+      <div class="py-3 flex items-center justify-between">
+        <span class="text-azul font-semibold text-base">{{'goles-recibidos' | translate}}</span>
+        <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.goles_recibidos"></span>
+      </div>
+    </div>
+    <!-- Estadisticas Ataque -->
+    <div class="col-span-2 md:col-span-1 bg-blue-100 rounded-xl p-4 shadow">
+        <h3 class="text-xl font-semibold text-azul">{{'estadisticas-ofensivas' | translate}}</h3>
+        <div class="py-3 flex items-center justify-between">
+            <span class="text-azul font-semibold text-base">{{'goles' | translate}}</span>
+            <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.goles"></span>
+        </div>
+        <div class="py-3 flex items-center justify-between">
+            <span class="text-azul font-semibold text-base">{{'asistencias' | translate}}</span>
+            <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.asistencias"></span>
+        </div>
+        <div class="py-3 flex items-center justify-between">
+            <span class="text-azul font-semibold text-base">{{'tiros-porteria' | translate}}</span>
+            <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.disparos_porteria"></span>
+        </div>
+        <div class="py-3 flex items-center justify-between">
+            <span class="text-azul font-semibold text-base">{{'regates-exitosos' | translate}}</span>
+            <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.regates_exitosos"></span>
+        </div>
+        <div class="py-3 flex items-center justify-between">
+            <span class="text-azul font-semibold text-base">{{'faltas-recibidas' | translate}}</span>
+            <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.faltas_recibidas"></span>
+        </div>
+    </div>
+    <!-- Estadisticas Defensivas -->
+    <div class="col-span-2 md:col-span-1 bg-blue-100 rounded-xl p-4 shadow">
+        <h3 class="text-xl font-semibold text-azul">{{'estadisticas-defensivas' | translate}}</h3>
+        <div class="py-3 flex items-center justify-between">
+            <span class="text-azul font-semibold text-base">{{'tarjetas-amarillas' | translate}}</span>
+            <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.tarjetas_amarillas"></span>
+        </div>
+        <div class="py-3 flex items-center justify-between">
+            <span class="text-azul font-semibold text-base">{{'tarjetas-rojas' | translate}}</span>
+            <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.tarjetas_rojas"></span>
+        </div>
+        <div class="py-3 flex items-center justify-between">
+            <span class="text-azul font-semibold text-base">{{'faltas-realizadas' | translate}}</span>
+            <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.faltas_realizadas"></span>
+        </div>
+        <div class="py-3 flex items-center justify-between">
+            <span class="text-azul font-semibold text-base">{{'duelos-ganados' | translate}}</span>
+            <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.duelos_ganados"></span>
+        </div>
+    </div>
+</div>
+  

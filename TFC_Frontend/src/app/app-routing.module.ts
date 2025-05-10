@@ -15,6 +15,9 @@ import { CompraEntradasComponent } from './components/compra-entradas/compra-ent
 import { AreaEntradasComponent } from './components/area-entradas/area-entradas.component';
 import { PlantillaComponent } from './components/plantilla/plantilla.component';
 import { AlienacionesComponent } from './components/alienaciones/alienaciones.component';
+import { PerfilJugadorComponent } from './components/perfil-jugador/perfil-jugador.component';
+import { PartidosEquipoComponent } from './components/partidos-equipo/partidos-equipo.component';
+import { AccesoDenegadoComponent } from './components/acceso-denegado/acceso-denegado.component';
 
 const routes: Routes = [
   {
@@ -74,8 +77,20 @@ const routes: Routes = [
     component: PlantillaComponent
   },
   {
-    path: 'alienaciones',
+    path: 'alineacion/:id',
     component: AlienacionesComponent
+  },
+  {
+    path: 'jugador/:id',
+    component: PerfilJugadorComponent
+  },
+  {
+    path: 'partidos/equipo/:id',
+    component: PartidosEquipoComponent
+  },
+  {
+    path : 'error',
+    component: AccesoDenegadoComponent
   }
 ];
 
