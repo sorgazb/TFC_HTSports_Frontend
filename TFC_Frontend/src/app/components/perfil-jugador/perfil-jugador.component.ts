@@ -23,10 +23,6 @@ export class PerfilJugadorComponent implements OnInit{
       this.router.navigate(['/error'])
     }
     
-    if(!localStorage.getItem('cuerpoTecnico')){
-      this.router.navigate(['/error'])
-    }
-    
     let id = Number(this.router.url.split('/').pop())
     this.serviciosUsuario.obtenerJugadorPlantilla(id).subscribe((jugador: Jugador) => {
       this.jugador = jugador
