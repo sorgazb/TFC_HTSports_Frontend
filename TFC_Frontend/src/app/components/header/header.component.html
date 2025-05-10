@@ -95,7 +95,7 @@
                     </li>
                     <!-- Plantilla Equipo -->
                     <li *ngIf="(cuerpoTecnico || jugador)">
-                        <a *ngIf="usuario" routerLink="miEquipo" class="btnInicioSesion">
+                        <a *ngIf="usuario" [routerLink]="'miEquipo/'+cuerpoTecnico.equipo_id" class="btnInicioSesion">
                             <mat-icon fontIcon="groups"></mat-icon>
                             <span>{{'equipo' | translate}}</span>
                         </a>

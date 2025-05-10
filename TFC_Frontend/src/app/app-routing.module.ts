@@ -73,7 +73,7 @@ const routes: Routes = [
     component: AreaEntradasComponent
   },
   {
-    path: 'miEquipo',
+    path: 'miEquipo/:id',
     component: PlantillaComponent
   },
   {

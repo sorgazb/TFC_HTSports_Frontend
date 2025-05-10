@@ -124,5 +124,13 @@ export class DetallePartidoComponent implements OnInit, AfterViewInit, OnDestroy
     this.porcentajeCornersContraEquipo2 = (this.actuacionesEquipos[1].corners_contra / totalCornersContra) * 100
   }
 
+  /*
+  * Metodo que redirige al usuario hasta la plantilla
+  * del equipo seleccionado
+  */
+  consultarEquipo(idEquipo : number){
+    this.router.navigate(['miEquipo/'+idEquipo])
+  }
+
 }
   

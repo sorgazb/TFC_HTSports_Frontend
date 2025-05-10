@@ -5,7 +5,7 @@
       <!-- Equipo Local -->
       <div class="flex flex-col items-center">
         <h1 class="text-xl font-semibold text-center">{{ partido.equipos[0].nombre }}</h1>
-        <img [src]="partido.equipos[0].escudo" alt="" class="w-32 h-32 object-contain" />
+        <img [src]="partido.equipos[0].escudo" alt="" class="w-32 h-32 object-contain cursor-pointer" (click)="consultarEquipo(partido.equipos[0].ID)"/>
       </div>
       <!-- Resultado -->
       <span *ngIf="partido.estado ==='enjuego' || partido.estado === 'Enjame'" class="font-bold text-azul text-xl animate-pulse">{{ partido.resultado }}</span>
@@ -13,7 +13,7 @@
       <!-- Equipo Visitante -->
       <div class="flex flex-col items-center">
         <h1 class="text-xl font-semibold text-center">{{ partido.equipos[1].nombre }}</h1>
-        <img [src]="partido.equipos[1].escudo" alt="" class="w-32 h-32 object-contain" />
+        <img [src]="partido.equipos[1].escudo" alt="" class="w-32 h-32 object-contain cursor-pointer" (click)="consultarEquipo(partido.equipos[1].ID)"/>
       </div>
     </div>
   </div>
@@ -104,13 +104,13 @@
     <mat-tab label="{{'alineaciones' | translate}}">
       <div class="flex flex-col items-center justify-center gap-8 p-5">
         <!-- Alineación Equipo Local -->
-        <div class="w-full max-w-xl flex flex-col items-center space-y-2 shadow-lg rounded-2xl bg-white p-4">
+        <div class="w-full max-w-xl flex flex-col items-center p-4">
           <h2 class="text-xl font-semibold text-center text-azul">{{ partido.equipos[0].nombre }}</h2>
           <img 
             [src]="'data:image/jpeg;base64,' + alienacionesPartido[0].imagen_alineacion" class="w-full h-auto object-contain rounded-lg"/>
         </div>
         <!-- Alineación Equipo Visitante -->
-        <div class="w-full max-w-xl flex flex-col items-center space-y-2 shadow-lg rounded-2xl bg-white p-4">
+        <div class="w-full max-w-xl flex flex-col items-center p-4">
           <h2 class="text-xl font-semibold text-center text-azul">{{ partido.equipos[1].nombre }}</h2>
           <img 
             [src]="'data:image/jpeg;base64,' + alienacionesPartido[1].imagen_alineacion" class="w-full h-auto object-contain rounded-lg"/>

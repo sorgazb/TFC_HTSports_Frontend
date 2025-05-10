@@ -43,15 +43,17 @@ export class PlantillaComponent implements OnInit{
     let cuerpoTecnicoSesion = JSON.parse(cuerpoTecnicoAux!)
     this.cuerpoTecnico = cuerpoTecnicoSesion
 
-    this.servicioEquipos.obtenerEquipoPorId(this.cuerpoTecnico.equipo_id).subscribe((equipo : Equipo) => {
+    let idEquipo = Number(this.router.url.split('/').pop())
+
+    this.servicioEquipos.obtenerEquipoPorId(idEquipo).subscribe((equipo : Equipo) => {
       this.equipo = equipo
     })
 
-    this.servicioUsuario.obtenerCuerposTecnicos(this.cuerpoTecnico.equipo_id).subscribe((cuerpoTecnico : CuerpoTecnico[]) => {
+    this.servicioUsuario.obtenerCuerposTecnicos(idEquipo).subscribe((cuerpoTecnico : CuerpoTecnico[]) => {
       this.cuerpoTecnicoPlantilla = cuerpoTecnico
     })
 
-    this.servicioUsuario.obtenerJugadores(this.cuerpoTecnico.equipo_id).subscribe((jugadores : Jugador[]) => {
+    this.servicioUsuario.obtenerJugadores(idEquipo).subscribe((jugadores : Jugador[]) => {
       this.jugadoresPlantilla = jugadores
       for (let jugador of this.jugadoresPlantilla){
         if(jugador.posicion == 'portero'){
