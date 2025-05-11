@@ -196,5 +196,15 @@
   "filtro-posicion": "Filter by Position",
   "valoracion-asc": "Rating Ascending",
   "valoracion-desc": "Rating Descending",
-  "todas_las_posiciones": "All Positions"
+  "todas_las_posiciones": "All Positions",
+  "nacionalidad" : "Nationality",
+  "introduce-descripcion" : "Enter a description about the player...",
+  "valoracion-ataque" : "Attack Rating",
+  "valoracion-defensa" : "Defense Rating",
+  "valoracion-pase" : "Pass Rating",
+  "valoracion-regate" : "Dribbling Rating",
+  "valoracion-fisico" : "Physical Rating",
+  "valoracion-portero" : "Goalkeeper Rating",
+  "valoracion" : "Global Rating",
+  "descripcion" : "Description: "
 }

@@ -42,7 +42,60 @@
     </div>
 
     <div>
-
+        <mat-accordion class="m-6">
+            <mat-expansion-panel *ngFor="let j of jugadoresOjeadosPaginados; let i = index" [expanded]="i === 0" class="border border-gray-200 rounded-xl mb-4">
+                <mat-expansion-panel-header class="bg-gray-200 flex flex-wrap items-center justify-between gap-4 sm:gap-6">
+                    <mat-panel-title class="text-black text-sm sm:text-base flex-1 min-w-[200px]">
+                        {{ j.nombre }} — {{ j.posicion | titlecase }}
+                    </mat-panel-title>
+                    <mat-panel-title class="text-black text-sm sm:text-base flex items-center min-w-[150px]">
+                        <span>{{ 'nacionalidad' | translate }}</span>
+                        <img class="w-5 h-3 sm:w-6 sm:h-4 object-contain rounded-sm shadow-sm ml-2" 
+                        src="../../../assets/svg-country-flags/svg/{{ j.nacionalidad }}.svg" />
+                    </mat-panel-title>
+                    <mat-panel-description class="text-black text-sm sm:text-base flex items-center min-w-[150px]">
+                        {{ 'valoracion' | translate }}:
+                        <nz-rate class="ml-2" [ngModel]="j.valoracion" nzDisabled></nz-rate>
+                    </mat-panel-description>
+                </mat-expansion-panel-header>
+                <div class="p-5 border-t border-gray-200">
+                    <img class="w-32 h-auto mb-4 object-cover"  [src]="'data:image/jpeg;base64,' + j.avatar">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <div>
+                            <strong>{{ 'edad' | translate }}:</strong> {{ j.edad }}
+                        </div>
+                        <div>
+                            <span><strong>{{ 'nacionalidad' | translate }}</strong></span>
+                            <img class="w-6 h-4 object-cover rounded-sm shadow-sm inline-block ml-2" src="../../../assets/svg-country-flags/svg/{{ j.nacionalidad }}.svg" [alt]="j.nacionalidad"/> 
+                        </div>
+                        <div class="col-span-1 sm:col-span-2">
+                            <span><strong>{{ 'descripcion' | translate }}</strong></span>
+                            <p>{{ j.descripcion }}</p>
+                        </div>
+                    </div>
+                    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4">
+                        <div>
+                            <strong>{{ 'valoracion-ataque' | translate }}:</strong> <nz-rate class="mx-2" [ngModel]="j.valoracion_ataque" nzDisabled></nz-rate>
+                        </div>
+                        <div>
+                            <strong>{{ 'valoracion-regate' | translate }}:</strong> <nz-rate class="mx-2" [ngModel]="j.valoracion_regate" nzDisabled></nz-rate>
+                        </div>
+                        <div>
+                            <strong>{{ 'valoracion-defensa' | translate }}:</strong> <nz-rate class="mx-2" [ngModel]="j.valoracion_defensa" nzDisabled></nz-rate>
+                        </div>
+                        <div>
+                            <strong>{{ 'valoracion-pase' | translate }}:</strong> <nz-rate class="mx-2" [ngModel]="j.valoracion_pase" nzDisabled></nz-rate>
+                        </div>
+                        <div>
+                            <strong>{{ 'valoracion-fisico' | translate }}:</strong> <nz-rate class="mx-2" [ngModel]="j.valoracion_fisico" nzDisabled></nz-rate>
+                        </div>
+                        <div *ngIf="j.posicion === 'portero'">
+                            <strong>{{ 'valoracion-portero' | translate }}:</strong> <nz-rate class="mx-2" [ngModel]="j.valoracion_portero" nzDisabled></nz-rate>
+                        </div>
+                    </div>
+                </div>
+            </mat-expansion-panel>
+        </mat-accordion>
     </div>
 
     <!-- Paginador -->

@@ -59,8 +59,12 @@ import { AccesoDenegadoComponent } from './components/acceso-denegado/acceso-den
 import { PerfilCuerpoTecnicoComponent } from './components/perfil-cuerpo-tecnico/perfil-cuerpo-tecnico.component';
 import { AreaJugadoresOjeadosComponent } from './components/area-jugadores-ojeados/area-jugadores-ojeados.component';
 import { CardJugadorOjeadoRegistrarComponent } from './components/card-jugador-ojeado-registrar/card-jugador-ojeado-registrar.component';
-import { CardJugadorOjeadoComponent } from './components/card-jugador-ojeado/card-jugador-ojeado.component';
 import { MatOptionModule } from '@angular/material/core';
+import { NzRateModule } from 'ng-zorro-antd/rate'; 
+import { NzIconModule } from 'ng-zorro-antd/icon';   
+import { MatExpansionModule } from '@angular/material/expansion';
+     // para los iconos
+
 
 
 registerLocaleData(es);
@@ -95,7 +99,6 @@ registerLocaleData(es);
     PerfilCuerpoTecnicoComponent,
     AreaJugadoresOjeadosComponent,
     CardJugadorOjeadoRegistrarComponent,
-    CardJugadorOjeadoComponent,
   ],
   imports: [
     BrowserModule,
@@ -103,6 +106,7 @@ registerLocaleData(es);
     MatTableModule,
     MatTabsModule,
     MatOptionModule,
+    MatExpansionModule,
     DragDropModule,
     AppRoutingModule,
     BrowserAnimationsModule,
@@ -113,8 +117,10 @@ registerLocaleData(es);
     MatFormFieldModule,
     MatInputModule,
     QRCodeModule,
+    NzIconModule,
     NzAlertModule,
     CountUpModule,
+    NzRateModule,
     TranslateModule.forRoot({
       loader :{
         provide : TranslateLoader,

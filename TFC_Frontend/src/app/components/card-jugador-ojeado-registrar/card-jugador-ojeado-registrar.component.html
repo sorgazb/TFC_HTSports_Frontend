@@ -3,50 +3,92 @@
     {{ 'registrar-jugador' | translate }}
   </h1>
   <div mat-dialog-content>
-    <form [formGroup]="formNuevoJugador" (ngSubmit)="registrarJugador()" class="grid grid-cols-2 gap-4 p-2">
-        <!-- Nombre -->
-        <mat-form-field class="col-span-2 w-full" appearance="outline" hideRequiredMarker>
-            <mat-label class="bg-white p-1">{{ 'Nombre' | translate }}</mat-label>
-            <input type="text" matInput formControlName="nombre"/>
-            <mat-error *ngIf="controlarErrores('nombre', 'required')">
-                {{ 'introduce-tu' | translate }} <strong>{{ 'nombre' | translate }}</strong>
-            </mat-error>
-        </mat-form-field>
+    <form [formGroup]="formNuevoJugador" (ngSubmit)="registrarJugador()" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-2">
+      <!-- Nombre -->
+      <mat-form-field class="col-span-1 md:col-span-1 w-full" appearance="outline" hideRequiredMarker>
+        <mat-label class="bg-white p-1">{{ 'Nombre' | translate }}</mat-label>
+        <input type="text" matInput formControlName="nombre" />
+      </mat-form-field>
 
-        <!-- Avatar -->
-        <div class="col-span-2 flex flex-col items-center gap-2">
-            <label class="text-sm font-semibold text-azul">{{ 'avatar' | translate }}</label>
-            <label for="avatarInput" class="cursor-pointer flex items-center justify-center w-36 h-36 rounded-full border-2 border-azul bg-gray-50 overflow-hidden">
-            <ng-container *ngIf="imagenSeleccionada">
-                <img [src]="imagenSeleccionada" alt="Avatar" class="w-full h-full object-cover rounded-full"/>
-            </ng-container>
-            </label>
-            <input id="avatarInput" type="file" (change)="cambiasImagen($event)" class="hidden"/>
-            <span class="text-xs text-black italic">{{ 'selecciona-imagen' | translate }}</span>
-        </div>
+      <!-- Edad -->
+      <mat-form-field class="col-span-1 md:col-span-1 w-full" appearance="outline" hideRequiredMarker>
+        <mat-label class="bg-white p-1">{{ 'edad' | translate }}</mat-label>
+        <input type="number" matInput formControlName="edad" />
+      </mat-form-field>
 
-        <!-- Nacionalidad -->
-        <div class="flex justify-center">
-            <mat-select-country class="w-2/3 max-w-sm" appearance="outline" label="{{ 'idioma' | translate }}" (onCountrySelected)="onCountrySelected($event)"></mat-select-country>
-        </div>
-        
-        <!-- Posicion -->
-        <div class="flex justify-center">
-            <select class="w-full border rounded border-azul">
-                <div *ngIf="this.translate.currentLang == 'es'">
-                    <option *ngFor="let posicion of posiciones" [value]="posicion.toLocaleLowerCase()">{{ posicion }}</option>
-                </div>
-                <div *ngIf="this.translate.currentLang == 'gb'">
-                    <option *ngFor="let posicion of posicionesEng" [value]="posicion.toLocaleLowerCase()">{{ posicion }}</option>
-                </div>
-            </select>
-        </div>
-        
-        <!-- Boton Registrar Jugador -->
-        <div class="col-span-2 flex justify-center">
-            <button type="submit" [disabled]="!formNuevoJugador.valid" class="bg-azul text-white px-6 py-2 rounded-full shadow">
-                {{ 'actualizar-usuario' | translate }}
-            </button>
+      <!-- Avatar -->
+      <div class="col-span-1 md:col-span-2 flex flex-col items-center gap-2">
+        <label class="text-sm font-semibold text-azul">{{ 'selecciona-imagen' | translate }}</label>
+        <label for="avatarInput" class="cursor-pointer flex items-center justify-center w-36 h-36 rounded-full border-2 border-azul bg-gray-50 overflow-hidden">
+          <ng-container *ngIf="imagenSeleccionada">
+            <img [src]="imagenSeleccionada" alt="Avatar" class="w-full h-full object-cover rounded-full" />
+          </ng-container>
+        </label>
+        <input id="avatarInput" type="file" (change)="cambiasImagen($event)" class="hidden" />
+        <span class="text-xs text-black italic">{{ 'selecciona-imagen' | translate }}</span>
+      </div>
+
+      <!-- Nacionalidad -->
+      <div class="col-span-1 md:col-span-1 flex justify-center">
+        <mat-select-country formControlName="nacionalidad" class="w-2/3 max-w-sm" appearance="outline" [label]="'nacionalidad' | translate" (onCountrySelected)="onCountrySelected($event)"></mat-select-country>
+      </div>
+
+      <!-- Posición -->
+      <div class="col-span-1 md:col-span-1 flex flex-col items-center gap-1">
+        <select id="posicion" formControlName="posicion" class="w-2/3 max-w-sm border rounded border-azul p-5 text-sm">
+          <option value="">{{ 'selecciona-posicion' | translate }}</option>
+          <option *ngFor="let posicion of getPosiciones()" [value]="posicion.toLocaleLowerCase()">
+            {{ posicion }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Descripción Jugador -->
+      <div class="col-span-1 md:col-span-2">
+        <textarea formControlName="descripcion" id="descripcion" rows="4" class="block p-2.5 w-full text-sm text-black rounded-lg border border-azul"[placeholder]="'introduce-descripcion' | translate"></textarea>
+      </div>
+      
+      <!-- Valoracion Ataque -->
+      <div class="col-span-1 md:col-span-1 flex flex-col items-center gap-2">
+        <label for="valoracion-ataque">{{ 'valoracion-ataque' | translate }}</label>
+        <nz-rate id="valoracion-ataque" formControlName="valoracion_ataque" nzAllowHalf></nz-rate>
+      </div>
+
+      <!-- Valoracion Defensa -->
+      <div class="col-span-1 md:col-span-1 flex flex-col items-center gap-2">
+        <label for="valoracion-defensa">{{ 'valoracion-defensa' | translate }}</label>
+        <nz-rate id="valoracion-defensa" formControlName="valoracion_defensa" nzAllowHalf></nz-rate>
+      </div>
+
+      <!-- Valoracion Pase  -->
+      <div class="col-span-1 md:col-span-1 flex flex-col items-center gap-2">
+        <label for="valoracion-pase">{{ 'valoracion-pase' | translate }}</label>
+        <nz-rate id="valoracion-pase" formControlName="valoracion_pase" nzAllowHalf></nz-rate>
+      </div>
+
+      <!-- Valoracion Regate -->
+      <div class="col-span-1 md:col-span-1 flex flex-col items-center gap-2">
+        <label for="valoracion-regate">{{ 'valoracion-regate' | translate }}</label>
+        <nz-rate id="valoracion-regate" formControlName="valoracion_regate" nzAllowHalf></nz-rate>
+      </div>
+
+      <!-- Valoracion Fisico -->
+      <div class="col-span-1 md:col-span-1 flex flex-col items-center gap-2">
+        <label for="valoracion-fisico">{{ 'valoracion-fisico' | translate }}</label>
+        <nz-rate id="valoracion-fisico" formControlName="valoracion_fisico" nzAllowHalf></nz-rate>
+      </div>
+
+      <!-- Valoracion Portero -->
+      <div class="col-span-1 md:col-span-1 flex flex-col items-center gap-2">
+        <label for="valoracion-portero">{{ 'valoracion-portero' | translate }}</label>
+        <nz-rate id="valoracion-portero" formControlName="valoracion_portero" nzAllowHalf></nz-rate>
+      </div>
+
+      <!-- Botón Registrar Jugador -->
+      <div class="col-span-1 md:col-span-2 flex justify-center">
+        <button type="submit" [disabled]="!formNuevoJugador.valid" class="bg-azul text-white px-6 py-2 rounded-full shadow">
+          {{ 'registrar-jugador' | translate }}
+        </button>
       </div>
     </form>
   </div>

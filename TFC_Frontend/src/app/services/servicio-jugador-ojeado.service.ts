@@ -13,15 +13,11 @@ export class ServicioJugadorOjeadoService {
 
   constructor(private http: HttpClient) { }
 
-  crearJugadorOjeado(jugadorOjeado: JugadorOjeado): Observable<JugadorOjeado>{
+  crearJugadorOjeado(jugadorOjeado: FormData): Observable<JugadorOjeado>{
     return this.http.post<JugadorOjeado>(`${this.apiUrl}${this.endPoint}`,jugadorOjeado)
   }
 
   obtenerJugadoresOjeadosEquipo(id: number): Observable<JugadorOjeado[]>{
     return this.http.get<JugadorOjeado[]>(`${this.apiUrl}${this.endPoint}/equipo/${id}`)
-  }
-
-  obtenerJugadorOjeado(id : number): Observable<JugadorOjeado>{
-    return this.http.get<JugadorOjeado>(`${this.apiUrl}${this.endPoint}/${id}`)
   }
 }

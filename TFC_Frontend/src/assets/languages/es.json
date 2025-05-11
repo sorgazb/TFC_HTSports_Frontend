@@ -196,5 +196,15 @@
   "filtro-posicion" : "Filtra por Posicion",
   "valoracion-asc" : "Valoracion Ascendente",
   "valoracion-desc" : "Valoracion Descendente",
-  "todos_las_posiciones" : "Todas las Posiciones"
+  "todos_las_posiciones" : "Todas las Posiciones",
+  "nacionalidad" : "Nacionalidad",
+  "introduce-descripcion" : "Introduce una descripcion sobre el Jugador ...",
+  "valoracion-ataque" : "Valoracion Ataque",
+  "valoracion-defensa" : "Valoracion Defensa",
+  "valoracion-pase" : "Valoracion Pase",
+  "valoracion-regate" : "Valoracion Regate",
+  "valoracion-fisico" : "Valoracion Fisico",
+  "valoracion-portero" : "Valoracion Portero",
+  "valoracion" : "Valoracion General",
+  "descripcion" : "Descripcion: "
 }

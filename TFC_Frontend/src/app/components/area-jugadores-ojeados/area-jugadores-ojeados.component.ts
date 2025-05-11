@@ -115,5 +115,13 @@ export class AreaJugadoresOjeadosComponent implements OnInit{
       width: '800px',
       maxWidth: '90vw', 
     })
+    cuadroJugador.afterClosed().subscribe(() => {
+        this.serviciosJugadorOjeado.obtenerJugadoresOjeadosEquipo(this.cuerpoTecnico.ID).subscribe((jugadoresOjeados: JugadorOjeado[]) => {
+          this.jugadoresOjeados = jugadoresOjeados
+          this.totalPaginas = Math.ceil(this.jugadoresOjeados.length / this.jugadoresPagina)
+          this.paginaActual = 1
+          this.actualizarJugadoresPaginados()
+        })
+      })
   }
 }
