@@ -20,6 +20,7 @@ import { PartidosEquipoComponent } from './components/partidos-equipo/partidos-e
 import { AccesoDenegadoComponent } from './components/acceso-denegado/acceso-denegado.component';
 import { PerfilCuerpoTecnicoComponent } from './components/perfil-cuerpo-tecnico/perfil-cuerpo-tecnico.component';
 import { AreaJugadoresOjeadosComponent } from './components/area-jugadores-ojeados/area-jugadores-ojeados.component';
+import { CalendarioEquipoComponent } from './components/calendario-equipo/calendario-equipo.component';
 
 const routes: Routes = [
   {
@@ -101,6 +102,10 @@ const routes: Routes = [
   {
     path: 'areaojeador',
     component: AreaJugadoresOjeadosComponent
+  },
+  {
+    path : 'calendario',
+    component: CalendarioEquipoComponent
   }
 ];
 

@@ -63,9 +63,10 @@ import { MatOptionModule } from '@angular/material/core';
 import { NzRateModule } from 'ng-zorro-antd/rate'; 
 import { NzIconModule } from 'ng-zorro-antd/icon';   
 import { MatExpansionModule } from '@angular/material/expansion';
-     // para los iconos
-
-
+import { CalendarioEquipoComponent } from './components/calendario-equipo/calendario-equipo.component';
+import { CommonModule } from '@angular/common';
+import { NzCalendarModule } from 'ng-zorro-antd/calendar';
+import { NzBadgeModule } from 'ng-zorro-antd/badge';
 
 registerLocaleData(es);
 
@@ -99,6 +100,7 @@ registerLocaleData(es);
     PerfilCuerpoTecnicoComponent,
     AreaJugadoresOjeadosComponent,
     CardJugadorOjeadoRegistrarComponent,
+    CalendarioEquipoComponent,
   ],
   imports: [
     BrowserModule,
@@ -109,10 +111,12 @@ registerLocaleData(es);
     MatExpansionModule,
     DragDropModule,
     AppRoutingModule,
+    NzBadgeModule,
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
     MatIconModule,
+    NzCalendarModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,

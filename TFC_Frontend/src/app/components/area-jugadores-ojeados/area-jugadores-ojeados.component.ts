@@ -52,7 +52,7 @@ export class AreaJugadoresOjeadosComponent implements OnInit{
     let cuerpoTecnicoSesion = JSON.parse(cuerpoTecnicoAux!)
     this.cuerpoTecnico = cuerpoTecnicoSesion
 
-    this.serviciosJugadorOjeado.obtenerJugadoresOjeadosEquipo(this.cuerpoTecnico.ID).subscribe((jugadoresOjeados : JugadorOjeado[])=>{
+    this.serviciosJugadorOjeado.obtenerJugadoresOjeadosEquipo(this.cuerpoTecnico.equipo_id).subscribe((jugadoresOjeados : JugadorOjeado[])=>{
       this.jugadoresOjeados = jugadoresOjeados
       this.totalPaginas = Math.ceil(this.jugadoresOjeados.length / this.jugadoresPagina)
       this.actualizarJugadoresPaginados()

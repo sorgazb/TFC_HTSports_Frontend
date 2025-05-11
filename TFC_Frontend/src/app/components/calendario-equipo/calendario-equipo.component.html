@@ -1,0 +1,17 @@
+<div class="p-10">
+  <nz-calendar>
+    <!-- Celda de fecha -->
+    <ul *nzDateCell="let date" class="events">
+      <!-- Construimos la clave del día -->
+      <ng-container *ngIf="eventMap[date.toISOString().slice(0,10)] as partidosDelDia">
+        <li *ngFor="let partido of partidosDelDia">
+          <!-- Aquí decides qué mostrar: hora, rival, lugar… -->
+          <nz-badge
+            nzStatus="success"
+            [nzText]="'Partido ' + (partido.fecha | date:'HH:mm') + ''"
+          ></nz-badge>
+        </li>
+      </ng-container>
+    </ul>
+  </nz-calendar>
+</div>
