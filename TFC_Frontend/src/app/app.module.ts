@@ -67,6 +67,7 @@ import { CalendarioEquipoComponent } from './components/calendario-equipo/calend
 import { CommonModule } from '@angular/common';
 import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
+import { AreaEntrenamientosComponent } from './components/area-entrenamientos/area-entrenamientos.component';
 
 registerLocaleData(es);
 
@@ -101,6 +102,7 @@ registerLocaleData(es);
     AreaJugadoresOjeadosComponent,
     CardJugadorOjeadoRegistrarComponent,
     CalendarioEquipoComponent,
+    AreaEntrenamientosComponent,
   ],
   imports: [
     BrowserModule,

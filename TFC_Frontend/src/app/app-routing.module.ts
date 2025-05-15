@@ -21,6 +21,7 @@ import { AccesoDenegadoComponent } from './components/acceso-denegado/acceso-den
 import { PerfilCuerpoTecnicoComponent } from './components/perfil-cuerpo-tecnico/perfil-cuerpo-tecnico.component';
 import { AreaJugadoresOjeadosComponent } from './components/area-jugadores-ojeados/area-jugadores-ojeados.component';
 import { CalendarioEquipoComponent } from './components/calendario-equipo/calendario-equipo.component';
+import { AreaEntrenamientosComponent } from './components/area-entrenamientos/area-entrenamientos.component';
 
 const routes: Routes = [
   {
@@ -102,6 +103,10 @@ const routes: Routes = [
   {
     path: 'areaojeador',
     component: AreaJugadoresOjeadosComponent
+  },
+  {
+    path: 'areaentrenamientos',
+    component: AreaEntrenamientosComponent
   },
   {
     path : 'calendario',

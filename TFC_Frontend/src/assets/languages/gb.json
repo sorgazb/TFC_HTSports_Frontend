@@ -206,5 +206,7 @@
   "valoracion-fisico" : "Physical Rating",
   "valoracion-portero" : "Goalkeeper Rating",
   "valoracion" : "Global Rating",
-  "descripcion" : "Description: "
+  "descripcion" : "Description: ",
+  "area-entrenamientos" : "Trainings"
+
 }

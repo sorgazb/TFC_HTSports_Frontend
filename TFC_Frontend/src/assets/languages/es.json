@@ -206,5 +206,6 @@
   "valoracion-fisico" : "Valoracion Fisico",
   "valoracion-portero" : "Valoracion Portero",
   "valoracion" : "Valoracion General",
-  "descripcion" : "Descripcion: "
+  "descripcion" : "Descripcion: ",
+  "area-entrenamientos" : "Entrenamientos"
 }

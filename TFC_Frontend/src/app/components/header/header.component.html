@@ -108,6 +108,13 @@
                             <span>{{'equipo' | translate}}</span>
                         </a>
                     </li>
+                    <!-- Area Entrenamientos -->
+                    <li>
+                        <a *ngIf="usuario && (cuerpoTecnico || jugador)" routerLink="areaentrenamientos" class="btnInicioSesion">
+                            <mat-icon fontIcon="fitness_center"></mat-icon>
+                            <span>{{'area-entrenamientos' | translate}}</span>
+                        </a>
+                    </li>
                     <!-- Area Ojeador -->
                     <li>
                         <a *ngIf="usuario && cuerpoTecnico" routerLink="areaojeador" class="btnInicioSesion">
