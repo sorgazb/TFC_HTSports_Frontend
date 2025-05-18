@@ -1,15 +1,66 @@
 <div>
     <!-- Botones Filtrar y Registrar Nueva Sesion Entrenamiento -->
-    <div class="flex">
-        <div class="m-5">
-            <button (click)="mostrarFiltros = !mostrarFiltros" class="bg-azul text-white px-4 py-2 rounded">
-                {{ mostrarFiltros ? ('ocultar-filtros' | translate) : ('mostrar-filtros' | translate) }}
-            </button>
-        </div>
+    <div class="flex flex-wrap">
         <div *ngIf="cuerpoTecnico.tipo === 'entrenador'" class="m-5">
             <button (click)="registrarNuevaSesionEntrenamiento()" class="bg-azul text-white px-4 py-2 rounded">
                 {{'registrar-nueva-sesion' | translate }}
             </button>
         </div>
     </div>
+
+    <!-- Titulo Entrenamientos -->
+    <div class="flex flex-col md:flex-row items-center gap-2 w-full px-4 text-center md:text-left">
+        <hr class="flex-1 border-azul hidden md:block">
+        <h1 class="text-lg sm:text-xl md:text-3xl font-extrabold text-azul">
+            {{ 'entrenamientos' | translate }}
+        </h1>
+        <hr class="flex-1 border-azul hidden md:block">
+    </div>
+    <hr class="w-full border-azul md:hidden">
+
+    <!-- Contenedor Informacion Entrenamientos -->
+    <mat-accordion class="m-4 sm:m-6">
+        <mat-expansion-panel *ngFor="let sesion of sesionesEntrenamiento" (opened)="cargarEntrenamientosSesion(sesion.ID)">
+            <mat-expansion-panel-header class="bg-gray-300 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-6 text-sm sm:text-base px-2 sm:px-4 py-2">
+                <mat-panel-title class="text-black w-full sm:w-auto">
+                    <div class="text-azul flex items-center gap-2">
+                        <mat-icon>fitness_center</mat-icon>
+                        <p class="font-semibold text-base sm:text-lg">{{'sesion-entrenamiento' | translate}}</p>
+                    </div>
+                </mat-panel-title>
+                <mat-panel-description class="text-black w-full sm:w-auto text-xs sm:text-sm">
+                    {{'fecha-inicio' | translate}}: {{ sesion.FechaInicio | date: 'mediumDate'}} — 
+                    {{'fecha-fin' | translate}}: {{ sesion.FechaFin | date: 'mediumDate'}}
+                </mat-panel-description>
+            </mat-expansion-panel-header>
+            <!-- Contenedor con la informacion de los detalles de la sesion -->
+            <mat-panel-description>
+                <div *ngIf="sesion.DetallesSesion" class="space-y-4 mt-2">
+                    <div class="my-2 py-2" *ngFor="let detalle of sesion.DetallesSesion; let i = index">
+                        <p class="text-azul text-base sm:text-lg font-bold my-2">{{'entrenamiento' | translate}} {{i + 1}}</p>
+                        <!-- Tipo Entrenamiento -->
+                        <div class="text-azul flex items-start gap-2 text-sm sm:text-base mb-1">
+                            <mat-icon>sports</mat-icon>
+                            <p class="text-black">{{'tipo' | translate}}: {{detalle.entrenamiento?.tipo?.toUpperCase()}}</p>
+                        </div> 
+                        <!-- Fecha Entrenamiento -->
+                        <div class="text-azul flex items-start gap-2 text-sm sm:text-base mb-1">
+                            <mat-icon>event</mat-icon>
+                            <p class="text-black">{{'fecha' | translate}} {{detalle.fecha | date: 'mediumDate'}}</p>
+                        </div> 
+                        <!-- Duracion Entrenamiento -->
+                        <div class="text-azul flex items-start gap-2 text-sm sm:text-base mb-1">
+                            <mat-icon>schedule</mat-icon>
+                            <p class="text-black">{{'duracion' | translate}}: {{detalle.entrenamiento?.duracion}}</p>
+                        </div>
+                        <!-- Descripcion Entrenamiento -->
+                        <div class="text-azul flex items-start gap-2 text-sm sm:text-base mb-1">
+                            <mat-icon>description</mat-icon>
+                            <p class="text-black">{{'descripcion' | translate}} {{detalle.entrenamiento?.descripcion}}</p>
+                        </div>
+                    </div>
+                </div>
+            </mat-panel-description>
+        </mat-expansion-panel>
+    </mat-accordion>
 </div>

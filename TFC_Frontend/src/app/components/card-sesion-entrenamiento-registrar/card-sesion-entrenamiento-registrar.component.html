@@ -2,6 +2,7 @@
   <h1 class="bg-azul text-white p-5 text-center text-xl">
     {{ 'registrar-nueva-sesion' | translate }}
   </h1>
+  
   <div mat-dialog-content>
     <form [formGroup]="formNuevaSesion" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-3">
       <mat-form-field appearance="outline" class="col-span-full" hideRequiredMarker>
@@ -23,22 +24,19 @@
       <mat-error class="col-span-full" *ngIf="formNuevaSesion.hasError('rangoInvalido')">{{ 'error-fecha-fin' | translate }}</mat-error>
       <button [disabled]="!formNuevaSesion.valid" class="col-span-full bg-azul p-2 rounded-xl text-white my-2" (click)="establecerEntrenamientosSesion()">{{'establecer-entrenamientos' | translate}}</button>
     </form>
+    
     <div *ngIf="mostrarDiasSesion" [formGroup]="formNuevaSesion">
       <div>
-        <div *ngFor="let dia of [].constructor(diasSesion); let i = index" class="border-2 border-gray-500 p-4 mb-3 rounded grid grid-cols-1 md:grid-cols-2 gap-4">
-          
+        <div *ngFor="let dia of [].constructor(diasSesion); let i = index" class="border-2 border-gray-500 p-4 mb-3 rounded grid grid-cols-1 md:grid-cols-2 gap-4">  
           <h3 class="col-span-full text-center text-azul">Día {{ i + 1 }}</h3>
-          
           <input type="date" [(ngModel)]="fechasDias[i]" [ngModelOptions]="{ standalone: true }" [min]="fechaInicioStr" [max]="fechaFinStr" (ngModelChange)="validarFecha(i)" class="border-2 border-azul rounded p-2 col-span-full text-black"/>
           <p *ngIf="fechasInvalidas[i]" class="text-red-500 text-sm mt-1">Fecha fuera de rango: debe estar entre {{ fechaInicioStr }} y {{ fechaFinStr }}</p>
-
           <div class="col-span-full">
-            <select class="border-2 border-azul rounded p-2 w-full text-black" [(ngModel)]="usarEntrenamiento" [ngModelOptions]="{ standalone: true }" (change)="seleccionarEntrenamiento()">
+            <select class="border-2 border-azul rounded p-2 w-full text-black" [(ngModel)]="usarEntrenamiento" [ngModelOptions]="{ standalone: true }">
               <option [ngValue]="true">Usar Entrenamiento existente</option>
               <option [ngValue]="false">Crear nuevo entrenamiento</option>
             </select>
           </div>
-          
           <div class="col-span-full" *ngIf="!usarEntrenamiento">
             <div class="m-2 p-2 border-2 border-gray-500 rounded">
               <h3 class="text-center text-azul w-full my-2">Nuevo entrenamiento</h3>
@@ -62,13 +60,21 @@
           </div>
           
           <div class="col-span-full" *ngIf="usarEntrenamiento">
-
+            <select [(ngModel)]="selectedEntrenamientoId[i]" [ngModelOptions]="{ standalone: true }" class="border-2 border-azul rounded p-2 w-full text-black my-1">
+              <option value="0" disabled selected>Selecciona un entrenamiento</option>
+              <option *ngFor="let ent of entrenamientosEquipo" [value]="ent.ID">
+                {{ ent.descripcion }}
+              </option>
+            </select>
+            <button type="button" class="w-full bg-azul p-2 rounded-xl text-white my-2" (click)="seleccionarEntrenamiento(i)" [disabled]="!selectedEntrenamientoId[i]">Establecer Entrenamiento</button>
           </div>
-        
         </div>
-      
+        <div class="w-full mt-4">
+          <button type="button" class="bg-azul text-white p-2 rounded" (click)="guardarSesionCompleta()">
+            Guardar sesión completa
+          </button>
+        </div>
       </div>
-    
     </div>
   </div>
 </div>

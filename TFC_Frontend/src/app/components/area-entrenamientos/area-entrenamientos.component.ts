@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { ChangeDetectorRef, Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { CuerpoTecnico } from 'src/app/class/cuerpo-tecnico';
 import { ServicioSesionEntrenamientoService } from 'src/app/services/servicio-sesion-entrenamiento.service';
 import { CardSesionEntrenamientoRegistrarComponent } from '../card-sesion-entrenamiento-registrar/card-sesion-entrenamiento-registrar.component';
+import { SesionEntrenamiento } from 'src/app/class/sesion-entrenamiento';
+import { Entrenamiento } from 'src/app/class/entrenamiento';
 
 @Component({
   selector: 'app-area-entrenamientos',
@@ -12,14 +14,12 @@ import { CardSesionEntrenamientoRegistrarComponent } from '../card-sesion-entren
   styleUrls: ['./area-entrenamientos.component.css']
 })
 export class AreaEntrenamientosComponent {
-
-  mostrarFiltros : boolean = false
-
   cuerpoTecnico !: CuerpoTecnico
-
   translate !: TranslateService
+  sesionesEntrenamiento : SesionEntrenamiento [] = []
+  entrenamientosSesion : Entrenamiento [] = []
 
-  constructor(private router : Router, private servicioSesionEntrenamiento : ServicioSesionEntrenamientoService, translate: TranslateService, public registrarSesionEntrenamiento : MatDialog){
+  constructor(private cd: ChangeDetectorRef,private router : Router, private servicioSesionEntrenamiento : ServicioSesionEntrenamientoService, translate: TranslateService, public registrarSesionEntrenamiento : MatDialog){
     this.translate = translate
   }
 
@@ -36,16 +36,16 @@ export class AreaEntrenamientosComponent {
     let cuerpoTecnicoAux = localStorage.getItem('cuerpoTecnico')
     let cuerpoTecnicoSesion = JSON.parse(cuerpoTecnicoAux!)
     this.cuerpoTecnico = cuerpoTecnicoSesion
+
+    let idEquipo = this.cuerpoTecnico.equipo_id
   
-    // this.serviciosJugadorOjeado.obtenerJugadoresOjeadosEquipo(this.cuerpoTecnico.equipo_id).subscribe((jugadoresOjeados : JugadorOjeado[])=>{
-    //   this.jugadoresOjeados = jugadoresOjeados
-    //   this.totalPaginas = Math.ceil(this.jugadoresOjeados.length / this.jugadoresPagina)
-    //   this.actualizarJugadoresPaginados()
-    // })
+    this.servicioSesionEntrenamiento.obtenerSesionesEntrenamientoEquipo(idEquipo).subscribe((sesionEntrenamiento : SesionEntrenamiento [])=>{
+      this.sesionesEntrenamiento = sesionEntrenamiento
+    })
   }
 
   /*
-  * Metodo que hace una llamada a la card material para cambiar el idioma de la web.
+  * Metodo que hace una llamada a la card material para registrar una nueva sesion de entrenamiento.
   */
   registrarNuevaSesionEntrenamiento(){
     const cuadroSesionEntrenamiento = this.registrarSesionEntrenamiento.open(CardSesionEntrenamientoRegistrarComponent,{
@@ -53,12 +53,30 @@ export class AreaEntrenamientosComponent {
       maxWidth: '90vw', 
     })
     cuadroSesionEntrenamiento.afterClosed().subscribe(() => {
-        // this.serviciosJugadorOjeado.obtenerJugadoresOjeadosEquipo(this.cuerpoTecnico.ID).subscribe((jugadoresOjeados: JugadorOjeado[]) => {
-        //   this.jugadoresOjeados = jugadoresOjeados
-        //   this.totalPaginas = Math.ceil(this.jugadoresOjeados.length / this.jugadoresPagina)
-        //   this.paginaActual = 1
-        //   this.actualizarJugadoresPaginados()
-        // })
-     })
-    }
+      let idEquipo = this.cuerpoTecnico.equipo_id
+      this.servicioSesionEntrenamiento.obtenerSesionesEntrenamientoEquipo(idEquipo).subscribe((sesionEntrenamiento : SesionEntrenamiento [])=>{
+        this.sesionesEntrenamiento = sesionEntrenamiento
+      })
+    })
+  }
+  
+  /*
+  * Metodo que hace una llamada al servicio de obtener entrenamiento de una sesion
+  * @param {number} => id de la sesion
+  */
+  cargarEntrenamientosSesion(sesionId: number) {
+    const sesion = this.sesionesEntrenamiento.find(s => s.ID === sesionId);
+    if (sesion?.DetallesSesion?.length) return;
+    
+    this.servicioSesionEntrenamiento.obtenerEntrenamientosSesion(sesionId).subscribe({
+      next: (sesionCompleta) => {
+        const sesionIndex = this.sesionesEntrenamiento.findIndex(s => s.ID === sesionId);
+        if (sesionIndex !== -1) {
+          this.sesionesEntrenamiento[sesionIndex].DetallesSesion = sesionCompleta.DetallesSesion
+          this.sesionesEntrenamiento = [...this.sesionesEntrenamiento]
+          this.cd.detectChanges()
+          }
+        }
+    })
+  }
 }

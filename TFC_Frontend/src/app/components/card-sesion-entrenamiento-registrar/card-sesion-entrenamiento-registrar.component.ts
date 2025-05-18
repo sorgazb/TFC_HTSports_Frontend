@@ -1,6 +1,6 @@
 import { formatDate, Time } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
-import { AbstractControl, Form, FormArray, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
 import { CuerpoTecnico } from 'src/app/class/cuerpo-tecnico';
@@ -17,14 +17,17 @@ import { ServicioSesionEntrenamientoService } from 'src/app/services/servicio-se
 })
 export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
   
+  idSesion !: number
+
   cuerpoTecnico !: CuerpoTecnico
   
   sesionEntrenamiento : SesionEntrenamiento = {
     ID : 0,
     id_Cuerpo_Tecnico : 0,
     id_Equipo : 0,
-    fecha_Inicio : '',
-    fecha_Fin : ''
+    FechaInicio : '',
+    FechaFin : '',
+    DetallesSesion: []
   }
 
   nuevoEntrenamiento : Entrenamiento = {
@@ -35,7 +38,11 @@ export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
     duracion : {hours : 0, minutes: 0}
   }
 
+  entrenamientosEquipo : Entrenamiento [] = []
+
   entrenamientosSesion : DetalleSesion [] = []
+
+  selectedEntrenamientoId: number[] = [];
   
   usarEntrenamiento : boolean = false
 
@@ -69,6 +76,10 @@ export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
         fechaFin:   new FormControl('', Validators.required)
       })
     }, { validators: this.validarRangoFechas })
+
+    this.servicioEntrenamiento.obtenerEntrenamientoEquipo(this.cuerpoTecnico.equipo_id).subscribe((entrenamientos : Entrenamiento[])=>{
+      this.entrenamientosEquipo = entrenamientos
+    })
   }
 
   constructor(public dialogRef: MatDialogRef<CardSesionEntrenamientoRegistrarComponent>, @Inject(MAT_DIALOG_DATA) public data:any, translate : TranslateService, private servicioSesionEntrenamiento : ServicioSesionEntrenamientoService, private servicioEntrenamiento : ServicioEntrenamientoService){
@@ -97,8 +108,8 @@ export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
     const fechaInicioString = formatDate(fechaInicio, formatoFecha, locale, zonaHoraria)
     const fechaFinString    = formatDate(fechaFin,    formatoFecha, locale, zonaHoraria)
 
-    this.sesionEntrenamiento.fecha_Inicio = fechaInicioString
-    this.sesionEntrenamiento.fecha_Fin = fechaFinString
+    this.sesionEntrenamiento.FechaInicio = fechaInicioString
+    this.sesionEntrenamiento.FechaFin = fechaFinString
     this.sesionEntrenamiento.id_Cuerpo_Tecnico = this.cuerpoTecnico.ID
     this.sesionEntrenamiento.id_Equipo = this.cuerpoTecnico.equipo_id
 
@@ -118,17 +129,20 @@ export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
 
     this.mostrarDiasSesion = true
 
-    // this.servicioSesionEntrenamiento.crearSesionEntrenamiento(this.sesionEntrenamiento).subscribe({
-    //   next: (sesionEntrenamiento : SesionEntrenamiento) => {
-    //     console.log(sesionEntrenamiento.ID)
-    //   }
-    // })
+    this.servicioSesionEntrenamiento.crearSesionEntrenamiento(this.sesionEntrenamiento).subscribe({
+      next: (sesionEntrenamiento : SesionEntrenamiento) => {
+        this.idSesion = sesionEntrenamiento.ID
+      }
+    })
 
     this.mostrarDiasSesion = true;  
   }
 
-  seleccionarEntrenamiento() {
+  seleccionarEntrenamiento(i : number) {
+        const idEntr = this.selectedEntrenamientoId[i];
+    if (idEntr) this.asignarDetalle(i, idEntr);
 
+    console.log(this.entrenamientosSesion)
   }
 
   /*
@@ -166,8 +180,8 @@ export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
   asignarDetalle(i: number, idEntr: number) {
     this.entrenamientosSesion[i] = {
       id:0,
-      id_Sesion_Entrenamiento: this.sesionEntrenamiento.ID,
-      id_Entrenamiento: idEntr,
+      id_Sesion_Entrenamiento: this.idSesion,
+      id_Entrenamiento: Number(idEntr),
       fecha: new Date(this.fechasDias[i])
     };
   }
@@ -210,5 +224,28 @@ export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
     const fin    = new Date(this.fechaFinStr);
     this.fechasInvalidas[i] = (d < inicio || d > fin);
   }
+
+  /**  
+ * Llama primero a crear la sesión (POST a /api/sesisonesEntrenamiento),
+ * luego, con el ID que devuelve, agrega los detalles de entrenamiento
+ * (POST a /api/sesisonesEntrenamiento/{id}/entrenamientos).
+ */
+guardarSesionCompleta() {
+  console.log('Datos que se enviarán al backend:', this.entrenamientosSesion);
+  console.log('ID de la sesión:', this.idSesion);
+
+  this.servicioSesionEntrenamiento.agregarEntrenamientosSesion(this.entrenamientosSesion, this.idSesion)
+  .subscribe({
+    next: () => {
+      console.log('Sesión y entrenamientos guardados correctamente.');
+      this.dialogRef.close(true); // Cierra el modal y devuelve éxito
+    },
+    error: err => {
+      console.error('Error al guardar los entrenamientos:', err);
+    }
+  });
+}
+
+
 
 }

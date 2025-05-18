@@ -217,5 +217,11 @@
   "error-fecha-fin" : "Error, la Fecha de Fin es inferior a la Fecha de Inicio",
   "establecer-entrenamientos" : "Establecer Entrenamientos",
   "usar-entrenamiento-existente" : "Usar Entrenamiento Existente",
-  "crear-nuevo-entrenamiento" : "Crear Nuevo Entrenamiento"
+  "crear-nuevo-entrenamiento" : "Crear Nuevo Entrenamiento",
+  "entrenamientos" : "Entrenamientos",
+  "sesion-entrenamiento" : "Sesion Entrenamiento",
+  "numero-entrenamientos" : "Numero de Entrenamientos",
+  "tipo" : "Tipo",
+  "duracion" : "Duracion",
+  "entrenamiento" : "Entrenamiento"
 }

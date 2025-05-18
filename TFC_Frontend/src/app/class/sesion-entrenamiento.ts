@@ -1,7 +1,10 @@
+import { DetalleSesion } from "./detalle-sesion"
+
 export class SesionEntrenamiento {
-    ID !: number
-    id_Equipo !: number
-    id_Cuerpo_Tecnico !: number
-    fecha_Inicio !: string
-    fecha_Fin !: string
+  ID!: number;
+  id_Equipo!: number;
+  id_Cuerpo_Tecnico!: number;
+  FechaInicio!: string;
+  FechaFin!: string;
+  DetallesSesion: DetalleSesion[] = []; // Propiedad con "D" mayúscula
 }
