@@ -29,6 +29,9 @@
           
           <h3 class="col-span-full text-center text-azul">Día {{ i + 1 }}</h3>
           
+          <input type="date" [(ngModel)]="fechasDias[i]" [ngModelOptions]="{ standalone: true }" [min]="fechaInicioStr" [max]="fechaFinStr" (ngModelChange)="validarFecha(i)" class="border-2 border-azul rounded p-2 col-span-full text-black"/>
+          <p *ngIf="fechasInvalidas[i]" class="text-red-500 text-sm mt-1">Fecha fuera de rango: debe estar entre {{ fechaInicioStr }} y {{ fechaFinStr }}</p>
+
           <div class="col-span-full">
             <select class="border-2 border-azul rounded p-2 w-full text-black" [(ngModel)]="usarEntrenamiento" [ngModelOptions]="{ standalone: true }" (change)="seleccionarEntrenamiento()">
               <option [ngValue]="true">Usar Entrenamiento existente</option>
@@ -54,7 +57,7 @@
                   <input type="number" min="0" max="59" [(ngModel)]="nuevoEntrenamiento.duracion.minutes" [ngModelOptions]="{ standalone: true }" class="border-2 border-azul rounded p-2 w-full text-black" placeholder="0"/>
                 </div>
               </div>
-              <button type="button" class="w-full bg-azul p-2 rounded-xl text-white my-2" (click)="crearNuevoEntrenamiento()">Crear Entrenamiento</button>
+              <button type="button" class="w-full bg-azul p-2 rounded-xl text-white my-2" (click)="crearNuevoEntrenamiento(i)">Crear Entrenamiento</button>
             </div>
           </div>
           

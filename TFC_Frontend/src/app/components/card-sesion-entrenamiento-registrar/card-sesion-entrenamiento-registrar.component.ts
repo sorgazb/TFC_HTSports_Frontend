@@ -50,8 +50,15 @@ export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
   tiposEntrenamientoEsp = ['fisico', 'tecnico', 'tactico', 'recuperacion', 'gimnasio', 'prepartido']
   tiposEntrenamientoEng = ['physical', 'technical', 'tactical', 'recovery', 'gym', 'pre-match']
 
-  ngOnInit(): void {
-  
+  // Arrays paralelos al número de días:
+  fechasDias: string[] = [];
+  fechasInvalidas: boolean[] = [];
+
+  // Cadenas ISO localizadas sin hora (para min/max del input)
+  fechaInicioStr = '';
+  fechaFinStr    = '';
+
+  ngOnInit(): void {  
     let cuerpoTecnicoAux = localStorage.getItem('cuerpoTecnico')
     let cuerpoTecnicoSesion = JSON.parse(cuerpoTecnicoAux!)
     this.cuerpoTecnico = cuerpoTecnicoSesion
@@ -98,6 +105,17 @@ export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
     const tiempoDiferencia = fechaFin.getTime() - fechaInicio.getTime()
     this.diasSesion = Math.ceil(tiempoDiferencia / (1000 * 60 * 60 * 24)) + 1
 
+    // Prepara arrays a la longitud correcta:
+    this.fechasDias = Array(this.diasSesion).fill('');
+    this.fechasInvalidas = Array(this.diasSesion).fill(false);
+
+    // Guarda fechaInicioStr/fechaFinStr como 'yyyy-MM-dd':
+    const fi: Date = this.formNuevaSesion.get('rangoFechas.fechaInicio')!.value;
+    const ff: Date = this.formNuevaSesion.get('rangoFechas.fechaFin')!.value;
+    this.fechaInicioStr = this.toDateInputString(fi);
+    this.fechaFinStr    = this.toDateInputString(ff);
+
+
     this.mostrarDiasSesion = true
 
     // this.servicioSesionEntrenamiento.crearSesionEntrenamiento(this.sesionEntrenamiento).subscribe({
@@ -106,9 +124,7 @@ export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
     //   }
     // })
 
-  
-    this.mostrarDiasSesion = true;
-  
+    this.mostrarDiasSesion = true;  
   }
 
   seleccionarEntrenamiento() {
@@ -123,26 +139,37 @@ export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
     return this.translate.currentLang === 'es' ? this.tiposEntrenamientoEsp : this.tiposEntrenamientoEng;
   }
 
-  crearNuevoEntrenamiento() {
+  crearNuevoEntrenamiento(i: number) {
+    
     this.nuevoEntrenamiento.id_cuerpo_tecnico = this.cuerpoTecnico.ID
-
-  const d = this.nuevoEntrenamiento.duracion;
-  const hh = String(d.hours).padStart(2, '0');
-  const mm = String(d.minutes).padStart(2, '0');
-  const duracionStr = `${hh}:${mm}:00`;    // e.g. "01:30:00"
-
-      const payload = {
-    tipo: this.nuevoEntrenamiento.tipo,
-    descripcion: this.nuevoEntrenamiento.descripcion,
-    duracion: duracionStr,
-    id_cuerpo_tecnico: this.nuevoEntrenamiento.id_cuerpo_tecnico
-  };
-
+    
+    const d = this.nuevoEntrenamiento.duracion;
+    const hh = String(d.hours).padStart(2, '0');
+    const mm = String(d.minutes).padStart(2, '0');
+    const duracionStr = `${hh}:${mm}:00`;
+    
+    const payload = {
+      tipo: this.nuevoEntrenamiento.tipo,
+      descripcion: this.nuevoEntrenamiento.descripcion,
+      duracion: duracionStr,
+      id_cuerpo_tecnico: this.nuevoEntrenamiento.id_cuerpo_tecnico
+    };
+    
     this.servicioEntrenamiento.crearEntrenamiento(payload).subscribe({
       next: (entrenamiento : Entrenamiento) => {
-        console.log(entrenamiento.ID)
+        this.asignarDetalle(i, entrenamiento.ID);
+        this.nuevoEntrenamiento = { ID:0, id_cuerpo_tecnico:0, tipo:'', descripcion:'', duracion:{hours:0,minutes:0} };
       }
     })
+  }
+
+  asignarDetalle(i: number, idEntr: number) {
+    this.entrenamientosSesion[i] = {
+      id:0,
+      id_Sesion_Entrenamiento: this.sesionEntrenamiento.ID,
+      id_Entrenamiento: idEntr,
+      fecha: new Date(this.fechasDias[i])
+    };
   }
 
   establecerTipoNuevoEntrenamiento(tipo: string) {
@@ -160,6 +187,28 @@ export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
       tipo = 'prepartido'
     }
     this.nuevoEntrenamiento.tipo = tipo;
+  }
+
+
+  /** Convierte Date a 'yyyy-MM-dd' para el input[type=date] */
+  toDateInputString(d: Date): string {
+    const y = d.getFullYear();
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    return `${y}-${m}-${day}`;
+  }
+
+  /** Valida la fecha elegida para el día i */
+  validarFecha(i: number) {
+    const val = this.fechasDias[i];
+    if (!val) {
+      this.fechasInvalidas[i] = false;
+      return;
+    }
+    const d = new Date(val);
+    const inicio = new Date(this.fechaInicioStr);
+    const fin    = new Date(this.fechaFinStr);
+    this.fechasInvalidas[i] = (d < inicio || d > fin);
   }
 
 }
