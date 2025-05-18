@@ -8,8 +8,8 @@ import { Observable } from 'rxjs';
 })
 export class ServicioEstadisticasTotalesJugadorService {
 
-  private apiUrl = 'https://tfc-htsports-api-439566681458.europe-southwest1.run.app/'
-  //private apiUrl = 'http://localhost:8080/'
+  //private apiUrl = 'https://tfc-htsports-api-439566681458.europe-southwest1.run.app/'
+  private apiUrl = 'http://localhost:8080/'
   private endPoint = 'api/estadisticasJugadores'
   
   constructor(private http: HttpClient) { }

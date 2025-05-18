@@ -9,8 +9,8 @@ import { Observable } from 'rxjs';
 })
 export class ServicioEntradaService {
 
-  private apiUrl = 'https://tfc-htsports-api-439566681458.europe-southwest1.run.app/'
-  //private apiUrl = 'http://localhost:8080/'
+  //private apiUrl = 'https://tfc-htsports-api-439566681458.europe-southwest1.run.app/'
+  private apiUrl = 'http://localhost:8080/'
   private endPoint = 'api/entradas'
 
   constructor(private http : HttpClient, private translate: TranslateService) { }

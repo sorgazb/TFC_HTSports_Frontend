@@ -207,6 +207,13 @@
   "valoracion-portero" : "Goalkeeper Rating",
   "valoracion" : "Global Rating",
   "descripcion" : "Description: ",
-  "area-entrenamientos" : "Trainings"
-
+  "area-entrenamientos" : "Trainings",
+  "registrar-nueva-sesion": "Register New Training Session",
+    "req-fecha-inicio": "Start date is required",
+  "req-fecha-fin": "End date is required",
+  "fecha-inicio": "Start date",
+  "fecha-fin": "End date",
+  "error-fecha-actual": "Error: start date is before the current date",
+  "error-fecha-fin": "Error: end date is before the start date",
+  "establecer-entrenamientos": "Set trainings"
 }

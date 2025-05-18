@@ -1,0 +1,72 @@
+<div>
+  <h1 class="bg-azul text-white p-5 text-center text-xl">
+    {{ 'registrar-nueva-sesion' | translate }}
+  </h1>
+  <div mat-dialog-content>
+    <form [formGroup]="formNuevaSesion" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-3">
+      <mat-form-field appearance="outline" class="col-span-full" hideRequiredMarker>
+        <mat-label class="m-2">{{ 'Fechas' | translate }}</mat-label>
+        <mat-date-range-input formGroupName="rangoFechas" [rangePicker]="picker">
+          <input matStartDate placeholder="{{ 'fecha-inicio' | translate }}" formControlName="fechaInicio">
+          <input matEndDate   placeholder="{{ 'fecha-fin'   | translate }}" formControlName="fechaFin">
+        </mat-date-range-input>
+        <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-date-range-picker #picker></mat-date-range-picker>
+        <mat-error *ngIf="formNuevaSesion.get('rangoFechas.fechaInicio')?.hasError('required')">
+          {{ 'req-fecha-inicio' | translate }}
+        </mat-error>
+        <mat-error *ngIf="formNuevaSesion.get('rangoFechas.fechaFin')?.hasError('required')">
+          {{ 'req-fecha-fin' | translate }}
+        </mat-error>
+      </mat-form-field>
+      <mat-error class="col-span-full" *ngIf="formNuevaSesion.hasError('inferiorActual')">{{ 'error-fecha-actual' | translate }}</mat-error>
+      <mat-error class="col-span-full" *ngIf="formNuevaSesion.hasError('rangoInvalido')">{{ 'error-fecha-fin' | translate }}</mat-error>
+      <button [disabled]="!formNuevaSesion.valid" class="col-span-full bg-azul p-2 rounded-xl text-white my-2" (click)="establecerEntrenamientosSesion()">{{'establecer-entrenamientos' | translate}}</button>
+    </form>
+    <div *ngIf="mostrarDiasSesion" [formGroup]="formNuevaSesion">
+      <div>
+        <div *ngFor="let dia of [].constructor(diasSesion); let i = index" class="border-2 border-gray-500 p-4 mb-3 rounded grid grid-cols-1 md:grid-cols-2 gap-4">
+          
+          <h3 class="col-span-full text-center text-azul">Día {{ i + 1 }}</h3>
+          
+          <div class="col-span-full">
+            <select class="border-2 border-azul rounded p-2 w-full text-black" [(ngModel)]="usarEntrenamiento" [ngModelOptions]="{ standalone: true }" (change)="seleccionarEntrenamiento()">
+              <option [ngValue]="true">Usar Entrenamiento existente</option>
+              <option [ngValue]="false">Crear nuevo entrenamiento</option>
+            </select>
+          </div>
+          
+          <div class="col-span-full" *ngIf="!usarEntrenamiento">
+            <div class="m-2 p-2 border-2 border-gray-500 rounded">
+              <h3 class="text-center text-azul w-full my-2">Nuevo entrenamiento</h3>
+              <select #selTipo class="border-2 border-azul rounded p-2 w-full text-black my-1" (change)="establecerTipoNuevoEntrenamiento(selTipo.value)">
+                <option value="" disabled selected>Selecciona un tipo</option>
+                <option *ngFor="let tipo of getTipoEntrenamiento()" [value]="tipo">{{ tipo.toUpperCase() }}</option>
+              </select>
+              <textarea [(ngModel)]="nuevoEntrenamiento.descripcion" [ngModelOptions]="{ standalone: true }" placeholder="Introduce una descripcion..." class="border-2 border-azul rounded p-2 w-full text-black my-1"></textarea>
+              <div class="grid grid-cols-2 gap-2 my-1">
+                <div>
+                  <label class="block text-sm font-medium text-gray-700">Horas</label>
+                  <input type="number" min="0" [(ngModel)]="nuevoEntrenamiento.duracion.hours" [ngModelOptions]="{ standalone: true }" class="border-2 border-azul rounded p-2 w-full text-black" placeholder="0"/>
+                </div>
+                <div>
+                  <label class="block text-sm font-medium text-gray-700">Minutos</label>
+                  <input type="number" min="0" max="59" [(ngModel)]="nuevoEntrenamiento.duracion.minutes" [ngModelOptions]="{ standalone: true }" class="border-2 border-azul rounded p-2 w-full text-black" placeholder="0"/>
+                </div>
+              </div>
+              <button type="button" class="w-full bg-azul p-2 rounded-xl text-white my-2" (click)="crearNuevoEntrenamiento()">Crear Entrenamiento</button>
+            </div>
+          </div>
+          
+          <div class="col-span-full" *ngIf="usarEntrenamiento">
+
+          </div>
+        
+        </div>
+      
+      </div>
+    
+    </div>
+  </div>
+</div>
+

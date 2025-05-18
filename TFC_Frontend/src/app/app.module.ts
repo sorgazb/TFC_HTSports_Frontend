@@ -68,6 +68,9 @@ import { CommonModule } from '@angular/common';
 import { NzCalendarModule } from 'ng-zorro-antd/calendar';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { AreaEntrenamientosComponent } from './components/area-entrenamientos/area-entrenamientos.component';
+import { CardSesionEntrenamientoRegistrarComponent } from './components/card-sesion-entrenamiento-registrar/card-sesion-entrenamiento-registrar.component';
+import { MatDatepickerModule }from '@angular/material/datepicker';
+import { MatNativeDateModule }from '@angular/material/core';
 
 registerLocaleData(es);
 
@@ -103,6 +106,7 @@ registerLocaleData(es);
     CardJugadorOjeadoRegistrarComponent,
     CalendarioEquipoComponent,
     AreaEntrenamientosComponent,
+    CardSesionEntrenamientoRegistrarComponent,
   ],
   imports: [
     BrowserModule,
@@ -117,8 +121,10 @@ registerLocaleData(es);
     BrowserAnimationsModule,
     FormsModule,
     HttpClientModule,
+    MatDatepickerModule,
     MatIconModule,
     NzCalendarModule,
+    MatNativeDateModule,
     ReactiveFormsModule,
     MatFormFieldModule,
     MatInputModule,

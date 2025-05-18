@@ -32,7 +32,7 @@ export class AreaJugadoresOjeadosComponent implements OnInit{
   posiciones = ['Porteros', 'Defensas', 'Centrocampistas', 'Delanteros']
   posicionesEng = ['Goalkeepers', 'Defenders', 'Midfielders', 'Forwards']
 
-  translate !: TranslateService;
+  translate !: TranslateService
 
   constructor(private router : Router, private serviciosJugadorOjeado : ServicioJugadorOjeadoService, translate: TranslateService, public registrarJugador : MatDialog){
     this.translate = translate

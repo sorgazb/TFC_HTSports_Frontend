@@ -1,1 +1,15 @@
-<p>area-entrenamientos works!</p>
+<div>
+    <!-- Botones Filtrar y Registrar Nueva Sesion Entrenamiento -->
+    <div class="flex">
+        <div class="m-5">
+            <button (click)="mostrarFiltros = !mostrarFiltros" class="bg-azul text-white px-4 py-2 rounded">
+                {{ mostrarFiltros ? ('ocultar-filtros' | translate) : ('mostrar-filtros' | translate) }}
+            </button>
+        </div>
+        <div *ngIf="cuerpoTecnico.tipo === 'entrenador'" class="m-5">
+            <button (click)="registrarNuevaSesionEntrenamiento()" class="bg-azul text-white px-4 py-2 rounded">
+                {{'registrar-nueva-sesion' | translate }}
+            </button>
+        </div>
+    </div>
+</div>
