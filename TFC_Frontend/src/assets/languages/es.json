@@ -223,5 +223,19 @@
   "numero-entrenamientos" : "Numero de Entrenamientos",
   "tipo" : "Tipo",
   "duracion" : "Duracion",
-  "entrenamiento" : "Entrenamiento"
+  "entrenamiento" : "Entrenamiento",
+  "establecer-entrenamientos-sesion" : "Establecer Entrenamientos Sesion",
+  "fecha-fuera-rango" : "Fecha fuera de rango",
+  "dia" : "Dia",
+  "entrenamiento-existente" : "Usar Entrenamiento existente",
+  "nuevo-entrenamiento" : "Nuevo Entrenamiento",
+  "fechas" : "Fechas",
+  "sel-tipo-entrenamiento" : "Selecciona Tipo de Entrenamiento",
+  "descripcion-entrenamiento" : "Introduce una descripcion...",
+  "horas" : "Horas",
+  "crear-entrenamiento" : "Crear Entrenamiento",
+  "entrenamiento-establecido" : "Entrenamiento Establecido",
+  "selecciona-entrenamiento" : "Selecciona un Entrenamiento",
+  "establecer-entrenamiento" : "Establecer Entrenamiento",
+  "guardar-sesion" : "Guardar Sesion"
 }

@@ -28,9 +28,11 @@ export class AreaEntrenamientosComponent {
     if(!sessionStorage.getItem('usuario')){
       this.router.navigate(['/error'])
     }
-  
+    
     if(!localStorage.getItem('cuerpoTecnico')){
-      this.router.navigate(['/error'])
+      if(!localStorage.getItem('jugador')){
+        this.router.navigate(['/error'])
+      }
     }
   
     let cuerpoTecnicoAux = localStorage.getItem('cuerpoTecnico')

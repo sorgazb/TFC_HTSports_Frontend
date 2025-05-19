@@ -13,8 +13,8 @@ import { ServicioPartidoService } from 'src/app/services/servicio-partido.servic
 import { TranslateService } from '@ngx-translate/core';
 
 interface Casillas {
-  posicion: string;
-  id: string;
+  posicion: string
+  id: string
 }
 
 @Component({
@@ -73,7 +73,7 @@ export class AlienacionesComponent implements OnInit {
 
   lista: string[] = []
 
-  translate !: TranslateService;
+  translate !: TranslateService
   cargando: boolean = true
   
   ngOnInit(): void {

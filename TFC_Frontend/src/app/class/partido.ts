@@ -1,11 +1,11 @@
 import { Equipo } from "./equipo";
 
 export class Partido {
-    ID !: number;
+    ID !: number
     fecha !: Date
-    estado !: string;
-    clima !: string;
+    estado !: string
+    clima !: string
     resultado !: string
     asistencia !: number
-    equipos !: Equipo[];
+    equipos !: Equipo[]
 }

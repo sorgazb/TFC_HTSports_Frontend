@@ -1,4 +1,4 @@
-import { formatDate, Time } from '@angular/common';
+import { formatDate } from '@angular/common';
 import { Component, Inject, OnInit } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, ValidationErrors, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
@@ -16,11 +16,9 @@ import { ServicioSesionEntrenamientoService } from 'src/app/services/servicio-se
   styleUrls: ['./card-sesion-entrenamiento-registrar.component.css']
 })
 export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
-  
-  idSesion !: number
 
   cuerpoTecnico !: CuerpoTecnico
-  
+
   sesionEntrenamiento : SesionEntrenamiento = {
     ID : 0,
     id_Cuerpo_Tecnico : 0,
@@ -39,31 +37,30 @@ export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
   }
 
   entrenamientosEquipo : Entrenamiento [] = []
-
   entrenamientosSesion : DetalleSesion [] = []
 
-  selectedEntrenamientoId: number[] = [];
-  
-  usarEntrenamiento : boolean = false
-
-  diasSesion !: number
-
-  mostrarDiasSesion : boolean = false
-
   formNuevaSesion !: FormGroup
-
   translate !: TranslateService
 
+  idSesion !: number
+
+  idEntrenamientoSeleccionado: number[] = []
+  
+  usarEntrenamiento : boolean = false
+  mostrarDiasSesion : boolean = false
+  mostrarSelectorFechaSesion: boolean = true
+  
+  diasSesion !: number
+  
   tiposEntrenamientoEsp = ['fisico', 'tecnico', 'tactico', 'recuperacion', 'gimnasio', 'prepartido']
   tiposEntrenamientoEng = ['physical', 'technical', 'tactical', 'recovery', 'gym', 'pre-match']
 
-  // Arrays paralelos al número de días:
-  fechasDias: string[] = [];
-  fechasInvalidas: boolean[] = [];
+  fechasDias: string[] = []
+  fechasInvalidas: boolean[] = []
+  mostrarDia: boolean[] = []
 
-  // Cadenas ISO localizadas sin hora (para min/max del input)
-  fechaInicioStr = '';
-  fechaFinStr    = '';
+  fechaInicioString = ''
+  fechaFinString    = ''
 
   ngOnInit(): void {  
     let cuerpoTecnicoAux = localStorage.getItem('cuerpoTecnico')
@@ -86,6 +83,12 @@ export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
     this.translate = translate
   }
 
+  /*
+  * Metodo que compara si el rango de fechas es correcto
+  * y si la fecha de inicio es mayor a la fecha actual
+  * @param group
+  * @returns ValidationErrors | null
+  */
   private validarRangoFechas(group: AbstractControl): ValidationErrors | null {
     const fechaIncio = group.get('rangoFechas.fechaInicio')!.value
     const fechaFin   = group.get('rangoFechas.fechaFin')!.value
@@ -97,6 +100,11 @@ export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
     return null
   }
 
+  /*
+  * Metodo que crea los detalles de la sesion de entrenamiento y carga la estructura
+  * HTML para mostrar y establcer los entrenamientos correspondientes a cada dia de 
+  * la sesion
+  */
   establecerEntrenamientosSesion(){
     const fechaInicio: Date = this.formNuevaSesion.get('rangoFechas.fechaInicio')!.value
     const fechaFin:    Date = this.formNuevaSesion.get('rangoFechas.fechaFin')!.value
@@ -116,76 +124,97 @@ export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
     const tiempoDiferencia = fechaFin.getTime() - fechaInicio.getTime()
     this.diasSesion = Math.ceil(tiempoDiferencia / (1000 * 60 * 60 * 24)) + 1
 
-    // Prepara arrays a la longitud correcta:
-    this.fechasDias = Array(this.diasSesion).fill('');
-    this.fechasInvalidas = Array(this.diasSesion).fill(false);
+    this.fechasDias = Array(this.diasSesion).fill('')
+    this.fechasInvalidas = Array(this.diasSesion).fill(false)
+    this.mostrarDia       = Array(this.diasSesion).fill(true)
 
-    // Guarda fechaInicioStr/fechaFinStr como 'yyyy-MM-dd':
-    const fi: Date = this.formNuevaSesion.get('rangoFechas.fechaInicio')!.value;
-    const ff: Date = this.formNuevaSesion.get('rangoFechas.fechaFin')!.value;
-    this.fechaInicioStr = this.toDateInputString(fi);
-    this.fechaFinStr    = this.toDateInputString(ff);
+    const fechaInicioDate: Date = this.formNuevaSesion.get('rangoFechas.fechaInicio')!.value
+    const fechaFinDate: Date = this.formNuevaSesion.get('rangoFechas.fechaFin')!.value
+    this.fechaInicioString = this.fechaAString(fechaInicioDate)
+    this.fechaFinString    = this.fechaAString(fechaFinDate)
 
-
-    this.mostrarDiasSesion = true
 
     this.servicioSesionEntrenamiento.crearSesionEntrenamiento(this.sesionEntrenamiento).subscribe({
       next: (sesionEntrenamiento : SesionEntrenamiento) => {
         this.idSesion = sesionEntrenamiento.ID
+        this.mostrarSelectorFechaSesion = false
       }
     })
 
-    this.mostrarDiasSesion = true;  
-  }
-
-  seleccionarEntrenamiento(i : number) {
-        const idEntr = this.selectedEntrenamientoId[i];
-    if (idEntr) this.asignarDetalle(i, idEntr);
-
-    console.log(this.entrenamientosSesion)
+    this.mostrarDiasSesion = true
   }
 
   /*
-  * Metodo que muestra el array de alineaciones en el idioma 
+  * Metodo que se encarga de obtener el id del entrenamiento existente seleccionado
+  * y asignarlo al detalle de la sesion de entrenamiento
+  * @param {index} => indice del entrenamiento seleccionado
+  */
+  seleccionarEntrenamiento(index : number) {
+    const idEntrenamiento = this.idEntrenamientoSeleccionado[index]
+    if (idEntrenamiento) this.asignarDetalle(index, idEntrenamiento)
+  }
+
+  /*
+  * Metodo que muestra el array de tipos de entrenamiento en el idioma 
   * seleccionado por el usuario
   */
   getTipoEntrenamiento(): string[] {
-    return this.translate.currentLang === 'es' ? this.tiposEntrenamientoEsp : this.tiposEntrenamientoEng;
+    return this.translate.currentLang === 'es' ? this.tiposEntrenamientoEsp : this.tiposEntrenamientoEng
   }
 
-  crearNuevoEntrenamiento(i: number) {
+  /*
+  * Metodo que se encarga de crear un nuevo entrenamiento para el dia seleccionado por
+  * el usuario, y en caso de exito lo asigna al detalle de la sesion de entrenamiento
+  * @param {index} => indice del dia seleccionado
+  */
+  crearNuevoEntrenamiento(index : number) {
     
     this.nuevoEntrenamiento.id_cuerpo_tecnico = this.cuerpoTecnico.ID
     
-    const d = this.nuevoEntrenamiento.duracion;
-    const hh = String(d.hours).padStart(2, '0');
-    const mm = String(d.minutes).padStart(2, '0');
-    const duracionStr = `${hh}:${mm}:00`;
+    const duracion = this.nuevoEntrenamiento.duracion
+    const horas = String(duracion.hours).padStart(2, '0')
+    const minutos = String(duracion.minutes).padStart(2, '0')
+    const duracionString = `${horas}:${minutos}:00`
     
-    const payload = {
+    const datosEntrenamiento = {
       tipo: this.nuevoEntrenamiento.tipo,
       descripcion: this.nuevoEntrenamiento.descripcion,
-      duracion: duracionStr,
+      duracion: duracionString,
       id_cuerpo_tecnico: this.nuevoEntrenamiento.id_cuerpo_tecnico
-    };
+    }
     
-    this.servicioEntrenamiento.crearEntrenamiento(payload).subscribe({
+    this.servicioEntrenamiento.crearEntrenamiento(datosEntrenamiento).subscribe({
       next: (entrenamiento : Entrenamiento) => {
-        this.asignarDetalle(i, entrenamiento.ID);
-        this.nuevoEntrenamiento = { ID:0, id_cuerpo_tecnico:0, tipo:'', descripcion:'', duracion:{hours:0,minutes:0} };
+        this.asignarDetalle(index, entrenamiento.ID)
+        this.nuevoEntrenamiento = { ID:0, id_cuerpo_tecnico:0, tipo:'', descripcion:'', duracion:{hours:0,minutes:0} }
       }
+    })
+
+    this.servicioEntrenamiento.obtenerEntrenamientoEquipo(this.cuerpoTecnico.equipo_id).subscribe((entrenamientos : Entrenamiento[])=>{
+      this.entrenamientosEquipo = entrenamientos
     })
   }
 
-  asignarDetalle(i: number, idEntr: number) {
-    this.entrenamientosSesion[i] = {
+  /*
+  * Metodo que se encarga de asignar al array de detalles el id del entrenamiento
+  * seleccionado por el usuario.
+  * @param {index} => indice del dia seleccionado
+  * @param {idEntrenamiento} => id del entrenamiento seleccionado
+  */
+  asignarDetalle(index : number, idEntrenamiento : number) {
+    this.entrenamientosSesion[index] = {
       id:0,
       id_Sesion_Entrenamiento: this.idSesion,
-      id_Entrenamiento: Number(idEntr),
-      fecha: new Date(this.fechasDias[i])
-    };
+      id_Entrenamiento: Number(idEntrenamiento),
+      fecha: new Date(this.fechasDias[index])
+    }
+    this.mostrarDia[index] = false
   }
 
+  /*
+  * Metodo que establece al nuevo entrenamiento el tipo seleccionado por el usuario
+  * @param {tipo} => tipo de entrenamiento seleccionado por el usuario
+  */
   establecerTipoNuevoEntrenamiento(tipo: string) {
     if(tipo === 'physical'){
       tipo = 'fisico'
@@ -200,52 +229,44 @@ export class CardSesionEntrenamientoRegistrarComponent implements OnInit{
     }else if(tipo === 'pre-match'){
       tipo = 'prepartido'
     }
-    this.nuevoEntrenamiento.tipo = tipo;
+    this.nuevoEntrenamiento.tipo = tipo
   }
 
 
-  /** Convierte Date a 'yyyy-MM-dd' para el input[type=date] */
-  toDateInputString(d: Date): string {
-    const y = d.getFullYear();
-    const m = String(d.getMonth() + 1).padStart(2, '0');
-    const day = String(d.getDate()).padStart(2, '0');
-    return `${y}-${m}-${day}`;
+  /*
+  * Metodo que convierte la fecha seleccionada a string
+  * @param {fecha} => fecha seleccionada por el usuario
+  */
+  fechaAString(fecha: Date): string {
+    const anio = fecha.getFullYear()
+    const mes = String(fecha.getMonth() + 1).padStart(2, '0')
+    const dia = String(fecha.getDate()).padStart(2, '0')
+    return `${anio}-${mes}-${dia}`
   }
 
-  /** Valida la fecha elegida para el día i */
-  validarFecha(i: number) {
-    const val = this.fechasDias[i];
-    if (!val) {
-      this.fechasInvalidas[i] = false;
-      return;
+  /*
+  * Metodo que se encarga de validar si la fecha seleccionada por el usuario
+  * esta dentro del rango de fechas de la sesion
+  * @param {fecha} => fecha seleccionada por el usuario
+  */
+  validarFecha(fecha: number) {
+    const fechaAValidar = this.fechasDias[fecha]
+    if (!fechaAValidar) {
+      this.fechasInvalidas[fecha] = false
+      return
     }
-    const d = new Date(val);
-    const inicio = new Date(this.fechaInicioStr);
-    const fin    = new Date(this.fechaFinStr);
-    this.fechasInvalidas[i] = (d < inicio || d > fin);
+    const fechaValidar = new Date(fechaAValidar)
+    const inicio = new Date(this.fechaInicioString)
+    const fin = new Date(this.fechaFinString)
+    this.fechasInvalidas[fecha] = (fechaValidar < inicio || fechaValidar > fin)
   }
 
-  /**  
- * Llama primero a crear la sesión (POST a /api/sesisonesEntrenamiento),
- * luego, con el ID que devuelve, agrega los detalles de entrenamiento
- * (POST a /api/sesisonesEntrenamiento/{id}/entrenamientos).
- */
-guardarSesionCompleta() {
-  console.log('Datos que se enviarán al backend:', this.entrenamientosSesion);
-  console.log('ID de la sesión:', this.idSesion);
-
-  this.servicioSesionEntrenamiento.agregarEntrenamientosSesion(this.entrenamientosSesion, this.idSesion)
-  .subscribe({
-    next: () => {
-      console.log('Sesión y entrenamientos guardados correctamente.');
-      this.dialogRef.close(true); // Cierra el modal y devuelve éxito
-    },
-    error: err => {
-      console.error('Error al guardar los entrenamientos:', err);
-    }
-  });
-}
-
-
-
+  /*
+  * Metodo el cual se encarga de guardar los detalles de la sesion de entrenamiento
+  */
+  guardarSesionCompleta() {
+    this.servicioSesionEntrenamiento.agregarEntrenamientosSesion(this.entrenamientosSesion, this.idSesion).subscribe(()=>{
+      this.dialogRef.close(true)
+    })
+  }
 }
