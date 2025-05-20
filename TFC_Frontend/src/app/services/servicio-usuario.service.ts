@@ -13,8 +13,8 @@ import { Jugador } from '../class/jugador'
 
 export class ServicioUsuarioService {
 
-  //private apiUrl = 'https://tfc-htsports-api-439566681458.europe-southwest1.run.app/'
-  private apiUrl = 'http://localhost:8080/'
+  private apiUrl = 'https://tfc-htsports-api-439566681458.europe-southwest1.run.app/'
+  //private apiUrl = 'http://localhost:8080/'
   private apiCarasUrl = 'http://'+environment.FACEINPHOTO_HOST+':'+environment.FACEINPHOTO_PORT+'/faceinphoto/count';
   private endPoint = 'api/usuarios'
 

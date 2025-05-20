@@ -145,7 +145,7 @@ export class CardJugadorOjeadoRegistrarComponent implements OnInit{
   * seleccionado por el usuario
   */
   getPosiciones(): string[] {
-    return this.translate.currentLang === 'es' ? this.posiciones : this.posicionesEng;
+    return this.translate.currentLang === 'es' ? this.posiciones : this.posicionesEng
   }
 
   /*
@@ -154,7 +154,7 @@ export class CardJugadorOjeadoRegistrarComponent implements OnInit{
   * a la posicion que ocupa en el campo
   */
   calcularValoracionMedia(){
-    const datosJugador = this.formNuevoJugador.value;
+    const datosJugador = this.formNuevoJugador.value
     
     const ataque   = datosJugador.valoracion_ataque
     const defensa  = datosJugador.valoracion_defensa
@@ -168,8 +168,8 @@ export class CardJugadorOjeadoRegistrarComponent implements OnInit{
     let sumaPesos = 0
     
     const datosMedia = (valor: number, peso: number) => {
-      totalPonderado += valor * peso;
-      sumaPesos += peso;
+      totalPonderado += valor * peso
+      sumaPesos += peso
     }
     
     if (posicion === 'delantero') {
@@ -192,9 +192,9 @@ export class CardJugadorOjeadoRegistrarComponent implements OnInit{
       datosMedia(fisico, 1 + 1.5)
     }
     
-    let media = totalPonderado / sumaPesos;
+    let media = totalPonderado / sumaPesos
     media = Math.min(5, Math.max(0, parseFloat(media.toFixed(2))))
-    media = Math.round(media * 2) / 2;
+    media = Math.round(media * 2) / 2
     this.jugadorOjeado.valoracion = media
   }
 }
