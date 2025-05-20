@@ -1,14 +1,17 @@
 <div class="p-10">
-  <nz-calendar>
-    <!-- Celda de fecha -->
-    <ul *nzDateCell="let date" class="events">
-      <!-- Construimos la clave del día -->
-      <ng-container *ngIf="eventMap[date.toISOString().slice(0,10)] as partidosDelDia">
-        <li *ngFor="let partido of partidosDelDia">
-          <!-- Aquí decides qué mostrar: hora, rival, lugar… -->
-          <nz-badge
-            nzStatus="success"
-            [nzText]="'Partido ' + (partido.fecha | date:'HH:mm') + ''"
+  <nz-alert *ngIf="eventosSeleccionados.length > 0" [nzMessage]="mensajeEventosSeleccionados" nzType="info" nzShowIcon>
+  </nz-alert>
+  <nz-calendar (nzSelectChange)="selectChange($event)">
+    <ul *nzDateCell="let date">
+      <ng-container *ngIf="eventMap[obtenerFechaClave(date)] as eventosDelDia">
+        <li *ngFor="let evento of eventosDelDia">
+          <nz-badge *ngIf="translate.currentLang === 'es'"
+          [nzStatus]="evento.tipo === 'partido' ? 'success' : 'processing'"
+          [nzText]="evento.tipo === 'partido' ? evento.descripcion : 'Entrenamiento: ' + evento.descripcion"
+          ></nz-badge>
+          <nz-badge *ngIf="translate.currentLang === 'gb'"
+          [nzStatus]="evento.tipo === 'partido' ? 'success' : 'processing'"
+          [nzText]="evento.tipo === 'partido' ? evento.descripcion : 'Training ' + evento.descripcion"
           ></nz-badge>
         </li>
       </ng-container>

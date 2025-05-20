@@ -237,5 +237,6 @@
   "entrenamiento-establecido" : "Training Set",
   "selecciona-entrenamiento" : "Select training",
   "establecer-entrenamiento" : "Set training",
-  "guardar-sesion" : "Save Session"
+  "guardar-sesion" : "Save Session",
+  "calendario" : "Calendar"
 }

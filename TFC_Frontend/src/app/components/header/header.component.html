@@ -86,6 +86,13 @@
                             <span>{{'partidos' | translate}}</span>
                         </a>
                     </li>
+                    <!-- Calendario -->
+                    <li>
+                        <a *ngIf="usuario && (cuerpoTecnico || jugador)" routerLink="calendario" class="btnInicioSesion">
+                            <mat-icon fontIcon="calendar_month"></mat-icon>
+                            <span>{{'calendario' | translate}}</span>
+                        </a>
+                    </li>
                     <!-- Partidos Equipo -->
                     <li *ngIf="(cuerpoTecnico || jugador)">
                         <a *ngIf="usuario  && cuerpoTecnico" [routerLink]="'partidos/equipo/'+cuerpoTecnico.equipo_id" class="btnInicioSesion">
