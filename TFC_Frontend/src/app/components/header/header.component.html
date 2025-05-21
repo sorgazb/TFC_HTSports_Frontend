@@ -122,18 +122,18 @@
                             <span>{{'area-entrenamientos' | translate}}</span>
                         </a>
                     </li>
-                    <!-- Area Ojeador -->
-                    <li>
-                        <a *ngIf="usuario && cuerpoTecnico" routerLink="areaojeador" class="btnInicioSesion">
-                            <mat-icon fontIcon="search"></mat-icon>
-                            <span>{{'area-ojeador' | translate}}</span>
-                        </a>
-                    </li>
                     <!-- Area Dietas IA -->
                     <li>
                         <a *ngIf="usuario && jugador" routerLink="" class="btnInicioSesion">
                             <mat-icon fontIcon="restaurant"></mat-icon>
                             <span>{{'Solicitar Dieta' | translate}}</span>
+                        </a>
+                    </li>
+                    <!-- Area Ojeador -->
+                    <li>
+                        <a *ngIf="usuario && cuerpoTecnico" routerLink="areaojeador" class="btnInicioSesion">
+                            <mat-icon fontIcon="search"></mat-icon>
+                            <span>{{'area-ojeador' | translate}}</span>
                         </a>
                     </li>
                 </ul>
