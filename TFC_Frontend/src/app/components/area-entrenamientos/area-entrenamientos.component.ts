@@ -67,9 +67,6 @@ export class AreaEntrenamientosComponent {
   * @param {number} => id de la sesion
   */
   cargarEntrenamientosSesion(sesionId: number) {
-    const sesion = this.sesionesEntrenamiento.find(s => s.ID === sesionId);
-    if (sesion?.DetallesSesion?.length) return;
-    
     this.servicioSesionEntrenamiento.obtenerEntrenamientosSesion(sesionId).subscribe({
       next: (sesionCompleta) => {
         const sesionIndex = this.sesionesEntrenamiento.findIndex(s => s.ID === sesionId);
