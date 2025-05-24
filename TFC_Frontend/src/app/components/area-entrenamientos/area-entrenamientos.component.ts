@@ -17,7 +17,6 @@ export class AreaEntrenamientosComponent {
   cuerpoTecnico !: CuerpoTecnico
   translate !: TranslateService
   sesionesEntrenamiento : SesionEntrenamiento [] = []
-  entrenamientosSesion : Entrenamiento [] = []
 
   constructor(private cd: ChangeDetectorRef,private router : Router, private servicioSesionEntrenamiento : ServicioSesionEntrenamientoService, translate: TranslateService, public registrarSesionEntrenamiento : MatDialog){
     this.translate = translate
@@ -69,12 +68,9 @@ export class AreaEntrenamientosComponent {
   cargarEntrenamientosSesion(sesionId: number) {
     this.servicioSesionEntrenamiento.obtenerEntrenamientosSesion(sesionId).subscribe({
       next: (sesionCompleta) => {
-        const sesionIndex = this.sesionesEntrenamiento.findIndex(s => s.ID === sesionId);
-        if (sesionIndex !== -1) {
-          this.sesionesEntrenamiento[sesionIndex].DetallesSesion = sesionCompleta.DetallesSesion
-          this.sesionesEntrenamiento = [...this.sesionesEntrenamiento]
-          this.cd.detectChanges()
-          }
+        this.sesionesEntrenamiento[sesionId].DetallesSesion = sesionCompleta.DetallesSesion
+        this.sesionesEntrenamiento = [...this.sesionesEntrenamiento]
+        this.cd.detectChanges()
         }
     })
   }
