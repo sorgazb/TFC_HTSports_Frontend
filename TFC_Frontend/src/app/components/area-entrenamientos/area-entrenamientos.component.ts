@@ -68,7 +68,8 @@ export class AreaEntrenamientosComponent {
   cargarEntrenamientosSesion(sesionId: number) {
     this.servicioSesionEntrenamiento.obtenerEntrenamientosSesion(sesionId).subscribe({
       next: (sesionCompleta) => {
-        this.sesionesEntrenamiento[sesionId].DetallesSesion = sesionCompleta.DetallesSesion
+        const sesionIndex = this.sesionesEntrenamiento.findIndex(s => s.ID === sesionId);
+        this.sesionesEntrenamiento[sesionIndex].DetallesSesion = sesionCompleta.DetallesSesion
         this.sesionesEntrenamiento = [...this.sesionesEntrenamiento]
         this.cd.detectChanges()
         }
