@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { Entrada } from 'src/app/class/entrada';
 import { Partido } from 'src/app/class/partido';
 import { ServicioEntradaService } from 'src/app/services/servicio-entrada.service';
@@ -14,8 +15,15 @@ export class AreaEntradasComponent implements OnInit{
   
   entradas : Entrada[] = []
   partido !: Partido
+
+  cargando: boolean = true
+
+  translate !: TranslateService
   
-  constructor(private serviciosEntrada: ServicioEntradaService, private servicioPartido: ServicioPartidoService, private router : Router) { }
+  
+  constructor(private serviciosEntrada: ServicioEntradaService, private servicioPartido: ServicioPartidoService, private router : Router, translate: TranslateService) { 
+    this.translate = translate
+  }
 
   ngOnInit(): void {
     
@@ -42,6 +50,7 @@ export class AreaEntradasComponent implements OnInit{
           })
         }
       })
+      this.cargando = false
     })
   }
 

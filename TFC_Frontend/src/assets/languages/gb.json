@@ -238,5 +238,8 @@
   "selecciona-entrenamiento" : "Select training",
   "establecer-entrenamiento" : "Set training",
   "guardar-sesion" : "Save Session",
-  "calendario" : "Calendar"
+  "calendario" : "Calendar",
+  "error-alienacion" : "Error setting lineup, select an existing lineup or create a new one",
+  "alineacion-establecida" : "Lineup set successfully, redirecting to matches area...",
+  "cargando-entradas" : "Loading tickets..."
 }

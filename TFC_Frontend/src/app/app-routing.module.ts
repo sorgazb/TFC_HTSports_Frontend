@@ -22,6 +22,7 @@ import { PerfilCuerpoTecnicoComponent } from './components/perfil-cuerpo-tecnico
 import { AreaJugadoresOjeadosComponent } from './components/area-jugadores-ojeados/area-jugadores-ojeados.component';
 import { CalendarioEquipoComponent } from './components/calendario-equipo/calendario-equipo.component';
 import { AreaEntrenamientosComponent } from './components/area-entrenamientos/area-entrenamientos.component';
+import { ChatDietasComponent } from './components/chat-dietas/chat-dietas.component';
 
 const routes: Routes = [
   {
@@ -111,6 +112,10 @@ const routes: Routes = [
   {
     path : 'calendario',
     component: CalendarioEquipoComponent
+  },
+  {
+    path : 'iadietas',
+    component : ChatDietasComponent
   }
 ];
 

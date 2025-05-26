@@ -71,6 +71,7 @@ import { AreaEntrenamientosComponent } from './components/area-entrenamientos/ar
 import { CardSesionEntrenamientoRegistrarComponent } from './components/card-sesion-entrenamiento-registrar/card-sesion-entrenamiento-registrar.component';
 import { MatDatepickerModule }from '@angular/material/datepicker';
 import { MatNativeDateModule }from '@angular/material/core';
+import { ChatDietasComponent } from './components/chat-dietas/chat-dietas.component';
 
 registerLocaleData(es);
 
@@ -107,6 +108,7 @@ registerLocaleData(es);
     CalendarioEquipoComponent,
     AreaEntrenamientosComponent,
     CardSesionEntrenamientoRegistrarComponent,
+    ChatDietasComponent,
   ],
   imports: [
     BrowserModule,

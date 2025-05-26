@@ -1,0 +1,57 @@
+<div class="p-5 flex flex-col items-center justify-center h-5/6">
+    <div class="border rounded-xl shadow p-5 w-full flex flex-col justify-end h-full">
+        <div class="h-svh rounded-md border border-gray-300 p-5 flex-1 overflow-y-auto">
+            <div #contentChat *ngFor="let chat of chats">
+                <div class="flex">
+                    <div *ngIf="chat.tipo === 'IA'" class="bg-gray-200 text-black p-3 rounded-lg max-w-xs m-2">
+                        {{chat.mensaje}}
+                    </div>
+                </div>
+                <div *ngIf="chat.tipo === 'Usuario'" class="flex justify-end">
+                    <div class="bg-azul text-white p-3 rounded-lg max-w-xs m-2 whitespace-pre-line">
+                        {{chat.mensaje}}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="bg-gray-200 p-5 rounded-md grid grid-cols-[1fr_auto] gap-4 items-center mt-2">
+            <input (keydown.enter)="mandarMensaje(mensaje)" [(ngModel)]="mensaje" type="text" class="outline-none border-none focus:outline-none focus:ring-0 bg-transparent w-full" placeholder="Intrudce tu mensaje"/>
+            <a (click)="mandarMensaje(mensaje)" type="button" class="bg-azul text-white w-10 h-10 rounded-full flex items-center justify-center shadow-md">
+                <mat-icon>arrow_upward</mat-icon>
+            </a>
+        </div>
+        <div class="mt-2 grid grid-cols-3 gap-4">
+            <div class="relative col-span-1">
+                <!-- Botón -->
+                <button type="button" (click)="abrirInputPeso()" class="w-full rounded-lg px-3 py-1 bg-azul text-white text-sm text-center">
+                    {{ 'Peso' | translate }}
+                </button>
+                <input *ngIf="abiertoPeso" type="number" id="peso" placeholder="Peso en kg" [(ngModel)]="peso" class=" mt-2 w-full border border-gray-300 rounded-md px-3 py-2 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+            </div>
+            <div class="relative col-span-1">
+                <!-- Botón -->
+                <button type="button" (click)="abrirInputAltura()" class="w-full rounded-lg px-3 py-1 bg-azul text-white text-sm text-center">
+                    {{ 'Altura' | translate }}
+                </button>
+                <input *ngIf="abiertoAltura" type="number" id="altura" placeholder="Altura en cm" [(ngModel)]="altura" class=" mt-2 w-full border border-gray-300 rounded-md px-3 py-2 bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"/>
+            </div>
+            <div class="relative col-span-1">
+                <!-- Botón -->
+                <button type="button" (click)="abrirSelectAlergias()" class="w-full rounded-lg px-3 py-1 bg-azul text-white text-sm text-center">
+                    {{ 'Alergias' | translate }}
+                </button>
+                <!-- Dropdown -->
+                <div *ngIf="abiertoAlergias" class="absolute z-10 mt-1 w-full bg-white border border-gray-300 rounded-md shadow-md max-h-60 overflow-y-auto">
+                    <ul class="p-2 space-y-2 text-sm">
+                        <li *ngFor="let alergia of alergias">
+                            <label class="flex items-center space-x-2">
+                                <input type="checkbox" [checked]="estaSeleccionada(alergia)" (change)="seleccionarAlergia(alergia)" class="form-checkbox text-blue-600 rounded"/>
+                                <span>{{ alergia }}</span>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

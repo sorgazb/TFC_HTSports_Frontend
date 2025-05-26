@@ -15,7 +15,7 @@ export class FooterComponent {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event) => {
-      if(this.router.url === '/inicioSesison' || this.router.url === '/registro'){
+      if(this.router.url === '/inicioSesison' || this.router.url === '/registro' || this.router.url === '/error'){
         this.mostrarFooter = false
       }else{
         this.mostrarFooter = true

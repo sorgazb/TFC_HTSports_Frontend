@@ -37,7 +37,7 @@ export class HeaderComponent implements OnInit {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event) => {
-      if(this.router.url === '/inicioSesion' || this.router.url === '/registro'){
+      if(this.router.url === '/inicioSesion' || this.router.url === '/registro' || this.router.url === '/error'){
         this.mostrarBarraNav = false
       }else{
         this.mostrarBarraNav = true

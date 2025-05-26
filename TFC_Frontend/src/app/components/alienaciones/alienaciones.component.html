@@ -9,52 +9,55 @@
 <div *ngIf="!cargando" class="p-4">
   <!-- Establecer Alineacion -->
   <div class="my-3">
-    <div class="flex flex-col w-full">
-      <label class="text-azul text-lg font-semibold mb-2">{{'alineacion-existente' | translate}}</label>
+    <div class="flex flex-col w-full animate-fade-right">
+      <label class="text-azul text-xl mb-2">{{'alineacion-existente' | translate}}</label>
       <div class="flex items-center space-x-4">
-        <select class="border-azul border-2 text-azul rounded p-2 w-1/2" [(ngModel)]="alienacionSeleccionada">
+        <select class="border border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 text-azul rounded p-2 w-1/2" [(ngModel)]="alienacionSeleccionada">
           <option *ngFor="let alineacion of alineacionesEquipo" [ngValue]="alineacion">
-            {{ alineacion.alineacion }}
+            {{ alineacion.sistema_juego }} {{ alineacion.alineacion }}
           </option>
         </select>
         <!-- Boton Establecer Alineacion -->
-        <button class="bg-azul text-white p-3 rounded cursor-pointer" (click)="establecerAlienacion()">
+        <button class="bg-azul text-white p-2 cursor-pointer rounded-lg hover:text-blue-300 duration-1000" (click)="establecerAlienacion()">
           {{'establecer-alineacion' | translate}}
         </button>
       </div>
+      <nz-alert class="animate-flip-down mt-2" *ngIf="alineacionVacia" nzType="error" nzMessage="{{'error-alienacion' | translate}}" nzCloseable="true" (nzOnClose)="alineacionVacia = false" nzShowIcon></nz-alert>
+      <nz-alert class="animate-flip-down mt-2" *ngIf="alineacionEstablecida" nzType="success" nzMessage="{{'alineacion-establecida' | translate}}" nzCloseable="true" (nzOnClose)="alineacionEstablecida = false" nzShowIcon></nz-alert>
     </div>
   </div>
   <!-- Contenedor Campo -->
   <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
     <!-- Contedor Opciones Personalizacion Alineacion -->
-    <div class="col-span-1">
-      <h1 class="text-azul text-xl font-semibold">{{'crear-alineacion' | translate}}</h1>
+    <div class="col-span-1 animate-flip-down">
+      <h1 class="text-azul text-xl">{{'crear-alineacion' | translate}}</h1>
+      <hr class="border-azul my-2">
       <!-- Nombre Alineacion -->
       <div>
-        <label class="text-azul text-lg font-semibold">{{'alineacion-nombre' | translate}}</label>
-        <input type="text" class="border-azul border-2 text-azul rounded p-2 w-full" [(ngModel)]="nombreAlienacion"/>
+        <label class="text-azul text-lg">{{'alineacion-nombre' | translate}}</label>
+        <input type="text" class="border border-blue-700 text-azul rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="nombreAlienacion"/>
       </div>
       <!-- Sistema de Juego -->
       <div>
-        <label class="text-azul text-lg font-semibold">{{'sistema-juego' | translate}}</label>
-        <select class="border-azul border-2 text-azul rounded p-2 w-full" [(ngModel)]="sistemaSeleccionado" (change)="cambiarSistema()">
+        <label class="text-azul text-lg">{{'sistema-juego' | translate}}</label>
+        <select class="border border-blue-700 text-azul rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="sistemaSeleccionado" (change)="cambiarSistema()">
           <option *ngFor="let sistemaJuego of sistemasDeJuego" [value]="sistemaJuego">{{sistemaJuego}}</option>
         </select>
       </div>
       <!-- Seleccion Posicion -->
       <div>
-        <label class="text-azul text-lg font-semibold">{{'selecciona-posicion' | translate}}</label>
-        <select *ngIf="this.translate.currentLang == 'es'" class="border-azul border-2 text-azul rounded p-2 w-full" [(ngModel)]="posicionSeleccionada" (change)="seleccionarPosicion()">
+        <label class="text-azul text-lg">{{'selecciona-posicion' | translate}}</label>
+        <select *ngIf="this.translate.currentLang == 'es'" class="border border-blue-700 text-azul rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="posicionSeleccionada" (change)="seleccionarPosicion()">
           <option *ngFor="let posicion of posiciones" [value]="posicion">{{posicion}}</option>
         </select>
-        <select *ngIf="this.translate.currentLang == 'gb'" class="border-azul border-2 text-azul rounded p-2 w-full" [(ngModel)]="posicionSeleccionada" (change)="seleccionarPosicion()">
+        <select *ngIf="this.translate.currentLang == 'gb'" class="border border-blue-700 text-azul rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="posicionSeleccionada" (change)="seleccionarPosicion()">
           <option *ngFor="let posicion of posicionesEng" [value]="posicion">{{posicion}}</option>
         </select>
       </div>
       <!-- Contenedor de Drag and Drop Jugadores Posicion -->
       <div id="listaJugadores" cdkDropList [cdkDropListData]="jugadoresPosicion" [cdkDropListConnectedTo]="lista"
         class="grid grid-cols-2 gap-2 bg-gray-500 p-4 rounded mt-2" (cdkDropListDropped)="drop($event)">
-        <div *ngFor="let jugador of jugadoresPosicion" cdkDrag class="m-2 cursor-move">
+        <div *ngFor="let jugador of jugadoresPosicion" cdkDrag class="m-2 animate-fade cursor-move">
           <!-- Carta Jugador -->
           <div class="bg-gradient-to-br from-indigo-100 to-blue-700 rounded-xl p-3 text-white text-center">
             <div class="relative">
@@ -69,7 +72,7 @@
       </div>
     </div>
     <!-- Contenedor Campo -->
-    <div class="lg:col-span-2 col-span-1">
+    <div class="lg:col-span-2 col-span-1 animate-fade-left">
       <div class="bg-green-700 h-full p-5 rounded-lg" #capture>
         <div class="grid gap-2 grid-rows-{{filas.length}}">
           <div *ngFor="let fila of filas" class="flex justify-center gap-2">

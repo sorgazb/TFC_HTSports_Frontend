@@ -16,6 +16,7 @@ export const environment = {
   FACEINPHOTO_HOST: '${process.env['FACEINPHOTO_HOST']}',
   FACEINPHOTO_PORT: '${process.env['FACEINPHOTO_PORT']}',
   FACEINPHOTO_PROXY: '${process.env['FACEINPHOTO_PROXY']}'
+  OPENIA_API_KEY: '${process.env['OPENIA_API_KEY']}'
 };`;
 
 const devPath = path.join(envDir, 'environment.ts');

@@ -75,6 +75,9 @@ export class AlienacionesComponent implements OnInit {
 
   translate !: TranslateService
   cargando: boolean = true
+
+  alineacionVacia : boolean = false
+  alineacionEstablecida : boolean = false
   
   ngOnInit(): void {
     this.cargarCampo()
@@ -157,7 +160,6 @@ export class AlienacionesComponent implements OnInit {
     }
   }
 
-
   /*
   * Metodo que carga en el campo la formacion  
   * especificada por el usuario
@@ -231,21 +233,29 @@ export class AlienacionesComponent implements OnInit {
   * la misma para despues asignarla al partido.
   */
   establecerAlienacion(){
-    let idPartido = Number(this.router.url.split('/').pop())
-    if(this.alienacionSeleccionada == null){
-      this.captureField().then(() => {
-        const alineacion = {
-          id_Cuerpo_Tecnico: this.cuerpoTecnico.ID,
-          sistema_juego: this.sistemaSeleccionado,
-          alineacion: this.nombreAlienacion,
-          imagen_alineacion: this.alienacionPartido.imagen_alineacion
-        }
-        this.servicioAlineacion.crearAlineacion(alineacion as any).subscribe(alineacion => {
+    if(this.alienacionSeleccionada == null && this.nombreAlienacion == ''){
+      this.alineacionVacia = true
+    }else{
+      let idPartido = Number(this.router.url.split('/').pop())
+      if(this.alienacionSeleccionada == null){
+        this.captureField().then(() => {
+          const alineacion = {
+            id_Cuerpo_Tecnico: this.cuerpoTecnico.ID,
+            sistema_juego: this.sistemaSeleccionado,
+            alineacion: this.nombreAlienacion,
+            imagen_alineacion: this.alienacionPartido.imagen_alineacion
+          }
+          this.servicioAlineacion.crearAlineacion(alineacion as any).subscribe(alineacion => {
             this.servicioPartido.actualizarAlineacionEquipo(idPartido, this.cuerpoTecnico.equipo_id, alineacion.ID).subscribe()
           })
-      })
-    }else{
-      this.servicioPartido.actualizarAlineacionEquipo(idPartido, this.cuerpoTecnico.equipo_id, this.alienacionSeleccionada.ID).subscribe(()=>{})
+        })
+      }else{
+        this.servicioPartido.actualizarAlineacionEquipo(idPartido, this.cuerpoTecnico.equipo_id, this.alienacionSeleccionada.ID).subscribe(()=>{})
+      }
+      this.alineacionEstablecida = true
+      setTimeout(() => {
+        this.router.navigate([`/partidos/equipo/${this.cuerpoTecnico.equipo_id}`])
+      }, 3000)
     }
   }
   
