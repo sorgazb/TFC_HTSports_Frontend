@@ -4,6 +4,7 @@ import { SesionEntrenamiento } from '../class/sesion-entrenamiento';
 import { map, Observable } from 'rxjs';
 import { DetalleSesion } from '../class/detalle-sesion';
 import { Entrenamiento } from '../class/entrenamiento';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
