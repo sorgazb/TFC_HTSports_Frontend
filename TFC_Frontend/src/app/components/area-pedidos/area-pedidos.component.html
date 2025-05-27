@@ -1,9 +1,15 @@
-<div class="container mx-auto p-5 flex flex-col items-center justify-center">
-  <div class="mb-8 text-center">
-    <h1 class="text-2xl font-bold text-azul">{{'area-pedido' | translate}}</h1>
+<div *ngIf="cargando && translate.currentLang == 'gb'" class="flex justify-center items-center min-h-screen">
+  <div class="flex flex-col items-center">
+    <div class="spinner-border animate-spin inline-block w-12 h-12 border-4 border-t-transparent border-azul rounded-full" role="status"></div>
+    <p class="mt-4 text-lg text-azul">{{'cargando-pedidos' | translate}}</p>
+  </div>
+</div>
+<div *ngIf="!cargando" class="container mx-auto p-5 flex flex-col items-center justify-center">
+  <div class="my-5 text-center animate-fade animate-delay-300">
+    <h1 class="text-2xl text-azul font-bold">{{'area-pedido' | translate}}</h1>
   </div>
   <!-- Tabla Pedidos Aficionado -->
-  <table class="text-sm w-full text-black border-2 border-azul">
+  <table class="text-sm w-full text-black border-2 border-azul animate-fade-down animate-delay-300">
     <thead class="text-white uppercase bg-azul">
       <tr>
         <th scope="col" class="border-r-2 border-white px-6 py-3">{{'num-pedido' | translate}}</th>
@@ -17,18 +23,18 @@
     </thead>
     <tbody class="text-center">
       <tr *ngFor="let pedido of pedidos" class="border border-azul">
-        <td class="px-6 py-4">{{pedido.ID}}</td>
-        <td class="px-6 py-4">{{pedido.fecha | date:'dd/MM/yyyy'}}</td>
-        <td class="px-6 py-4">{{pedido.direccion}}</td>
-        <td class="px-6 py-4">{{pedido.poblacion}}</td>
-        <td class="px-6 py-4">{{pedido.codigo_postal}}</td>
-        <td class="px-6 py-4 uppercase" [ngClass]="{
+        <td class="px-6 py-4 border-r border-azul">{{pedido.ID}}</td>
+        <td class="px-6 py-4 border-r border-azul">{{pedido.fecha | date:'dd/MM/yyyy'}}</td>
+        <td class="px-6 py-4 border-r border-azul">{{pedido.direccion}}</td>
+        <td class="px-6 py-4 border-r border-azul">{{pedido.poblacion}}</td>
+        <td class="px-6 py-4 border-r border-azul">{{pedido.codigo_postal}}</td>
+        <td class="px-6 py-4 border-r border-azul uppercase" [ngClass]="{
           'bg-green-200': pedido.estado === 'pagado' || pedido.estado === 'paid',
           'bg-red-200': pedido.estado === 'cancelado' || pedido.estado === 'canceled',
           'bg-blue-200': pedido.estado === 'pendiente' || pedido.estado === 'earring'}">
           {{pedido.estado}}
         </td>   
-        <td class="px-6 py-4">{{pedido.precio_total}} €</td>
+        <td class="px-6 py-4 border-r border-azul">{{pedido.precio_total}} €</td>
       </tr>
     </tbody>
   </table>

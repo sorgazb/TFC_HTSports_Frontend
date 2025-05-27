@@ -243,5 +243,6 @@
   "alineacion-establecida" : "Lineup set successfully, redirecting to matches area...",
   "cargando-entradas" : "Loading tickets...",
   "cargando-jugadores-ojeados" : "Loading scouted players...",
-  "todos-las-posiciones" : "All Positions"
+  "todos-las-posiciones" : "All Positions",
+  "cargando-pedidos" : "Loading orders..."
 }

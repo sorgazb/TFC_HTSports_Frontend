@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ServicioPedidoService } from '../../services/servicio-pedido.service';
 import { Pedido } from '../../class/pedido';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-area-pedidos',
@@ -12,7 +13,13 @@ export class AreaPedidosComponent implements OnInit {
 
   pedidos: Pedido[] = []
 
-  constructor(private serviciosPedidos: ServicioPedidoService, private router : Router) { }
+  cargando: boolean = true
+
+  translate !: TranslateService
+
+  constructor(private serviciosPedidos: ServicioPedidoService, private router : Router, translate: TranslateService) { 
+    this.translate = translate
+  }
 
   ngOnInit(): void {
 
@@ -39,6 +46,7 @@ export class AreaPedidosComponent implements OnInit {
           })
         }
       })
+      this.cargando = false
     })
   }
 }
