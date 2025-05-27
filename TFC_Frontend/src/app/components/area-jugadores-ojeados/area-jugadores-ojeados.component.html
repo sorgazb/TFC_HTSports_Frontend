@@ -1,26 +1,38 @@
-<div>
+<div *ngIf="cargando" class="flex justify-center items-center min-h-screen">
+  <div class="flex flex-col items-center">
+    <div class="spinner-border animate-spin inline-block w-12 h-12 border-4 border-t-transparent border-azul rounded-full" role="status"></div>
+    <p class="mt-4 text-lg text-azul">{{'cargando-jugadores-ojeados' | translate}}</p>
+  </div>
+</div>
+<div *ngIf="!cargando">
+    <!-- Titulo Area Ojeadores -->
+    <div class="flex items-center justify-center w-full m-5 text-center animate-fade">
+        <h1 class="text-lg sm:text-xl md:text-3xl text-azul font-bold">
+            {{ 'area-ojeador' | translate }}
+        </h1>
+    </div>
+
     <!-- Botones Flitrar y Registrar Nuevo Jugador -->
-    <div class="flex">
-        <div class="m-5">
-            <button (click)="mostrarFiltros = !mostrarFiltros" class="bg-azul text-white px-4 py-2 rounded">
+    <div class="flex animate-fade-right">
+        <div class="mx-5">
+            <button (click)="mostrarFiltros = !mostrarFiltros" class="bg-azul text-white p-2 cursor-pointer rounded-lg hover:text-blue-300 duration-1000">
                 {{ mostrarFiltros ? ('ocultar-filtros' | translate) : ('mostrar-filtros' | translate) }}
             </button>
         </div>
-        <div *ngIf="cuerpoTecnico.tipo === 'ojeador'" class="m-5">
-            <button (click)="registrarNuevoJugador()" class="bg-azul text-white px-4 py-2 rounded">
+        <div *ngIf="cuerpoTecnico.tipo === 'ojeador'" class="mx-5">
+            <button (click)="registrarNuevoJugador()" class="bg-azul text-white p-2 cursor-pointer rounded-lg hover:text-blue-300 duration-1000">
                 {{'registrar-jugador' | translate }}
             </button>
         </div>
     </div>
     
     <!-- Contenedor Filtros -->
-    <div class="overflow-hidden transition-max-height duration-500 ease-in-out grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 m-6" [ngClass]="{ 'max-h-0': !mostrarFiltros, 'max-h-screen': mostrarFiltros }">
-    
+    <div class="animate-flip-up overflow-hidden transition-max-height duration-500 ease-in-out grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 m-5" [ngClass]="{ 'max-h-0': !mostrarFiltros, 'max-h-screen': mostrarFiltros }">
         <!-- Filtro Posicion -->
         <div>
             <label class="block mb-1 text-azul">{{'filtro-posicion' | translate}}</label>
-            <select class="w-full border rounded p-2 border-azul text-azul" [(ngModel)]="filtroPosicion" (change)="aplicarFiltros()">
-                <option value="">{{ 'todos_las_posiciones' | translate }}</option>
+            <select class="w-full rounded p-2 border border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="filtroPosicion" (change)="aplicarFiltros()">
+                <option value="">{{ 'todos-las-posiciones' | translate }}</option>
                 <div *ngIf="this.translate.currentLang == 'es'">
                     <option *ngFor="let posicion of posiciones" [value]="posicion.toLocaleLowerCase()">{{ posicion }}</option>
                 </div>
@@ -29,11 +41,10 @@
                 </div>
             </select>
         </div>
-    
         <!-- Ordenador Valoracion -->
         <div>
             <label class="block mb-1 text-azul">{{'metodo-ordenacion' | translate}}</label>
-            <select class="w-full border rounded p-2 border-azul text-azul" [(ngModel)]="ordenValoracion" (change)="aplicarFiltros()">
+            <select class="w-full rounded p-2 border border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="ordenValoracion" (change)="aplicarFiltros()">
                 <option value="">{{ 'metodo-ordenacion' | translate }}</option>
                 <option value="asc">{{ 'valoracion-asc' | translate }}</option>
                 <option value="desc">{{ 'valoracion-desc' | translate }}</option>
@@ -41,49 +52,45 @@
         </div>
     </div>
 
-    <div>
-        <!-- Titulo Entrenamientos -->
-         <div class="flex flex-col md:flex-row items-center gap-2 w-full px-4 text-center md:text-left">
-            <hr class="flex-1 border-azul hidden md:block">
-            <h1 class="text-lg sm:text-xl md:text-3xl font-extrabold text-azul">
-                {{ 'area-ojeador' | translate }}
-            </h1>
-            <hr class="flex-1 border-azul hidden md:block">
-        </div>
-        <hr class="w-full border-azul md:hidden">
+    <div class="p-3 animate-fade">
         <!-- Contenedor Jugadores Ojeados -->
-        <mat-accordion class="m-6">
-            <mat-expansion-panel *ngFor="let j of jugadoresOjeadosPaginados; let i = index" [expanded]="i === 0" class="border border-gray-200 rounded-xl mb-4">
-                <mat-expansion-panel-header class="bg-gray-200 flex flex-wrap items-center justify-between gap-4 sm:gap-6">
+        <mat-accordion>
+            <mat-expansion-panel *ngFor="let j of jugadoresOjeadosPaginados; let i = index">
+                <mat-expansion-panel-header class="bg-gray-400 flex flex-wrap items-center justify-between gap-4 sm:gap-6">
                     <mat-panel-title class="text-black text-sm sm:text-base flex-1 min-w-[200px]">
                         {{ j.nombre }} — {{ j.posicion | titlecase }}
                     </mat-panel-title>
                     <mat-panel-title class="text-black text-sm sm:text-base flex items-center min-w-[150px]">
-                        <span>{{ 'nacionalidad' | translate }}</span>
+                        <span class="hidden md:inline">{{ 'nacionalidad' | translate }}</span>
                         <img class="w-5 h-3 sm:w-6 sm:h-4 object-contain rounded-sm shadow-sm ml-2" 
                         src="../../../assets/svg-country-flags/svg/{{ j.nacionalidad }}.svg" />
                     </mat-panel-title>
-                    <mat-panel-description class="text-black text-sm sm:text-base flex items-center min-w-[150px]">
-                        {{ 'valoracion' | translate }}:
-                        <nz-rate class="ml-2" [ngModel]="j.valoracion" nzDisabled></nz-rate>
-                    </mat-panel-description>
+                    <div class="hidden md:inline">
+                        <mat-panel-description class="text-black text-sm sm:text-base flex items-center min-w-[150px]">
+                            <span>{{ 'valoracion' | translate }}:</span>
+                            <nz-rate class="ml-2" [ngModel]="j.valoracion" nzDisabled></nz-rate>
+                        </mat-panel-description>
+                    </div>
                 </mat-expansion-panel-header>
-                <div class="p-5 border-t border-gray-200">
-                    <img class="w-32 h-auto mb-4 object-cover"  [src]="'data:image/jpeg;base64,' + j.avatar">
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                        <div>
-                            <strong>{{ 'edad' | translate }}:</strong> {{ j.edad }}
+
+                <div class="p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="col-span-1 flex items-center justify-center">
+                        <img class="w-32 h-auto mb-4 object-cover"  [src]="'data:image/jpeg;base64,' + j.avatar">
+                    </div>
+                    <div class="col-span-1 grid grid-cols-1 gap-4">
+                        <div class="col-span-1">
+                            <strong>{{ 'edad' | translate }}</strong> {{ j.edad }}
                         </div>
-                        <div>
+                        <div class="col-span-1">
                             <span><strong>{{ 'nacionalidad' | translate }}</strong></span>
                             <img class="w-6 h-4 object-cover rounded-sm shadow-sm inline-block ml-2" src="../../../assets/svg-country-flags/svg/{{ j.nacionalidad }}.svg" [alt]="j.nacionalidad"/> 
                         </div>
-                        <div class="col-span-1 sm:col-span-2">
+                        <div class="col-span-1">
                             <span><strong>{{ 'descripcion' | translate }}</strong></span>
                             <p>{{ j.descripcion }}</p>
                         </div>
                     </div>
-                    <div class="mt-4 grid grid-cols-2 md:grid-cols-3 gap-4">
+                    <div class="col-span-1 mt-4 grid grid-cols-2 md:grid-cols-3 gap-4">
                         <div>
                             <strong>{{ 'valoracion-ataque' | translate }}:</strong> <nz-rate class="mx-2" [ngModel]="j.valoracion_ataque" nzDisabled></nz-rate>
                         </div>
@@ -109,7 +116,7 @@
     </div>
 
     <!-- Paginador -->
-    <div class="flex justify-center items-center gap-2 mt-4">
+    <div class="flex justify-center items-center gap-2 mt-4 animate-fade">
       <button class="text-azul" (click)="cambiarPagina(1)" [disabled]="paginaActual == 1">
         <mat-icon fontIcon="keyboard_double_arrow_left"></mat-icon>
       </button>

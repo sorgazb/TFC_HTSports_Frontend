@@ -34,6 +34,8 @@ export class AreaJugadoresOjeadosComponent implements OnInit{
 
   translate !: TranslateService
 
+  cargando: boolean = true
+
   constructor(private router : Router, private serviciosJugadorOjeado : ServicioJugadorOjeadoService, translate: TranslateService, public registrarJugador : MatDialog){
     this.translate = translate
   }
@@ -57,6 +59,8 @@ export class AreaJugadoresOjeadosComponent implements OnInit{
       this.totalPaginas = Math.ceil(this.jugadoresOjeados.length / this.jugadoresPagina)
       this.actualizarJugadoresPaginados()
     })
+
+    this.cargando = false
   }
 
   /*

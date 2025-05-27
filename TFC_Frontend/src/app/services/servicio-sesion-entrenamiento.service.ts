@@ -15,7 +15,7 @@ export class ServicioSesionEntrenamientoService {
   //private apiUrl = 'http://localhost:8080/'
   private endPoint = 'api/sesisonesEntrenamiento'
   
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private translate: TranslateService) { }
   
   crearSesionEntrenamiento(sesionEntrenamiento: SesionEntrenamiento): Observable<SesionEntrenamiento>{
     return this.http.post<SesionEntrenamiento>(`${this.apiUrl}${this.endPoint}`,sesionEntrenamiento)
@@ -33,7 +33,7 @@ export class ServicioSesionEntrenamientoService {
   }
 
   obtenerEntrenamientosSesion(idSesion: number): Observable<SesionEntrenamiento> {
-    return this.http.get<any>(`${this.apiUrl}${this.endPoint}/${idSesion}/entrenamientos`).pipe(
+    return this.http.get<any>(`${this.apiUrl}${this.endPoint}/${idSesion}/entrenamientos?lang=${this.translate.currentLang}`).pipe(
       map(respuesta => {
         const sesionMapeada = {
           ...respuesta,
