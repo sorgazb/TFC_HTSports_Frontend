@@ -15,7 +15,7 @@ export const environment = {
   apiUrl: '${process.env['ENV_API_URL']}',
   FACEINPHOTO_HOST: '${process.env['FACEINPHOTO_HOST']}',
   FACEINPHOTO_PORT: '${process.env['FACEINPHOTO_PORT']}',
-  FACEINPHOTO_PROXY: '${process.env['FACEINPHOTO_PROXY']}'
+  FACEINPHOTO_PROXY: '${process.env['FACEINPHOTO_PROXY']}',
   OPENIA_API_KEY: '${process.env['OPENIA_API_KEY']}'
 };`;
 
@@ -29,4 +29,5 @@ console.log('Generando environment.prod.ts en:', prodPath);
 fs.writeFileSync(devPath, envContent);
 fs.writeFileSync(prodPath, envContent);
 
+// 3. Confirmación
 console.log('✅ Archivos de entorno generados correctamente.');
