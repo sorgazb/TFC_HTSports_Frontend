@@ -1,5 +1,5 @@
-<div class="p-10">
-  <nz-alert *ngIf="eventosSeleccionados.length > 0" [nzMessage]="mensajeEventosSeleccionados" nzType="info" nzShowIcon>
+<div class="p-10 animate-fade">
+  <nz-alert class="animate-fade-left" *ngIf="eventosSeleccionados.length > 0" [nzMessage]="mensajeEventosSeleccionados" nzType="info" nzShowIcon>
   </nz-alert>
   <nz-calendar (nzSelectChange)="selectChange($event)">
     <ul *nzDateCell="let date">
