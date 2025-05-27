@@ -3,9 +3,11 @@ import { Component, Inject, NgModule, OnInit } from '@angular/core';
 import { FormControl, FormGroup, FormsModule, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { TranslateService } from '@ngx-translate/core';
+import { delay } from 'rxjs';
 import { CuerpoTecnico } from 'src/app/class/cuerpo-tecnico';
 import { JugadorOjeado } from 'src/app/class/jugador-ojeado';
 import { ServicioJugadorOjeadoService } from 'src/app/services/servicio-jugador-ojeado.service';
+import { ServicioUsuarioService } from 'src/app/services/servicio-usuario.service';
 
 @Component({
   selector: 'app-card-jugador-ojeado-registrar',
@@ -46,6 +48,12 @@ export class CardJugadorOjeadoRegistrarComponent implements OnInit{
 
   translate !: TranslateService
 
+  fotoValidada: boolean = false
+
+  fotoNoValidada: boolean = false
+
+  cargando: boolean = false
+
   ngOnInit(): void {
 
     let cuerpoTecnicoAux = localStorage.getItem('cuerpoTecnico')
@@ -67,7 +75,8 @@ export class CardJugadorOjeadoRegistrarComponent implements OnInit{
     })
   }
 
-  constructor(public dialogRef: MatDialogRef<CardJugadorOjeadoRegistrarComponent>, @Inject(MAT_DIALOG_DATA) public data:any, translate: TranslateService, private servcioJugadorOjeado : ServicioJugadorOjeadoService){
+  constructor(public dialogRef: MatDialogRef<CardJugadorOjeadoRegistrarComponent>, @Inject(MAT_DIALOG_DATA) public data:any, translate: TranslateService,
+   private servcioJugadorOjeado : ServicioJugadorOjeadoService, private serviciosUsuario : ServicioUsuarioService){
     this.translate = translate
   }
 
@@ -75,6 +84,7 @@ export class CardJugadorOjeadoRegistrarComponent implements OnInit{
   * Metodo que renderiza la imagen seleccionada por el usuario.
   */
   cambiasImagen(event: any) {
+    this.cargando = true
     const file: File = event.target.files[0]
     if (file) {
       this.imagenASubir = file
@@ -84,6 +94,17 @@ export class CardJugadorOjeadoRegistrarComponent implements OnInit{
         this.imagenSeleccionada = reader.result
       }
       reader.readAsDataURL(file)
+      this.serviciosUsuario.comprobarImagenWEB(file).pipe(delay(3000)).subscribe({
+        next: resp => {
+          this.fotoValidada = true
+          this.cargando = false
+        },
+        error: err =>{
+          this.fotoNoValidada = true
+          this.cargando = false
+        } 
+      })
+      //this.cargando = false
     }
   }
 

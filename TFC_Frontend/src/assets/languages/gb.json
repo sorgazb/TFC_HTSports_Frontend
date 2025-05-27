@@ -244,5 +244,8 @@
   "cargando-entradas" : "Loading tickets...",
   "cargando-jugadores-ojeados" : "Loading scouted players...",
   "todos-las-posiciones" : "All Positions",
-  "cargando-pedidos" : "Loading orders..."
+  "cargando-pedidos" : "Loading orders...",
+  "imagen-valida" : "Valid image",
+  "imagen-no-valida" : "Invalid image",
+  "validando-imagen" : "Validating image..."
 }

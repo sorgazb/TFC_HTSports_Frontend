@@ -244,5 +244,8 @@
   "cargando-entradas" : "Cargando Entradas...",
   "cargando-jugadores-ojeados" : "Cargando Jugadores Ojeados...",
   "todos-las-posiciones" : "Todas las Posiciones",
-  "cargando-pedidos" : "Cargando Pedidos..."
+  "cargando-pedidos" : "Cargando Pedidos...",
+  "imagen-valida" : "Imagen válida",
+  "imagen-no-valida" : "Imagen no válida",
+  "validando-imagen" : "Validando imagen..."
 }

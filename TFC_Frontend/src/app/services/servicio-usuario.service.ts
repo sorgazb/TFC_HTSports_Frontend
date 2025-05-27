@@ -1,4 +1,4 @@
-import { HttpClient, HttpHeaders} from '@angular/common/http'
+import { HttpClient, HttpHeaders, HttpParams} from '@angular/common/http'
 import { Injectable } from '@angular/core'
 import { Usuario } from '../class/usuario'
 import { catchError, Observable, throwError } from 'rxjs'
@@ -17,6 +17,7 @@ export class ServicioUsuarioService {
   //private apiUrl = 'http://localhost:8080/'
   private apiCarasUrl = 'http://'+environment.FACEINPHOTO_HOST+':'+environment.FACEINPHOTO_PORT+'/faceinphoto/count';
   private endPoint = 'api/usuarios'
+  private readonly faceInPhoto = 'https://faceinphoto.p.rapidapi.com/faceinphoto/count';
 
   constructor(private http: HttpClient) { 
   }
@@ -91,5 +92,23 @@ export class ServicioUsuarioService {
         'X-RapidAPI-Proxy-Secret': environment.FACEINPHOTO_PROXY
       }
     })
+  }
+
+  comprobarImagenWEB(imagen: File): Observable<any> {
+    const headers = new HttpHeaders({
+      'X-Rapidapi-Key': '537517a32emsh5c0948f57af5a91p182ba2jsn0448a4034897',
+      'X-Rapidapi-Host': 'faceinphoto.p.rapidapi.com'
+      // Nota: No establecemos Content-Type para multipart/form-data; el navegador lo hace automáticamente
+    });
+
+    const formData = new FormData();
+    formData.append('image', imagen, imagen.name);
+
+    return this.http.post<any>(this.faceInPhoto, formData, { headers })
+      .pipe(
+        catchError(err => {
+          return throwError(() => err);
+        })
+      );
   }
 }
