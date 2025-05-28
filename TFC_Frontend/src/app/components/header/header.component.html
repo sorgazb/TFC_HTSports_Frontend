@@ -116,21 +116,21 @@
                         </a>
                     </li>
                     <!-- Area Entrenamientos -->
-                    <li>
+                    <li *ngIf="(cuerpoTecnico || jugador)">
                         <a *ngIf="usuario && (cuerpoTecnico || jugador)" routerLink="areaentrenamientos" class="btnInicioSesion">
                             <mat-icon fontIcon="fitness_center"></mat-icon>
                             <span>{{'area-entrenamientos' | translate}}</span>
                         </a>
                     </li>
                     <!-- Area Dietas IA -->
-                    <li>
+                    <li *ngIf="jugador">
                         <a *ngIf="usuario && jugador" routerLink="iadietas" class="btnInicioSesion">
                             <mat-icon fontIcon="restaurant"></mat-icon>
                             <span>{{'Solicitar Dieta' | translate}}</span>
                         </a>
                     </li>
                     <!-- Area Ojeador -->
-                    <li>
+                    <li *ngIf="cuerpoTecnico">
                         <a *ngIf="usuario && cuerpoTecnico" routerLink="areaojeador" class="btnInicioSesion">
                             <mat-icon fontIcon="search"></mat-icon>
                             <span>{{'area-ojeador' | translate}}</span>
