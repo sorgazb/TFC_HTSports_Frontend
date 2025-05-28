@@ -6,6 +6,7 @@ import { Aficionado } from '../class/aficionado'
 import { environment } from '../environments/environment'
 import { CuerpoTecnico } from '../class/cuerpo-tecnico'
 import { Jugador } from '../class/jugador'
+import { TranslateService } from '@ngx-translate/core'
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +20,7 @@ export class ServicioUsuarioService {
   private endPoint = 'api/usuarios'
   private readonly faceInPhoto = 'https://faceinphoto.p.rapidapi.com/faceinphoto/count';
 
-  constructor(private http: HttpClient) { 
+  constructor(private http: HttpClient, private translate : TranslateService) { 
   }
 
   registrarUsuario(usuario: Usuario): Observable<Usuario> {
@@ -70,6 +71,10 @@ export class ServicioUsuarioService {
 
   obtenerJugadores(equipoId: number): Observable<Jugador[]> {
     return this.http.get<Jugador[]>(`${this.apiUrl}${this.endPoint}/equipo/${equipoId}/jugadores`)
+  }
+
+  obtenerJugadoresAlineacion(equipoId: number): Observable<Jugador[]> {
+    return this.http.get<Jugador[]>(`${this.apiUrl}${this.endPoint}/equipo/alineacion/${equipoId}?lang=${this.translate.currentLang}`)
   }
 
   obtenerCuerposTecnicos(equipoId: number): Observable<CuerpoTecnico[]> {

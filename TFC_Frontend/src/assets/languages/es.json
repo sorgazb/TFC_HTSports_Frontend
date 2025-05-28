@@ -253,5 +253,6 @@
   "peso" : "Peso",
   "altura" : "Altura",
   "alergias" : "Alergias",
-  "detalles-entrada" : "Detalles Entrada"
+  "detalles-entrada" : "Detalles Entrada",
+  "cargando-detalles-partido" : "Cargando Detalles del Partido..."
 }

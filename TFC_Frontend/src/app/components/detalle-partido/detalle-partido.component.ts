@@ -5,9 +5,11 @@ import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 import { ActuacionEquipoPartido } from 'src/app/class/actuacion-equipo-partido';
 import { Alienacion } from 'src/app/class/alienacion';
+import { Jugador } from 'src/app/class/jugador';
 import { Partido } from 'src/app/class/partido';
 import { ServicioEquipoService } from 'src/app/services/servicio-equipo.service';
 import { ServicioPartidoService } from 'src/app/services/servicio-partido.service';
+import { ServicioUsuarioService } from 'src/app/services/servicio-usuario.service';
 
 @Component({
   selector: 'app-detalle-partido',
@@ -47,8 +49,13 @@ export class DetallePartidoComponent implements OnInit, AfterViewInit, OnDestroy
   porcentajeCornersContraEquipo2 = 0
 
   private intervaloActualizacion: any
+
+  jugadoresEquipoLocal : Jugador [] = []
+  jugadoresEquipoVisitante : Jugador [] = []
+
+  cargando: boolean = true
   
-  constructor(translate : TranslateService, private router : Router, private serviciosPartido : ServicioPartidoService, private serviciosEquipo : ServicioEquipoService) {
+  constructor(translate : TranslateService, private router : Router, private serviciosPartido : ServicioPartidoService, private serviciosEquipo : ServicioEquipoService, private serviciosUsuario : ServicioUsuarioService) {
     this.translate = translate
   }
     
@@ -75,6 +82,17 @@ export class DetallePartidoComponent implements OnInit, AfterViewInit, OnDestroy
       this.partido.equipos = equiposPartido
       
       this.generarEstadisticasEquipos()
+
+      this.serviciosUsuario.obtenerJugadoresAlineacion(this.partido.equipos[0].ID).subscribe((juagdoresEquipo : Jugador[])=>{
+        this.jugadoresEquipoLocal = juagdoresEquipo
+        this.jugadoresEquipoLocal.sort((a : Jugador,b : Jugador) => a.dorsal - b.dorsal)
+      })
+
+      this.serviciosUsuario.obtenerJugadoresAlineacion(this.partido.equipos[1].ID).subscribe((juagdoresEquipo : Jugador[])=>{
+        this.jugadoresEquipoVisitante = juagdoresEquipo
+        this.jugadoresEquipoVisitante.sort((a : Jugador,b : Jugador) => a.dorsal - b.dorsal)
+      })
+      this.cargando = false
     })
   }
 
@@ -130,6 +148,15 @@ export class DetallePartidoComponent implements OnInit, AfterViewInit, OnDestroy
   */
   consultarEquipo(idEquipo : number){
     this.router.navigate(['miEquipo/'+idEquipo])
+  }
+
+  /*
+  * Metodo que dirige al usuario al perfil del jugador seleccionado
+  * @param {number} id del jugador seleccionado
+  */
+  perfilJugador(idJugador : number){
+    console.log(idJugador)
+    this.router.navigate(['/jugador', idJugador])
   }
 
 }

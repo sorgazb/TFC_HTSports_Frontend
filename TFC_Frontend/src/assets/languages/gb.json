@@ -253,5 +253,6 @@
   "peso" : "Weight",
   "altura" : "Height",
   "alergias" : "Allergies",
-  "detalles-entrada" : "Ticket Details"
+  "detalles-entrada" : "Ticket Details",
+  "cargando-detalles-partido": "Loading Match Details..."
 }
