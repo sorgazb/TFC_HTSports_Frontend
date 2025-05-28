@@ -144,7 +144,7 @@
   "faltasRecibidas" : "Faltas Recibidas:",
   "cornersFavor" : "Corners a Favor:",
   "cornersContra" : "Corners en Contra:",
-  "seleccionaZona" : "Selecciona Zona:",
+  "seleccionaZona" : "Selecciona Zona",
   "zonaVip" : "Zona VIP - 100€",
   "zonaGeneral" : "Zona General - 40€",
   "zonaTribuna" : "Zona Tribuna - 50€",
@@ -252,5 +252,6 @@
   "introduce-mensaje" : "Introduce un mensaje...",
   "peso" : "Peso",
   "altura" : "Altura",
-  "alergias" : "Alergias"
+  "alergias" : "Alergias",
+  "detalles-entrada" : "Detalles Entrada"
 }

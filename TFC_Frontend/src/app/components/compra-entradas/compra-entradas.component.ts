@@ -331,5 +331,13 @@ export class CompraEntradasComponent implements OnInit {
       }
     })
   }
+
+  /*
+  * Metodo que redirige al usuario hasta la plantilla
+  * del equipo seleccionado
+  */
+  consultarEquipo(idEquipo : number){
+    this.router.navigate(['miEquipo/'+idEquipo])
+  }
 }
 

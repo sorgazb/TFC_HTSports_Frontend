@@ -1,64 +1,86 @@
-<div class="grid grid-cols-1 lg:grid-cols-2 gap-6 p-5 items-center">
-  <div class="flex flex-col items-center space-y-4">
-    <!-- Equipos Partido -->
-    <div class="flex flex-col lg:flex-row justify-center items-center space-y-4 lg:space-y-0 lg:space-x-6">
+<div class="grid grid-cols-1 md:grid-cols-2 p-5 gap-5">
+  <!-- Equipos Partido -->
+  <div class="col-span-1 animate-fade-right">
+    <div class="grid grid-cols-3">
       <!-- Equipo Local -->
-      <div class="flex flex-col items-center">
-        <h1 class="text-xl font-semibold text-center">{{ partido.equipos[0].nombre }}</h1>
-        <img [src]="partido.equipos[0].escudo" alt="" class="w-20 h-20 object-contain" />
+      <div class="col-span-1 flex flex-col justify-center items-center py-2 cursor-pointer" (click)="consultarEquipo(partido.equipos[0].ID)">
+        <img src="{{partido.equipos[0].escudo}}" alt="" class="w-32 h-32 object-contain">
+        <p class="p-2 text-center">{{partido.equipos[0].nombre}}</p>
       </div>
-      <!-- Resultado -->
-      <span *ngIf="partido.estado ==='enjuego' || partido.estado === 'Enjame'" class="font-bold text-azul text-xl animate-pulse my-2 lg:my-0">{{ partido.resultado }}</span>
-      <span *ngIf="partido.estado != 'enjuego'" class="font-bold text-azul text-xl my-2 lg:my-0">{{ partido.resultado }}</span>
+      <div class="col-span-1 flex flex-col justify-center items-center py-2">
+        <span *ngIf="partido.estado != 'enjuego'" class="font-bold text-azul text-xl my-2 lg:my-0">{{ partido.resultado }}</span>
+        <span>{{ partido.fecha | date: 'dd/MM/yyyy'}}</span>
+      </div>
       <!-- Equipo Visitante -->
-      <div class="flex flex-col items-center">
-        <h1 class="text-xl font-semibold text-center">{{ partido.equipos[1].nombre }}</h1>
-        <img [src]="partido.equipos[1].escudo" alt="" class="w-20 h-20 object-contain" />
+      <div class="col-span-1 flex flex-col justify-center items-center py-2 cursor-pointer" (click)="consultarEquipo(partido.equipos[1].ID)">
+        <img src="{{partido.equipos[1].escudo}}" alt="" class="w-32 h-32 object-contain">
+        <p class="p-2 text-center">{{partido.equipos[1].nombre}}</p>
       </div>
     </div>
   </div>
-  <!-- Informacion Partido -->
-  <div class="text-center lg:text-left">
-    <h2 class="text-2xl font-bold text-azul mb-4">{{'detallesPartido' | translate}}</h2>
-    <div class="flex flex-col space-y-2">
-      <p>{{'estadio' | translate}} {{partido.equipos[0].estadio}}</p>
-      <p>{{'fecha' | translate}} {{ partido.fecha | date: 'dd/MM/yyyy'}}</p>
-      <p>{{'hora' | translate}} {{partido.fecha | date: 'HH:mm'}}</p>
-      <p>{{'clima' | translate}} {{partido.clima.toUpperCase()}}</p>
-      <p>{{'asistencia' | translate}} {{partido.asistencia}}</p>
+  <!-- Detalles del Partido -->
+  <div class="col-span-1 animate-fade-left">
+    <div class="w-full bg-azul rounded-lg p-2">
+      <h1 class="text-center text-white text-xl">{{'detallesPartido' | translate}}</h1>
+    </div>
+    <div class="flex flex-col justify-center items-center">
+      <div class=" w-full border-b p-1">
+        <p class="text-center">{{'estadio' | translate}} {{partido.equipos[0].estadio}}</p>
+      </div>
+      <div class=" w-full border-b p-1">
+        <p class="text-center">{{'fecha' | translate}} {{ partido.fecha | date: 'dd/MM/yyyy'}}</p>
+      </div>
+      <div class=" w-full border-b p-1">
+        <p class="text-center">{{'hora' | translate}} {{partido.fecha | date: 'HH:mm'}}</p>
+      </div>
+      <div class=" w-full border-b p-1">
+        <p class="text-center">{{'clima' | translate}} {{partido.clima.toUpperCase()}}</p>
+      </div>
+      <div class=" w-full border-b p-1">
+        <p class="text-center">{{'asistencia' | translate}} {{partido.asistencia}}</p>
+      </div>
     </div>
   </div>
 </div>
-<!-- Contenedor Compra Entradas -->
-<div class="w-full px-5 mt-8">
-  <h1 class="text-center text-azul font-bold text-2xl m-2">{{'seleccionaZona' | translate}}</h1>
-  <img usemap="#mapa-estadio" src="../../../assets/img/estadioHT.png" class="w-full max-w-[600px] mx-auto h-auto object-contain rounded-lg shadow-md" #estadioImg/>
-  <!-- Areas Estadio -->
-  <map name="mapa-estadio">
-    <!-- Zona de Discapacidad -->
-    <area mat-raised-button matTooltip="{{'zonaDiscapacidad' | translate}}" class="cursor-pointer" coords="519,100,520,292,703,292,743,309,853,166,790,125,685,100" shape="poly" (click)="crearEntradaDiscapacidad()">
-    <!-- Zona Tribuna -->
-    <area mat-raised-button matTooltip="{{'zonaTribuna' | translate}}" class="cursor-pointer" coords="156,165,266,309,220,364,207,431,207,509,209,565,208,623,224,666,241,693,268,711,151,853,61,729,39,515,48,342,87,247" shape="poly"  (click)="crearEntradaTribuna()"/>
-    <!-- Zona Vip -->
-    <area mat-raised-button matTooltip="{{'zonaVip' | translate}}" class="cursor-pointer" coords="167,164,275,306,307,294,337,290,367,290,392,293,418,289,448,292,472,292,493,289,507,292,506,102,386,104,323,97,266,114,221,128" shape="poly" (click)="crearEntradaVip()">
-    <!-- Zona Vip -->
-    <area mat-raised-button matTooltip="{{'zonaVip' | translate}}" class="cursor-pointer" coords="276,715,165,856,221,893,260,906,300,912,326,917,367,920,410,918,444,921,487,918,504,921,506,733" shape="poly" (click)="crearEntradaVip()">
-    <!-- Zona General -->
-    <area mat-raised-button matTooltip="{{'zonaGeneral' | translate}}" class="cursor-pointer" coords="512,730,513,921,686,924,764,907,817,886,857,864,873,845,913,797,939,762,957,727,966,694,973,657,977,628,974,592,977,512,976,380,958,309,934,256,914,222,858,172,750,313,789,349,809,435,808,511,810,582,806,616,798,673,769,698,744,718,699,732" shape="poly" (click)="crearEntradaGeneral()">
-  </map>
-  <!-- Alerta Compra -->
-  <nz-alert *ngIf="alerta.mostrar" [nzMessage]="alerta.mensaje" nzShowIcon nzCloseable (nzOnClose)="alerta.mostrar = false" class="mb-4 p-5"></nz-alert>
-  <!-- PayPal -->
-  <div *ngIf="existeEntrada" class="mt-8">
-    <h2 class="text-2xl font-semibold text-center mb-4">{{'metodo-pago' | translate}}</h2>
+<!-- Alerta Compra -->
+<nz-alert *ngIf="alerta.mostrar" [nzMessage]="alerta.mensaje" nzShowIcon nzCloseable (nzOnClose)="alerta.mostrar = false" class="mb-4 p-5"></nz-alert>
+<div class="grid grid-cols-1 md:grid-cols-2 p-5 gap-5">
+  <div class="col-span-1 p-5 animate-fade-right">
+    <div class="w-full bg-azul rounded-lg p-2">
+      <h1 class="text-center text-white text-xl">{{'seleccionaZona' | translate}}</h1>
+    </div>
+    <img usemap="#mapa-estadio" src="../../../assets/img/estadioHT.png" class="w-full max-w-[600px] mx-auto h-auto object-contain rounded-lg" #estadioImg/>
+    <!-- Areas Estadio -->
+    <map name="mapa-estadio">
+      <!-- Zona de Discapacidad -->
+      <area mat-raised-button matTooltip="{{'zonaDiscapacidad' | translate}}" class="cursor-pointer" coords="519,100,520,292,703,292,743,309,853,166,790,125,685,100" shape="poly" (click)="crearEntradaDiscapacidad()">
+      <!-- Zona Tribuna -->
+      <area mat-raised-button matTooltip="{{'zonaTribuna' | translate}}" class="cursor-pointer" coords="156,165,266,309,220,364,207,431,207,509,209,565,208,623,224,666,241,693,268,711,151,853,61,729,39,515,48,342,87,247" shape="poly"  (click)="crearEntradaTribuna()"/>
+      <!-- Zona Vip -->
+      <area mat-raised-button matTooltip="{{'zonaVip' | translate}}" class="cursor-pointer" coords="167,164,275,306,307,294,337,290,367,290,392,293,418,289,448,292,472,292,493,289,507,292,506,102,386,104,323,97,266,114,221,128" shape="poly" (click)="crearEntradaVip()">
+      <!-- Zona Vip -->
+      <area mat-raised-button matTooltip="{{'zonaVip' | translate}}" class="cursor-pointer" coords="276,715,165,856,221,893,260,906,300,912,326,917,367,920,410,918,444,921,487,918,504,921,506,733" shape="poly" (click)="crearEntradaVip()">
+      <!-- Zona General -->
+      <area mat-raised-button matTooltip="{{'zonaGeneral' | translate}}" class="cursor-pointer" coords="512,730,513,921,686,924,764,907,817,886,857,864,873,845,913,797,939,762,957,727,966,694,973,657,977,628,974,592,977,512,976,380,958,309,934,256,914,222,858,172,750,313,789,349,809,435,808,511,810,582,806,616,798,673,769,698,744,718,699,732" shape="poly" (click)="crearEntradaGeneral()">
+    </map>
+  </div>
+  <div *ngIf="existeEntrada" class="col-span-1 p-5 animate-fade-left">
+    <div class="w-full bg-azul rounded-lg p-2">
+      <h1 class="text-center text-white text-xl">{{'detalles-entrada' | translate}}</h1>
+    </div>
+    <div class="flex flex-col justify-center items-center">
+      <div class=" w-full border-b p-1">
+        <p class="text-center">{{'precio' | translate}} {{Entrada.precio}}€</p>
+      </div>
+      <div class=" w-full border-b p-1">
+        <p class="text-center">{{'zona' | translate}}: {{Entrada.zona.toUpperCase()}}</p>
+      </div>
+    </div>
+    <div class="w-full p-2">
+      <h1 class="text-center text-black text-xl">{{'metodo-pago' | translate}}</h1>
+    </div>
     <div class="w-full flex justify-center">
       <div #paypal class="w-full max-w-md"></div>
     </div>
   </div>
 </div>
-
-
-
-
-  
-  

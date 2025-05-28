@@ -144,7 +144,7 @@
   "faltasRecibidas" : "Fouls Received:",
   "cornersFavor" : "Corners For:",
   "cornersContra" : "Corners Against:",
-  "seleccionaZona" : "Select Zone:",
+  "seleccionaZona" : "Select Zone",
   "zonaVip" : "VIP Zone - 100€",
   "zonaGeneral" : "General Zone - 40€",
   "zonaTribuna" : "Tribune Zone - 50€",
@@ -252,5 +252,6 @@
   "introduce-mensaje" : "Enter a message...",
   "peso" : "Weight",
   "altura" : "Height",
-  "alergias" : "Allergies"
+  "alergias" : "Allergies",
+  "detalles-entrada" : "Ticket Details"
 }
