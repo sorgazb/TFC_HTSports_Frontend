@@ -247,5 +247,10 @@
   "cargando-pedidos" : "Cargando Pedidos...",
   "imagen-valida" : "Imagen válida",
   "imagen-no-valida" : "Imagen no válida",
-  "validando-imagen" : "Validando imagen..."
+  "validando-imagen" : "Validando imagen...",
+  "generando-dieta" : "Generando respuesta...",
+  "introduce-mensaje" : "Introduce un mensaje...",
+  "peso" : "Peso",
+  "altura" : "Altura",
+  "alergias" : "Alergias"
 }

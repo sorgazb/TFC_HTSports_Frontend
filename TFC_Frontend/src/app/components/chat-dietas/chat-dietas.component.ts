@@ -1,6 +1,7 @@
 import { animate, style, transition, trigger } from '@angular/animations';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { TranslateService } from '@ngx-translate/core';
 import { interval, pipe, takeWhile } from 'rxjs';
 import { Jugador } from 'src/app/class/jugador';
 import { Usuario } from 'src/app/class/usuario';
@@ -38,16 +39,17 @@ export class ChatDietasComponent implements OnInit{
     '🍅 Tomate',
     '🍫 Chocolate',
   ]
-    alergiasEng = [
+  
+  allergiesEng = [
     '🍞 Gluten',
-    '🌽 Maiz',
-    '🥜 Frutos secos',
-    '🦀 Marisco',
-    '🥚 Huevo',
-    '🫛 Soja',
-    '🐟 Pescado',
-    '🥛 Lactosa',
-    '🍅 Tomate',
+    '🌽 Corn',
+    '🥜 Nuts',
+    '🦀 Shellfish',
+    '🥚 Egg',
+    '🫛 Soy',
+    '🐟 Fish',
+    '🥛 Lactose',
+    '🍅 Tomato',
     '🍫 Chocolate',
   ]
 
@@ -60,9 +62,15 @@ export class ChatDietasComponent implements OnInit{
   abiertoPeso = false
   abiertoAltura = false
 
+  cargando: boolean = false
+
+  translate !: TranslateService
+
   @ViewChild('contentChat', { static: true }) contentChat!: ElementRef<HTMLElement>;
 
-  constructor(private router : Router, private servicioIA : ServicioiaService, private cd : ChangeDetectorRef) { }
+  constructor(private router : Router, private servicioIA : ServicioiaService, private cd : ChangeDetectorRef,translate: TranslateService) {
+    this.translate = translate
+  }
   
   ngOnInit(): void {
     if (!sessionStorage.getItem('usuario')) {
@@ -90,18 +98,27 @@ export class ChatDietasComponent implements OnInit{
   mandarMensaje(mensaje: string) {
     if(mensaje.length > 0){
       mensaje = this.usuario.nombre + ':\n' + mensaje
-      if (this.peso != undefined && this.peso != 0) {
+      if (this.peso != undefined && this.peso != 0 && this.translate.currentLang == 'es') {
         mensaje = mensaje + '\nPeso: ' + this.peso + ' kg'
       }
-      if (this.altura != undefined && this.altura != 0 ) {
+      if (this.altura != undefined && this.altura != 0 && this.translate.currentLang == 'es') {
         mensaje = mensaje + '\nAltura: ' + this.altura + ' cm'
       }
-      if (this.alergiasSeleccionadas.length > 0) {
+      if (this.alergiasSeleccionadas.length > 0 && this.translate.currentLang == 'es') {
         mensaje = mensaje+'\nAlergias: ' + this.alergiasSeleccionadas.join(', ')
       }
+      if (this.peso != undefined && this.peso != 0 && this.translate.currentLang == 'gb') {
+        mensaje = mensaje + '\nWeight: ' + this.peso + ' kg'
+      }
+      if (this.altura != undefined && this.altura != 0 && this.translate.currentLang == 'gb') {
+        mensaje = mensaje + '\nHeight: ' + this.altura + ' cm'
+      }
+      if (this.alergiasSeleccionadas.length > 0 && this.translate.currentLang == 'gb') {
+        mensaje = mensaje+'\nAllergies: ' + this.alergiasSeleccionadas.join(', ')
+      }
+      this.agregarChat('Usuario', mensaje)
       mensaje = mensaje + '\nEdad: ' + this.jugador.edad
       mensaje = mensaje + '\nPosicion: ' + this.jugador.posicion
-      this.agregarChat('Usuario', mensaje)
       this.solicitarDieta(mensaje)
       this.mensaje = ''
       this.abiertoAlergias = false
@@ -139,8 +156,8 @@ export class ChatDietasComponent implements OnInit{
 
   convertToHtml(responseGpt: string){
     return responseGpt
-      .replace(/\\n/g, '<br>') // Reemplaza los saltos de línea por <br>
-      .replace(/(\d+(\.\d+)?)([Kk][Gg])/g, '<span class="peso">$1 kg</span>') // Resalta los pesos
+      .replace(/\\n/g, '<br>')
+      .replace(/(\d+(\.\d+)?)([Kk][Gg])/g, '<span class="peso">$1 kg</span>') 
       .replace(/(\d+(\.\d+)?)([Cc][Mm])/g, '<span class="altura">$1 cm</span>') // Resalta las alturas
       .replace(/(\d+(\.\d+)?)([Kk][Aa][Ll][Oo][Rr][Ii][Aa])/g, '<span class="calorias">$1 kcal</span>') // Resalta las calorías 
   }
@@ -175,6 +192,7 @@ export class ChatDietasComponent implements OnInit{
   }
 
   solicitarDieta(text : string){
+    this.cargando = true
     this.servicioIA.enviarMensaje(text).subscribe(respuesta =>{
       const mensaje = respuesta.choices[0].message.content
       this.typeText(mensaje)
@@ -182,6 +200,7 @@ export class ChatDietasComponent implements OnInit{
         role: 'assistant',
         content: mensaje
       })
+      this.cargando = false
     })
   }
 
