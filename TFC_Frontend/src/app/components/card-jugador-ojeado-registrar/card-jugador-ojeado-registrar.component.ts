@@ -94,7 +94,7 @@ export class CardJugadorOjeadoRegistrarComponent implements OnInit{
         this.imagenSeleccionada = reader.result
       }
       reader.readAsDataURL(file)
-      this.serviciosUsuario.comprobarImagenWEB(file).pipe(delay(3000)).subscribe({
+      this.serviciosUsuario.comprobarImagenWEB(file).subscribe({
         next: resp => {
           this.fotoValidada = true
           this.cargando = false
