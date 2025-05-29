@@ -34,6 +34,12 @@ export class PerfilUsuarioComponent implements OnInit {
 
   imagenSeleccionada: string | ArrayBuffer | null = null
 
+  fotoValidada: boolean = false
+
+  fotoNoValidada: boolean = false
+
+  cargando: boolean = false
+
   ngOnInit(): void {
     
     if(!sessionStorage.getItem('usuario')){
@@ -130,42 +136,44 @@ export class PerfilUsuarioComponent implements OnInit {
       nombre: this.formUsuario.get('nombre')?.value,
       correo_electronico: this.formUsuario.get('email')?.value
     }
-  
-    if (this.imagenASubir) {
-      console.log(this.imagenASubir)
-        //this.seriviosUsuario.comprobarImagen(this.imagenASubir).subscribe({
-        // next: (response) => {
-        //   if(response.count == 1){
-        //     const formData = new FormData();
-        //     formData.append('nombre', datosUsuarioActualizar.nombre)
-        //     formData.append('correo_electronico', datosUsuarioActualizar.correo_electronico)
-        //     formData.append('avatar', this.imagenASubir!)
     
-        //     this.seriviosUsuario.actualizarDatosUsuario(this.usuario.ID, formData).subscribe({
-        //       next: () => {
-        //         this.mostrarUsuarioActualizado = true
-        //         this.usuario = {
-        //           ...this.usuario,
-        //           ...datosUsuarioActualizar,
-        //           avatar: this.imagenASubir!
-        //         }
-        //         this.usuarioSubject.next(this.usuario)
-        //         sessionStorage.setItem('usuario', JSON.stringify({ usuario: this.usuario }))
-        //       },
-        //       error: (error) => {
-        //         if (error.status === 400) {
-        //           this.mostrarErrorRegistro = true
-        //         }
-        //       }
-        //     });
-        //   }else{
-        //     this.mostrarErrorNumCaras = true
-        //   }
-        // },
-        // error: (error) => {
-        //     this.mostrarErrorFaceAPI = true
-        // }
-      //});
+    if (this.imagenASubir) {
+      this.seriviosUsuario.comprobarImagenWEB(this.imagenASubir).subscribe({
+        next: resp => {
+          this.fotoValidada = true
+          this.cargando = false
+          if(resp.count == 1){
+            const formData = new FormData();
+            formData.append('nombre', datosUsuarioActualizar.nombre)
+            formData.append('correo_electronico', datosUsuarioActualizar.correo_electronico)
+            formData.append('avatar', this.imagenASubir!)
+    
+            this.seriviosUsuario.actualizarDatosUsuario(this.usuario.ID, formData).subscribe({
+              next: () => {
+                this.mostrarUsuarioActualizado = true
+                this.usuario = {
+                  ...this.usuario,
+                  ...datosUsuarioActualizar,
+                  avatar: this.imagenASubir!
+                }
+                this.usuarioSubject.next(this.usuario)
+                sessionStorage.setItem('usuario', JSON.stringify({ usuario: this.usuario }))
+              },
+              error: (error) => {
+                if (error.status === 400) {
+                  this.mostrarErrorRegistro = true
+                }
+              }
+            });
+          }else{
+            this.mostrarErrorNumCaras = true
+          }
+        },
+        error: err =>{
+          this.fotoNoValidada = true
+          this.cargando = false
+        } 
+      })
     } else {
       const formData = new FormData();
       formData.append('nombre', datosUsuarioActualizar.nombre)

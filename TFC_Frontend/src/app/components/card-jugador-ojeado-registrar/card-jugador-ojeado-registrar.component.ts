@@ -104,7 +104,6 @@ export class CardJugadorOjeadoRegistrarComponent implements OnInit{
           this.cargando = false
         } 
       })
-      //this.cargando = false
     }
   }
 

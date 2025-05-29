@@ -40,9 +40,19 @@
         </label>
         <input id="avatarInput" type="file" (change)="cambiasImagen($event)" class="hidden"/>
         <span class="text-xs text-black italic">{{ 'selecciona-imagen' | translate }}</span>
+        <div *ngIf="cargando" class="flex flex-col items-center gap-1 mt-2">
+          <span class="text-sm text-black italic">{{ 'validando-imagen' | translate }}</span>
+          <div class="flex flex-row gap-2">
+            <div class="w-2 h-2 rounded-full bg-azul animate-bounce"></div>
+            <div class="w-2 h-2 rounded-full bg-azul animate-bounce [animation-delay:-.3s]"></div>
+            <div class="w-2 h-2 rounded-full bg-azul animate-bounce [animation-delay:-.5s]"></div>
+          </div>
+        </div>
       </div>
       <!-- Alertas Usuario -->
       <div class="md:col-span-2">
+        <nz-alert class="animate-flip-down mt-2" *ngIf="fotoValidada" nzType="success" nzMessage="{{'imagen-valida' | translate}}" nzShowIcon></nz-alert>
+        <nz-alert class="animate-flip-down mt-2" *ngIf="fotoNoValidada" nzType="error" nzMessage="{{'imagen-no-valida' | translate}}" nzShowIcon></nz-alert>
         <div *ngIf="mostrarErrorRegistro">
           <nz-alert nzType="error" nzCloseable (nzOnClose)="cerrarAlerta()" nzMessage="{{'err-ru' | translate}}" nzDescription="{{'text-err-ru' | translate}}" nzShowIcon></nz-alert>
         </div>
@@ -58,7 +68,7 @@
       </div>
       <!-- Validar Cambios -->
       <div class="md:col-span-2 flex justify-center">
-        <button type="submit" [disabled]="!formUsuario.valid" class="bg-azul text-white px-6 py-2 rounded-full shadow">{{'actualizar-usuario' | translate}}</button>
+        <button type="submit" [disabled]="!formUsuario.valid" class="bg-azul text-white p-2 cursor-pointer rounded-lg hover:text-blue-300 duration-1000">{{'actualizar-usuario' | translate}}</button>
       </div>
     </form>
     <!-- Informacion Aficionado -->
@@ -108,7 +118,7 @@
       </div>
       <!-- Validar datos Aficionado -->
       <div class="md:col-span-2 flex justify-center">
-        <button type="submit" [disabled]="!formAficionado.valid" class="bg-azul text-white px-6 py-2 rounded-full shadow">{{'actualizar-direccion' | translate}}</button>
+        <button type="submit" [disabled]="!formAficionado.valid" class="bg-azul text-white p-2 cursor-pointer rounded-lg hover:text-blue-300 duration-1000">{{'actualizar-direccion' | translate}}</button>
       </div>
     </form>
   </div>
