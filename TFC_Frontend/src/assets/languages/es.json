@@ -256,5 +256,6 @@
   "detalles-entrada" : "Detalles Entrada",
   "cargando-detalles-partido" : "Cargando Detalles del Partido...",
   "cargando-partidos" : "Cargando Partidos ...",
-  "detallesPedido" : "Detalles Pedido"
+  "detallesPedido" : "Detalles Pedido",
+  "cargando-perfil" : "Cargando Perfil..."
 }

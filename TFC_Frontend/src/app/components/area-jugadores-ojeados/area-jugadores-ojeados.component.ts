@@ -58,9 +58,8 @@ export class AreaJugadoresOjeadosComponent implements OnInit{
       this.jugadoresOjeados = jugadoresOjeados
       this.totalPaginas = Math.ceil(this.jugadoresOjeados.length / this.jugadoresPagina)
       this.actualizarJugadoresPaginados()
+      this.cargando = false
     })
-
-    this.cargando = false
   }
 
   /*

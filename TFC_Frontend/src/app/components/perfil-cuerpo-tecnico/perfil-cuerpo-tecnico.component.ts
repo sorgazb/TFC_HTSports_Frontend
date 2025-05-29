@@ -24,7 +24,7 @@ export class PerfilCuerpoTecnicoComponent {
       let id = Number(this.router.url.split('/').pop())
       this.serviciosUsuario.obtenerCuerpoTecnicoPlantilla(id).subscribe((cuerpoTecnico: CuerpoTecnico) => {
         this.cuerpoTecnico = cuerpoTecnico
+        this.cargando = false
       })
-      this.cargando = false
     }
 }

@@ -14,6 +14,7 @@ export class PerfilJugadorComponent implements OnInit{
 
   jugador !: Jugador
   estadisticasTotalesJugador !: EstadisticasTotalesJugador
+  cargando : boolean = true
 
   constructor(private serviciosUsuario : ServicioUsuarioService, private servicioEstadisticasJugador :  ServicioEstadisticasTotalesJugadorService, private router : Router){}
 
@@ -26,6 +27,7 @@ export class PerfilJugadorComponent implements OnInit{
     let id = Number(this.router.url.split('/').pop())
     this.serviciosUsuario.obtenerJugadorPlantilla(id).subscribe((jugador: Jugador) => {
       this.jugador = jugador
+      this.cargando = false
     })
     this.servicioEstadisticasJugador.obtenerEstadisticasTotalesJugador(id).subscribe((estadisticas: EstadisticasTotalesJugador) => {
       this.estadisticasTotalesJugador = estadisticas

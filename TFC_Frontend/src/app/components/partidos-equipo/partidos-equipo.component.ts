@@ -91,13 +91,12 @@ export class PartidosEquipoComponent implements OnInit{
       })
       this.totalPaginas = Math.ceil(this.partidosEquipo.length / this.partidosPagina)
       this.actualizarPartidosPaginados()
+      this.cargando = false
     })
 
     this.serviciosEquipo.obtenerTodosLosEquipos().subscribe((equipos: Equipo[]) => {
       this.equipos = equipos
     })
-
-    this.cargando = false
   }
 
   constructor(private serviciosPartido : ServicioPartidoService, private serviciosEquipo : ServicioEquipoService, private router : Router){}

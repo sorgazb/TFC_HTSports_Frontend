@@ -68,11 +68,11 @@ export class PartidosComponent {
       })
       this.totalPaginas = Math.ceil(this.partidos.length / this.partidosPagina)
       this.actualizarPartidosPaginados()
+      this.cargando = false
     })
     this.serviciosEquipo.obtenerTodosLosEquipos().subscribe((equipos: Equipo[]) => {
       this.equipos = equipos
     })
-    this.cargando = false
   }
     
   /*

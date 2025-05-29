@@ -256,5 +256,6 @@
   "detalles-entrada" : "Ticket Details",
   "cargando-detalles-partido": "Loading Match Details...",
   "cargando-partidos": "Loading matches ...",
-  "detallesPedido" : "Order details"
+  "detallesPedido" : "Order details",
+  "cargando-perfil" : "Loading Profile..."
 }

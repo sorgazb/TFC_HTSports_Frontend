@@ -1,74 +1,80 @@
-<div class="grid grid-cols-2 grid-rows-3 gap-6 p-6 max-w-3xl mx-auto">
-    <div class="flex items-center justify-center col-span-1">
+<div *ngIf="cargando" class="flex justify-center items-center min-h-screen">
+  <div class="flex flex-col items-center">
+    <div class="spinner-border animate-spin inline-block w-12 h-12 border-4 border-t-transparent border-azul rounded-full" role="status"></div>
+    <p class="mt-4 text-lg text-azul">{{'cargando-perfil' | translate}}</p>
+  </div>
+</div>
+<div *ngIf="!cargando" class="grid grid-cols-2 grid-rows-3 gap-6 p-6 max-w-3xl mx-auto">
+    <div class="flex items-center justify-center col-span-1 animate-fade-right">
       <img src="{{jugador.avatar}}" alt="{{jugador.nombre}}" class="w-auto h-auto object-cover [mask-image:linear-gradient(to_bottom,black_90%,transparent_100%)]"/>
     </div>
     <!-- Informacion Jugador -->
     <div class="flex flex-col justify-center space-y-2 col-span-1">
-      <h1 class="text-9xl text-azul font-extrabold" [countUp]="jugador.dorsal"></h1>
-      <h1 class="text-2xl font-bold text-azul">{{jugador.nombre}}</h1>
-      <span class="font-bold text-yellow-600">{{jugador.posicion.toUpperCase()}}</span>
-      <span class="text-black">{{'edad' | translate}} {{jugador.edad}}</span>
+      <h1 class="text-4xl md:text-9xl text-azul font-extrabold animate-jump-in" [countUp]="jugador.dorsal"></h1>
+      <h1 class="text-2xl font-bold text-azul animate-jump-in animate-delay-150">{{jugador.nombre}}</h1>
+      <span class="font-bold text-yellow-600 animate-jump-in animate-delay-300">{{jugador.posicion.toUpperCase()}}</span>
+      <span class="text-black animate-jump-in animate-delay-500">{{'edad' | translate}} {{jugador.edad}}</span>
     </div>
     <!-- Area Minutos -->
-    <div class="col-span-2 md:col-span-1 bg-blue-100 rounded-xl p-4 shadow">
+    <div class="col-span-2 md:col-span-1 bg-blue-100 rounded-xl p-4 shadow-xl shadow-blue-300 animate-fade">
       <h3 class="text-xl font-semibold text-azul">{{'minutos' | translate}}</h3>
-      <div class="py-3 flex items-center justify-between">
-        <span class="text-azul font-semibold text-base">{{'minutos-jugados' | translate}}</span>
-        <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.minutos"></span>
+      <div class="py-3 flex items-center justify-between animate-jump-in">
+        <span class="text-azul font-semibold text-base animate-jump-in">{{'minutos-jugados' | translate}}</span>
+        <span class="text-azul font-semibold text-xl animate-jump-in animate-delay-150" [countUp]="estadisticasTotalesJugador.minutos"></span>
       </div>
     </div>
     <!-- Estadisticas Portero -->
-    <div *ngIf="jugador.posicion == 'portero'" class="col-span-2 md:col-span-1 bg-blue-100 rounded-xl p-4 shadow">
-      <h3 class="text-xl font-semibold text-azul">{{'estadisticas-porteria' | translate}}</h3>
-      <div class="py-3 flex items-center justify-between">
+    <div *ngIf="jugador.posicion == 'portero'" class="col-span-2 md:col-span-1 bg-blue-100 rounded-xl p-4 shadow-xl shadow-blue-300 animate-fade">
+      <h3 class="text-xl font-semibold text-azul animate-jump-in">{{'estadisticas-porteria' | translate}}</h3>
+      <div class="py-3 flex items-center justify-between animate-jump-in animate-delay-150">
         <span class="text-azul font-semibold text-base">{{'paradas-realizadas' | translate}}</span>
         <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.paradas"></span>
       </div>
-      <div class="py-3 flex items-center justify-between">
+      <div class="py-3 flex items-center justify-between animate-jump-in animate-delay-200">
         <span class="text-azul font-semibold text-base">{{'goles-recibidos' | translate}}</span>
         <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.goles_recibidos"></span>
       </div>
     </div>
     <!-- Estadisticas Ataque -->
-    <div class="col-span-2 md:col-span-1 bg-blue-100 rounded-xl p-4 shadow">
-        <h3 class="text-xl font-semibold text-azul">{{'estadisticas-ofensivas' | translate}}</h3>
-        <div class="py-3 flex items-center justify-between">
+    <div class="col-span-2 md:col-span-1 bg-blue-100 rounded-xl p-4 shadow-xl shadow-blue-300 animate-fade">
+        <h3 class="text-xl font-semibold text-azul animate-jump-in">{{'estadisticas-ofensivas' | translate}}</h3>
+        <div class="py-3 flex items-center justify-between animate-jump-in animate-delay-150">
             <span class="text-azul font-semibold text-base">{{'goles' | translate}}</span>
             <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.goles"></span>
         </div>
-        <div class="py-3 flex items-center justify-between">
+        <div class="py-3 flex items-center justify-between animate-jump-in animate-delay-200">
             <span class="text-azul font-semibold text-base">{{'asistencias' | translate}}</span>
             <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.asistencias"></span>
         </div>
-        <div class="py-3 flex items-center justify-between">
+        <div class="py-3 flex items-center justify-between animate-jump-in animate-delay-300">
             <span class="text-azul font-semibold text-base">{{'tiros-porteria' | translate}}</span>
             <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.disparos_porteria"></span>
         </div>
-        <div class="py-3 flex items-center justify-between">
+        <div class="py-3 flex items-center justify-between animate-jump-in animate-delay-500">
             <span class="text-azul font-semibold text-base">{{'regates-exitosos' | translate}}</span>
             <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.regates_exitosos"></span>
         </div>
-        <div class="py-3 flex items-center justify-between">
+        <div class="py-3 flex items-center justify-between animate-jump-in animate-delay-700">
             <span class="text-azul font-semibold text-base">{{'faltas-recibidas' | translate}}</span>
             <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.faltas_recibidas"></span>
         </div>
     </div>
     <!-- Estadisticas Defensivas -->
-    <div class="col-span-2 md:col-span-1 bg-blue-100 rounded-xl p-4 shadow">
-        <h3 class="text-xl font-semibold text-azul">{{'estadisticas-defensivas' | translate}}</h3>
-        <div class="py-3 flex items-center justify-between">
+    <div class="col-span-2 md:col-span-1 bg-blue-100 rounded-xl p-4 shadow-xl shadow-blue-300 animate-fade">
+        <h3 class="text-xl font-semibold text-azul animate-jump-in">{{'estadisticas-defensivas' | translate}}</h3>
+        <div class="py-3 flex items-center justify-between animate-jump-in animate-delay-150">
             <span class="text-azul font-semibold text-base">{{'tarjetas-amarillas' | translate}}</span>
             <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.tarjetas_amarillas"></span>
         </div>
-        <div class="py-3 flex items-center justify-between">
+        <div class="py-3 flex items-center justify-between animate-jump-in animate-delay-200">
             <span class="text-azul font-semibold text-base">{{'tarjetas-rojas' | translate}}</span>
             <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.tarjetas_rojas"></span>
         </div>
-        <div class="py-3 flex items-center justify-between">
+        <div class="py-3 flex items-center justify-between animate-jump-in animate-delay-300">
             <span class="text-azul font-semibold text-base">{{'faltas-realizadas' | translate}}</span>
             <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.faltas_realizadas"></span>
         </div>
-        <div class="py-3 flex items-center justify-between">
+        <div class="py-3 flex items-center justify-between animate-jump-in animate-delay-500">
             <span class="text-azul font-semibold text-base">{{'duelos-ganados' | translate}}</span>
             <span class="text-azul font-semibold text-xl" [countUp]="estadisticasTotalesJugador.duelos_ganados"></span>
         </div>
