@@ -1,15 +1,29 @@
-<div>
-  <!-- Boton Filtros -->
-  <div class="m-5">
-    <button (click)="mostrarFiltros = !mostrarFiltros" class="bg-azul text-white px-4 py-2 rounded">{{ mostrarFiltros ? ('ocultar-filtros' | translate) : ('mostrar-filtros' | translate) }}</button>
+
+<div *ngIf="cargando" class="flex justify-center items-center min-h-screen">
+  <div class="flex flex-col items-center">
+    <div class="spinner-border animate-spin inline-block w-12 h-12 border-4 border-t-transparent border-azul rounded-full" role="status"></div>
+    <p class="mt-4 text-lg text-azul">{{'cargando-partidos' | translate}}</p>
   </div>
-    
+</div>
+<div *ngIf="!cargando">
+  <!-- Titulo Partidos -->
+  <div class="flex items-center justify-center w-full m-5 text-center animate-fade">
+    <h1 class="text-lg sm:text-xl md:text-3xl text-azul font-bold">{{ 'partidos' | translate }}</h1>
+  </div>
+
+  <!-- Boton Filtros -->
+  <div class="flex animate-fade-right">
+    <div class="mx-5">
+      <button (click)="mostrarFiltros = !mostrarFiltros" class="bg-azul text-white p-2 cursor-pointer rounded-lg hover:text-blue-300 duration-1000">{{ mostrarFiltros ? ('ocultar-filtros' | translate) : ('mostrar-filtros' | translate) }}</button>
+    </div>
+  </div>
+  
   <!-- Contenedor Filtros -->
-  <div class="overflow-hidden transition-max-height duration-500 ease-in-out grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 m-6" [ngClass]="{ 'max-h-0': !mostrarFiltros, 'max-h-screen': mostrarFiltros }">
+  <div class="animate-flip-up overflow-hidden transition-max-height duration-500 ease-in-out grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 m-5" [ngClass]="{ 'max-h-0': !mostrarFiltros, 'max-h-screen': mostrarFiltros }">
     <!-- Filtro Equipo -->
     <div>
       <label class="block mb-1 text-azul">{{'filtro-equipo' | translate}}</label>
-      <select class="w-full border rounded p-2 border-azul text-azul" [(ngModel)]="filtroEquipo" (change)="aplicarFiltros()">
+      <select class="w-full rounded p-2 border border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="filtroEquipo" (change)="aplicarFiltros()">
         <option value="">{{ 'todos_los_equipos' | translate }}</option>
         <option *ngFor="let equipo of equipos" [value]="equipo.ID">{{ equipo.nombre }}</option>
       </select>
@@ -17,57 +31,53 @@
     <!-- Filtro Fecha -->
     <div>
       <label class="block mb-1 text-azul">{{'filtro-fecha' | translate}}</label>
-      <input type="date" class="w-full border rounded p-2 border-azul text-azul" [(ngModel)]="flitroFecha" (change)="aplicarFiltros()">
+      <input type="date" class="w-full rounded p-2 border border-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500" [(ngModel)]="flitroFecha" (change)="aplicarFiltros()">
     </div>
   </div>
-    
+  
   <!-- Contenedor Partidos -->
-  <div class="grid grid-cols-1 scroll-smooth p-4">
-    <!-- Titulo Partidos -->
-    <div class="flex flex-col md:flex-row items-center gap-2 w-full px-4">
-      <hr class="flex-1 border-azul hidden md:block">
-      <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-azul text-center md:text-left">{{ 'partidos' | translate }}</h1>
-      <hr class="flex-1 border-azul hidden md:block">
-    </div>
-    <hr class="w-full border-azul md:hidden">
+  <div class="p-3 animate-fade-up">
     <!-- Contenedor Partidos -->
-    <div class="grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-10 p-5 mt-3">
-      <div *ngFor="let partido of partidosPaginados" class="border border-opacity-25 rounded-2xl p-3 grid grid-rows-[1fr,auto,auto,auto] gap-2 h-full">
-        <span class="text-center text-azul" *ngIf="partido.estado === 'programado' || partido.estado === 'programmed'"><mat-icon>timer</mat-icon></span>
-        <span class="text-center text-red-500" *ngIf="partido.estado === 'enjuego' || partido.estado === 'Enjame'"><mat-icon>live_tv</mat-icon></span>
-        <span class="text-center text-azul" *ngIf="partido.estado === 'finalizado' || partido.estado === 'finished'"><mat-icon>flag</mat-icon></span>
-        <span class="text-center text-azul" *ngIf="partido.estado === 'suspendido' || partido.estado === 'suspended'"><mat-icon>cancel</mat-icon></span>
-        <div class="flex justify-between items-center w-full">
-          <div *ngIf="partido.equipos[0]" class="flex flex-col items-center w-32">
-            <div class="w-24 h-24 flex items-center justify-center overflow-hidden rounded">
-              <img class="object-contain w-full h-full" [src]="partido.equipos[0].escudo" alt="{{partido.equipos[0].nombre}}">
-            </div>
-            <p class="text-center mt-2 text-sm font-medium">{{partido.equipos[0].nombre}}</p>
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10 p-5 mt-3">
+      <div *ngFor="let partido of partidosPaginados" class="col-span-1 border rounded-3xl grid grid-rows-[1fr,auto,auto,auto] h-full shadow-xl shadow-gray-300 transition duration-300 ease-in-out hover:-translate-y-1">
+        <!-- Estado Partido -->
+        <div class="p-2 flex justify-center">
+          <span class="text-center text-azul" *ngIf="partido.estado === 'programado' || partido.estado === 'programmed'"><mat-icon>timer</mat-icon></span>
+          <span class="text-center text-red-500" *ngIf="partido.estado === 'enjuego' || partido.estado === 'Enjame'"><mat-icon>live_tv</mat-icon></span>
+          <span class="text-center text-azul" *ngIf="partido.estado === 'finalizado' || partido.estado === 'finished'"><mat-icon>flag</mat-icon></span>
+          <span class="text-center text-azul" *ngIf="partido.estado === 'suspendido' || partido.estado === 'suspended'"><mat-icon>cancel</mat-icon></span>
+        </div>
+        <!-- Equipos Partido -->
+        <div class="grid grid-cols-3">
+          <!-- Equipo Local -->
+          <div class="col-span-1 flex flex-col justify-center items-center py-2 cursor-pointer hover:text-azul duration-1000" (click)="consultarEquipo(partido.equipos[0].ID)">
+            <img src="{{partido.equipos[0].escudo}}" alt="" class="w-24 h-24 object-contain">
+            <p class="p-2 text-center">{{partido.equipos[0].nombre}}</p>
           </div>
-          <div class="w-16 h-16 flex items-center justify-center">
-            <img src="assets/img/vs.png" alt="vs" class="w-full h-full object-contain">
+          <div class="col-span-1 flex flex-col justify-center items-center py-2">
+            <span *ngIf="partido.estado === 'finalizado' || partido.estado === 'finished' || partido.estado === 'enjuego' || partido.estado === 'Enjame'" class="font-bold text-azul text-xl my-2 lg:my-0">{{ partido.resultado }}</span>
           </div>
-          <div *ngIf="partido.equipos[1]" class="flex flex-col items-center w-32">
-            <div class="w-24 h-24 flex items-center justify-center overflow-hidden rounded">
-              <img class="object-contain w-full h-full" [src]="partido.equipos[1].escudo" alt="{{partido.equipos[1].nombre}}">
-            </div>
-            <p class="text-center mt-2 text-sm font-medium">{{partido.equipos[1].nombre}}</p>
+          <!-- Equipo Visitante -->
+          <div class="col-span-1 flex flex-col justify-center items-center py-2 cursor-pointer hover:text-azul duration-1000" (click)="consultarEquipo(partido.equipos[1].ID)">
+            <img src="{{partido.equipos[1].escudo}}" alt="" class="w-24 h-24 object-contain">
+            <p class="p-2 text-center">{{partido.equipos[1].nombre}}</p>
           </div>
         </div>
-        <div *ngIf="partido.estado === 'finalizado' || partido.estado === 'finished' || partido.estado === 'enjuego' || partido.estado === 'Enjame'" class="text-center text-azul font-bold text-2xl">
-          <span>{{partido.resultado}}</span>
-        </div>
-        <div class="bg-azul rounded p-2">
+        <!-- Detalles Partido -->
+        <div class="bg-azul rounded-3xl p-5">
+          <!-- Estadio Partido -->
           <div *ngIf="partido.equipos[0]" class="flex flex-col items-center w-full mb-2">
             <div class="text-center text-white flex items-center justify-center gap-2">
               <mat-icon>stadium</mat-icon>
               <span>{{ partido.equipos[0].estadio }}</span>
             </div>
           </div>
+          <!-- Fecha Partido -->
           <div class="text-center text-white flex items-center justify-center gap-2 mb-2">
             <mat-icon>calendar_month</mat-icon>
             <span>{{ partido.fecha | date: 'dd/MM/yyyy HH:mm' }}</span>
-          </div>                  
+          </div> 
+          <!-- Clima Partido -->
           <div class="text-center text-white flex items-center justify-center gap-2 mb-2">
             <mat-icon *ngIf="partido.clima === 'lluvia' || partido.clima === 'rain'">water_drop</mat-icon>
             <mat-icon *ngIf="partido.clima === 'soleado' || partido.clima === 'sunny'">wb_sunny</mat-icon>
@@ -75,43 +85,49 @@
             <mat-icon *ngIf="partido.clima === 'frio' || partido.clima === 'cold'">ac_unit</mat-icon>
             <span>{{ partido.clima.toUpperCase()}}</span>
           </div>
+          <!-- Asistencia Partido -->
           <div *ngIf="partido.estado === 'finalizado' || partido.estado === 'finished' || partido.estado === 'enjuego' || partido.estado === 'Enjame'" class="text-center text-white flex items-center justify-center gap-2 mb-2">
             <mat-icon>person</mat-icon>
             <span>{{partido.asistencia}}</span>
           </div>
-          <div class="text-center">
-            <a *ngIf="(partido.estado === 'programado' || partido.estado === 'programmed') && cuerpoTecnico  && cuerpoTecnico.tipo === 'entrenador'" (click)="establecerAlineacion(partido.ID)" class="bg-white flex items-center justify-center p-1 rounded text-azul hover:bg-blue-200">
-              <mat-icon>sports</mat-icon>
-              <span>{{'establecer-alineacion' | translate}}</span>
-            </a>
-            <a *ngIf="partido.estado === 'enjuego' || partido.estado === 'Enjame' || partido.estado === 'finalizado' || partido.estado === 'finished'" (click)="consultarPartido(partido.ID)" class="bg-white flex items-center justify-center p-1 rounded text-azul hover:bg-blue-200">
+          <div *ngIf="partido.asistencia < partido.equipos[0].capacidad_estadio">
+            <div *ngIf="(partido.estado === 'programado' || partido.estado === 'programmed') && cuerpoTecnico  && cuerpoTecnico.tipo === 'entrenador'" class="text-center">
+              <a (click)="establecerAlineacion(partido.ID)" class="bg-white flex items-center justify-center p-1 rounded text-azul hover:bg-blue-200">
+                <mat-icon>sports</mat-icon>
+                <span>{{'establecer-alineacion' | translate}}</span>
+              </a>
+            </div>
+          </div>
+          <div *ngIf="partido.estado != 'programado' && partido.estado != 'programmed' && partido.estado !='suspendido' && partido.estado != 'suspended'" class="text-center">
+            <a (click)="consultarPartido(partido.ID)" class="bg-white flex items-center justify-center p-1 rounded-lg text-azul hover:bg-gray-200 duration-1000">
               <mat-icon>sports</mat-icon>
               <span>{{'consultar-partido' | translate}}</span>
             </a>
           </div>
-        
         </div>
       </div>
     </div>
-  </div>
-  <!-- Paginador -->
-  <div class="flex justify-center items-center gap-2 m-4">
-    <button class="text-azul" (click)="cambiarPagina(1)" [disabled]="paginaActual == 1">
-      <mat-icon fontIcon="keyboard_double_arrow_left"></mat-icon>
-    </button>
-    <button class="text-azul" (click)="cambiarPagina(paginaActual - 1)" [disabled]="paginaActual == 1">
-      <mat-icon fontIcon="arrow_back_iost"></mat-icon>
-    </button>
-    
-    <span class="text-azul">{{'pagina' | translate}} {{ paginaActual }} {{'de' | translate}} {{ totalPaginas }}</span>
-    
-    <button class="text-azul" (click)="cambiarPagina(paginaActual + 1)" [disabled]="paginaActual == totalPaginas">
-      <mat-icon fontIcon="arrow_forward_iost"></mat-icon>
-    </button>
-    <button class="text-azul" (click)="cambiarPagina(totalPaginas)" [disabled]="paginaActual == totalPaginas">
-      <mat-icon fontIcon="keyboard_double_arrow_right"></mat-icon>
-    </button>
+    <!-- Paginador -->
+    <div class="flex justify-center items-center gap-2 mt-4">
+      <button class="text-azul" (click)="cambiarPagina(1)" [disabled]="paginaActual == 1">
+        <mat-icon fontIcon="keyboard_double_arrow_left"></mat-icon>
+      </button>
+      <button class="text-azul" (click)="cambiarPagina(paginaActual - 1)" [disabled]="paginaActual == 1">
+        <mat-icon fontIcon="arrow_back_iost"></mat-icon>
+      </button>
+
+      <span class="text-azul">{{'pagina' | translate}} {{ paginaActual }} {{'de' | translate}} {{ totalPaginas }}</span>
+  
+      <button class="text-azul" (click)="cambiarPagina(paginaActual + 1)" [disabled]="paginaActual == totalPaginas">
+        <mat-icon fontIcon="arrow_forward_iost"></mat-icon>
+      </button>
+      <button class="text-azul" (click)="cambiarPagina(totalPaginas)" [disabled]="paginaActual == totalPaginas">
+        <mat-icon fontIcon="keyboard_double_arrow_right"></mat-icon>
+      </button>
+    </div>
   </div>
 </div>
+  
+
     
   

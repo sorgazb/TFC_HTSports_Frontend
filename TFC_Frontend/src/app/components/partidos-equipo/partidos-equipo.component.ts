@@ -32,6 +32,8 @@ export class PartidosEquipoComponent implements OnInit{
   totalPaginas !: number
   
   equipos: Equipo[] = []
+
+  cargando : boolean = true
   
   ngOnInit(): void {
     
@@ -93,7 +95,9 @@ export class PartidosEquipoComponent implements OnInit{
 
     this.serviciosEquipo.obtenerTodosLosEquipos().subscribe((equipos: Equipo[]) => {
       this.equipos = equipos
-    });
+    })
+
+    this.cargando = false
   }
 
   constructor(private serviciosPartido : ServicioPartidoService, private serviciosEquipo : ServicioEquipoService, private router : Router){}
@@ -168,5 +172,13 @@ export class PartidosEquipoComponent implements OnInit{
   */
   consultarPartido(id: number) {
     this.router.navigate(['/partidos', id])
+  }
+
+  /*
+  * Metodo que redirige al usuario hasta la plantilla
+  * del equipo seleccionado
+  */
+  consultarEquipo(idEquipo : number){
+    this.router.navigate(['miEquipo/'+idEquipo])
   }
 }

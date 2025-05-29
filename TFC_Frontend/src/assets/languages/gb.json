@@ -139,7 +139,7 @@
   "estadisticasEquipos" : "Team Statistics",
   "alineaciones" : "Lineups",
   "posesion" : "Possession:",
-  "tirosTotal" : "Total Shots:",
+  "tirosTotales" : "Total Shots:",
   "tirosPorteria" : "Shots on Target:",
   "faltasRecibidas" : "Fouls Received:",
   "cornersFavor" : "Corners For:",
@@ -254,5 +254,6 @@
   "altura" : "Height",
   "alergias" : "Allergies",
   "detalles-entrada" : "Ticket Details",
-  "cargando-detalles-partido": "Loading Match Details..."
+  "cargando-detalles-partido": "Loading Match Details...",
+  "cargando-partidos": "Loading matches ..."
 }
