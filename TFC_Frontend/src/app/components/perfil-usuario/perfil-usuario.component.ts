@@ -133,39 +133,39 @@ export class PerfilUsuarioComponent implements OnInit {
   
     if (this.imagenASubir) {
       console.log(this.imagenASubir)
-      this.seriviosUsuario.comprobarImagen(this.imagenASubir).subscribe({
-        next: (response) => {
-          if(response.count == 1){
-            const formData = new FormData();
-            formData.append('nombre', datosUsuarioActualizar.nombre)
-            formData.append('correo_electronico', datosUsuarioActualizar.correo_electronico)
-            formData.append('avatar', this.imagenASubir!)
+        //this.seriviosUsuario.comprobarImagen(this.imagenASubir).subscribe({
+        // next: (response) => {
+        //   if(response.count == 1){
+        //     const formData = new FormData();
+        //     formData.append('nombre', datosUsuarioActualizar.nombre)
+        //     formData.append('correo_electronico', datosUsuarioActualizar.correo_electronico)
+        //     formData.append('avatar', this.imagenASubir!)
     
-            this.seriviosUsuario.actualizarDatosUsuario(this.usuario.ID, formData).subscribe({
-              next: () => {
-                this.mostrarUsuarioActualizado = true
-                this.usuario = {
-                  ...this.usuario,
-                  ...datosUsuarioActualizar,
-                  avatar: this.imagenASubir!
-                }
-                this.usuarioSubject.next(this.usuario)
-                sessionStorage.setItem('usuario', JSON.stringify({ usuario: this.usuario }))
-              },
-              error: (error) => {
-                if (error.status === 400) {
-                  this.mostrarErrorRegistro = true
-                }
-              }
-            });
-          }else{
-            this.mostrarErrorNumCaras = true
-          }
-        },
-        error: (error) => {
-            this.mostrarErrorFaceAPI = true
-        }
-      });
+        //     this.seriviosUsuario.actualizarDatosUsuario(this.usuario.ID, formData).subscribe({
+        //       next: () => {
+        //         this.mostrarUsuarioActualizado = true
+        //         this.usuario = {
+        //           ...this.usuario,
+        //           ...datosUsuarioActualizar,
+        //           avatar: this.imagenASubir!
+        //         }
+        //         this.usuarioSubject.next(this.usuario)
+        //         sessionStorage.setItem('usuario', JSON.stringify({ usuario: this.usuario }))
+        //       },
+        //       error: (error) => {
+        //         if (error.status === 400) {
+        //           this.mostrarErrorRegistro = true
+        //         }
+        //       }
+        //     });
+        //   }else{
+        //     this.mostrarErrorNumCaras = true
+        //   }
+        // },
+        // error: (error) => {
+        //     this.mostrarErrorFaceAPI = true
+        // }
+      //});
     } else {
       const formData = new FormData();
       formData.append('nombre', datosUsuarioActualizar.nombre)
