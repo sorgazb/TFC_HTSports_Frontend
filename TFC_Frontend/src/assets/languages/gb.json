@@ -258,5 +258,6 @@
   "cargando-partidos": "Loading matches ...",
   "detallesPedido" : "Order details",
   "cargando-perfil" : "Loading Profile...",
-  "cargando-producto" : "Loading Product..."
+  "cargando-producto" : "Loading Product...",
+  "cargando-productos" : "Loading Products..."
 }

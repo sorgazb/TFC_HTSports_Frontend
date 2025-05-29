@@ -29,9 +29,11 @@ export class TiendaComponent implements OnInit {
   filtroPrecioMax !: number
   ordenPrecio !: string
 
-  productosPagina : number = 8
+  productosPagina : number = 12
   paginaActual : number = 1
   totalPaginas !: number
+
+  cargando : boolean = true
 
   constructor(translate : TranslateService, private router : Router, private serviciosProductos : ServicioProductoService, private serviciosEquipo : ServicioEquipoService) {
     this.translate = translate
@@ -51,6 +53,7 @@ export class TiendaComponent implements OnInit {
       this.productos = productos
       this.totalPaginas = Math.ceil(this.productos.length / this.productosPagina)
       this.actualizarProductosPaginados()
+      this.cargando = false
     })
     this.serviciosEquipo.obtenerTodosLosEquipos().subscribe((equipos: Equipo[]) => {
       this.equipos = equipos
