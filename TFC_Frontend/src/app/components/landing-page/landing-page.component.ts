@@ -23,20 +23,28 @@ import { filter } from 'rxjs';
 export class LandingPageComponent implements AfterViewInit {
 
   imgCarruselEsp = [
-    '../../assets/img/carrusel/tienda_ES.png',
-    '../../assets/img/carrusel/tienda_ES.png',
-    '../../assets/img/carrusel/tienda_ES.png',
-    '../../assets/img/carrusel/tienda_ES.png',
-    '../../assets/img/carrusel/tienda_ES.png'
+    '../../assets/img/carrusel/tiendaES.png',
+    '../../assets/img/carrusel/partidosES.png',
+    '../../assets/img/carrusel/entradasES.png',
+    '../../assets/img/carrusel/plantillaES.png',
+    '../../assets/img/carrusel/alineacionES.png',
+    '../../assets/img/carrusel/ojeadorES.png',
+    '../../assets/img/carrusel/iaDietasES.png',
+    '../../assets/img/carrusel/estadisticasPartidoES.png',
+    '../../assets/img/carrusel/entrenamientosES.png'
   ];
   
   imgCarruselEng = 
   [
-    '../../assets/img/carrusel/tienda_EN.png',
-    '../../assets/img/carrusel/tienda_EN.png',
-    '../../assets/img/carrusel/tienda_EN.png',
-    '../../assets/img/carrusel/tienda_EN.png',
-    '../../assets/img/carrusel/tienda_EN.png'
+    '../../assets/img/carrusel/tiendaEN.png',
+    '../../assets/img/carrusel/partidosEN.png',
+    '../../assets/img/carrusel/entradasEN.png',
+    '../../assets/img/carrusel/plantillaEN.png',
+    '../../assets/img/carrusel/alineacionEN.png',
+    '../../assets/img/carrusel/ojeadorEN.png',
+    '../../assets/img/carrusel/iaDietasEN.png',
+    '../../assets/img/carrusel/estadisticasPartidoEN.png',
+    '../../assets/img/carrusel/entrenamientosEN.png'
   ];
 
   mostrarLandingPage : boolean = true
