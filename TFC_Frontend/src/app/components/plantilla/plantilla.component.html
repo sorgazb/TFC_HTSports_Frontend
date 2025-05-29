@@ -6,7 +6,7 @@
     </div>
 </div>
   
-<div *ngIf="!cargando" class="space-y-4 p-4">
+<div *ngIf="!cargando" class="space-y-4 p-4 animate-fade">
     <mat-tab-group>
         <mat-tab label="{{ 'equipo' | translate }}">
             <div class="p-5">
@@ -30,55 +30,53 @@
         <mat-tab label="{{'jugadores' | translate}}">
             <div class="p-5">
                 <!-- Porteros Plantilla -->
-                <div class="flex flex-col md:flex-row items-center gap-2 w-full px-4">
-                    <hr class="flex-1 border-azul hidden md:block">
+                <div class="flex justify-center items-center w-full px-4">
                     <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-azul text-center md:text-left">{{ 'porteros' | translate }}</h1>
-                    <hr class="flex-1 border-azul hidden md:block">
                 </div>
-                <hr class="w-full border-azul md:hidden">
                 <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-10 p-5 mt-3">
-                    <div *ngFor="let jugador of porteros" class="cursor-pointer bg-gradient-to-br from-indigo-100 to-blue-700 border rounded-2xl p-3 grid grid-rows-[1fr,auto,auto,auto] gap-2 h-full transition duration-300 ease-in-out hover:-translate-y-2" (click)="perfilJugador(jugador.id)">
-                        <img class="rounded w-full h-auto object-contain [mask-image:linear-gradient(to_bottom,black_90%,transparent_100%)]" src="{{jugador.avatar}}" alt="">
+                    <div *ngFor="let jugador of porteros" class="cursor-pointer bg-gradient-to-br from-indigo-100 to-blue-700 rounded-2xl p-3 grid grid-rows-[1fr,auto,auto,auto] gap-2 h-full transition duration-300 ease-in-out hover:-translate-y-2 shadow-lg shadow-blue-800" (click)="perfilJugador(jugador.id)">
+                        <img class="rounded w-full h-auto object-contain [mask-image:linear-gradient(to_bottom,black_90%,transparent_100%)]
+                        transform transition-transform duration-1000 ease-in-out
+                        hover:scale-105" src="{{jugador.avatar}}" alt="">
                         <h1 class="text-center text-2xl font-bold tracking-tight text-blue-950">{{jugador.dorsal}} - {{ jugador.nombre }}</h1>
                         <p class="text-center text-white text">{{'edad' | translate}} {{ jugador.edad }}</p>  
                     </div>
                 </div>
                 <!-- Defensas Plantilla -->
-                <div class="flex flex-col md:flex-row items-center gap-2 w-full px-4">
-                    <hr class="flex-1 border-azul hidden md:block">
+                <div class="flex justify-center items-center px-4">
                     <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-azul text-center md:text-left">{{ 'defensas' | translate }}</h1>
-                    <hr class="flex-1 border-azul hidden md:block">
                 </div>
-                <hr class="w-full border-azul md:hidden">
                 <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-10 p-5 mt-3">
-                    <div *ngFor="let jugador of defensas" class="cursor-pointer bg-gradient-to-br from-indigo-100 to-blue-700 border rounded-2xl p-3 grid grid-rows-[1fr,auto,auto,auto] gap-2 h-full transition duration-300 ease-in-out hover:-translate-y-2" (click)="perfilJugador(jugador.id)">
-                        <img class="rounded w-full h-auto object-contain [mask-image:linear-gradient(to_bottom,black_90%,transparent_100%)]" src="{{jugador.avatar}}" alt="">
+                    <div *ngFor="let jugador of defensas" class="cursor-pointer bg-gradient-to-br from-indigo-100 to-blue-700 rounded-2xl p-3 grid grid-rows-[1fr,auto,auto,auto] gap-2 h-full transition duration-300 ease-in-out hover:-translate-y-2 shadow-lg shadow-blue-800" (click)="perfilJugador(jugador.id)">
+                        <img class="rounded w-full h-auto object-contain [mask-image:linear-gradient(to_bottom,black_90%,transparent_100%)]
+                        transform transition-transform duration-1000 ease-in-out
+                        hover:scale-105" src="{{jugador.avatar}}" alt="">
                         <h1 class="text-center text-2xl font-bold tracking-tight text-blue-950">{{jugador.dorsal}} - {{ jugador.nombre }}</h1>
                         <p class="text-center text-white text">{{'edad' | translate}} {{ jugador.edad }}</p>  
                     </div>
                 </div>
                 <!-- Centro Campistas Plantilla -->
-                <div class="flex flex-col md:flex-row items-center gap-2 w-full px-4">
-                    <hr class="flex-1 border-azul hidden md:block">
+                <div class="flex justify-center items-center px-4">
                     <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-azul text-center md:text-left">{{ 'centrocampistas' | translate }}</h1>
-                    <hr class="flex-1 border-azul hidden md:block">
                 </div>
                 <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-10 p-5 mt-3">
-                    <div *ngFor="let jugador of centrocampistas" class="cursor-pointer bg-gradient-to-br from-indigo-100 to-blue-700 border rounded-2xl p-3 grid grid-rows-[1fr,auto,auto,auto] gap-2 h-full transition duration-300 ease-in-out hover:-translate-y-2" (click)="perfilJugador(jugador.id)">
-                        <img class="rounded w-full h-auto object-contain [mask-image:linear-gradient(to_bottom,black_90%,transparent_100%)]" src="{{jugador.avatar}}" alt="">
+                    <div *ngFor="let jugador of centrocampistas" class="cursor-pointer bg-gradient-to-br from-indigo-100 to-blue-700 rounded-2xl p-3 grid grid-rows-[1fr,auto,auto,auto] gap-2 h-full transition duration-300 ease-in-out hover:-translate-y-2 shadow-lg shadow-blue-800" (click)="perfilJugador(jugador.id)">
+                        <img class="rounded w-full h-auto object-contain [mask-image:linear-gradient(to_bottom,black_90%,transparent_100%)]
+                        transform transition-transform duration-1000 ease-in-out
+                        hover:scale-105" src="{{jugador.avatar}}" alt="">
                         <h1 class="text-center text-2xl font-bold tracking-tight text-blue-950">{{jugador.dorsal}} - {{ jugador.nombre }}</h1>
                         <p class="text-center text-white text">{{'edad' | translate}} {{ jugador.edad }}</p>  
                     </div>
                 </div>
                 <!-- Delanteros Plantilla -->
-                <div class="flex flex-col md:flex-row items-center gap-2 w-full px-4">
-                    <hr class="flex-1 border-azul hidden md:block">
+                <div class="flex justify-center items-center px-4">
                     <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-azul text-center md:text-left">{{ 'delanteros' | translate }}</h1>
-                    <hr class="flex-1 border-azul hidden md:block">
                 </div>
                 <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-10 p-5 mt-3">
-                    <div *ngFor="let jugador of delanteros" class="cursor-pointer bg-gradient-to-br from-indigo-100 to-blue-700 border rounded-2xl p-3 grid grid-rows-[1fr,auto,auto,auto] gap-2 h-full transition duration-300 ease-in-out hover:-translate-y-2" (click)="perfilJugador(jugador.id)">
-                        <img class="rounded w-full h-auto object-contain [mask-image:linear-gradient(to_bottom,black_90%,transparent_100%)]" src="{{jugador.avatar}}" alt="">
+                    <div *ngFor="let jugador of delanteros" class="cursor-pointer bg-gradient-to-br from-indigo-100 to-blue-700 rounded-2xl p-3 grid grid-rows-[1fr,auto,auto,auto] gap-2 h-full transition duration-300 ease-in-out hover:-translate-y-2 shadow-lg shadow-blue-800" (click)="perfilJugador(jugador.id)">
+                        <img class="rounded w-full h-auto object-contain [mask-image:linear-gradient(to_bottom,black_90%,transparent_100%)]
+                        transform transition-transform duration-1000 ease-in-out
+                        hover:scale-105" src="{{jugador.avatar}}" alt="">
                         <h1 class="text-center text-2xl font-bold tracking-tight text-blue-950">{{jugador.dorsal}} - {{ jugador.nombre }}</h1>
                         <p class="text-center text-white text">{{'edad' | translate}} {{ jugador.edad }}</p> 
                     </div>
@@ -88,8 +86,10 @@
         <mat-tab label="{{'cuerpo-tecnico' | translate}}">
             <div class="p-5">
                 <div class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-10 p-5 mt-3">
-                    <div *ngFor="let cuerpoTecnico of cuerpoTecnicoPlantilla" class="cursor-pointer bg-gradient-to-br from-indigo-100 to-blue-700 border rounded-2xl p-3 grid grid-rows-[1fr,auto,auto,auto] gap-2 h-full transition duration-300 ease-in-out hover:-translate-y-2">
-                        <img class="rounded w-full h-auto object-contain [mask-image:linear-gradient(to_bottom,black_90%,transparent_100%)]" src="{{cuerpoTecnico.avatar}}" alt="">
+                    <div *ngFor="let cuerpoTecnico of cuerpoTecnicoPlantilla" class="cursor-pointer bg-gradient-to-br from-indigo-100 to-blue-700 rounded-2xl p-3 grid grid-rows-[1fr,auto,auto,auto] gap-2 h-full transition duration-300 ease-in-out hover:-translate-y-2 shadow-lg shadow-blue-800">
+                        <img class="rounded w-full h-auto object-contain [mask-image:linear-gradient(to_bottom,black_90%,transparent_100%)]
+                        transform transition-transform duration-1000 ease-in-out
+                        hover:scale-105" src="{{cuerpoTecnico.avatar}}" alt="">
                         <h1 class="text-center text-2xl font-bold tracking-tight text-blue-950">{{cuerpoTecnico.nombre}}</h1>
                         <p class="text-center text-white text">{{'rol' | translate}} {{cuerpoTecnico.tipo.toLocaleUpperCase()}}</p>
                         <p class="text-center text-white text">{{'edad' | translate}} {{cuerpoTecnico.edad }}</p> 
