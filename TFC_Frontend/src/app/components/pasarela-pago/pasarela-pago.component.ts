@@ -56,6 +56,8 @@ export class PasarelaPagoComponent implements OnInit {
 
     this.listadoCarrito = this.serviciosCarrito.obtenerCarrito();
     this.total = this.listadoCarrito.reduce((sum, item) => sum + (item.producto.precio * item.cantidad), 0)
+
+    console.log(this.listadoCarrito)
   }
 
   /*

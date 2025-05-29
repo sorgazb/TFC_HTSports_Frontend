@@ -255,5 +255,6 @@
   "alergias" : "Alergias",
   "detalles-entrada" : "Detalles Entrada",
   "cargando-detalles-partido" : "Cargando Detalles del Partido...",
-  "cargando-partidos" : "Cargando Partidos ..."
+  "cargando-partidos" : "Cargando Partidos ...",
+  "detallesPedido" : "Detalles Pedido"
 }

@@ -1,59 +1,80 @@
-<div class="min-h-screen flex items-center justify-center m-5c b p-4">
-  <!-- Contenedor Pasarela Pago -->
-  <div class="w-full max-w-4xl bg-white border-2 border-azul p-8 rounded-2xl">
-    <h2 class="text-2xl font-semibold text-center mb-6 text-azul">{{'direccion-envio' | translate}}</h2>
-    <!-- Select Direcciones -->
-    <div class="mb-4" *ngIf="aficionado.direccion">
-      <label class="block text-sm font-medium text-gray-700 mb-1">{{'elige-opcion' | translate}}</label>
-      <select [(ngModel)]="usarDireccionGuardada" name="direccionSeleccionada" (change)="seleccionarDireccion()" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-azul">
-        <option [ngValue]="true">{{'usar-direccion' | translate}}</option>
-        <option [ngValue]="false">{{'nueva-direccion' | translate}}</option>
-      </select>
-    </div>
+<div class="p-5 grid grid-cols-1 md:grid-cols-2 gap-5">
+  <!-- Contenedor Direcciones -->
+  <div class="col-span-1 animate-fade-right">
+    <div class="border border-azul p-5 rounded-xl shadow-xl shadow-gray-400">
+      <h2 class="text-2xl text-center mb-6 text-azul">{{'direccion-envio' | translate}}</h2>
+      <!-- Select Direcciones -->
+      <div class="mb-4 animate-fade-down" *ngIf="aficionado.direccion">
+        <label class="block text-sm font-medium text-gray-700 mb-1">{{'elige-opcion' | translate}}</label>
+        <select [(ngModel)]="usarDireccionGuardada" name="direccionSeleccionada" (change)="seleccionarDireccion()" class="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-azul">
+          <option [ngValue]="true">{{'usar-direccion' | translate}}</option>
+          <option [ngValue]="false">{{'nueva-direccion' | translate}}</option>
+        </select>
+      </div>
 
-    <!-- Formulario Nueva Direccion -->
-    <form [formGroup]="formNuevaDireccion" *ngIf="!usarDireccionGuardada">
-      <!-- Direccion -->
-      <mat-form-field class="w-full mb-4" appearance="outline" hideRequiredMarker>
-        <mat-label class="bg-white p-1">{{'direccion' | translate}}</mat-label>
-        <input type="text" matInput formControlName="direccion">
-        <mat-error *ngIf="controlarErroresAficionado('direccion', 'required')">{{'introduce-tu' | translate}} <strong>{{'direccion-form' | translate}}</strong></mat-error>
-      </mat-form-field>
-      <!-- Poblacion -->
-      <mat-form-field class="w-full mb-4" appearance="outline" hideRequiredMarker>
-        <mat-label class="bg-white p-1">{{'poblacion' | translate}}</mat-label>
-        <input type="text" matInput formControlName="poblacion">
-        <mat-error *ngIf="controlarErroresAficionado('poblacion', 'required')">{{'introduce-tu' | translate}} <strong>{{'poblacion-form' | translate}}</strong></mat-error>
-      </mat-form-field>
-      <!-- Codigo Postal -->
-      <mat-form-field class="w-full mb-4" appearance="outline" hideRequiredMarker>
-        <mat-label class="bg-white p-1">{{'codigo-postal' | translate}}</mat-label>
-        <input type="text" matInput formControlName="codigoPostal">
-        <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'required')">{{'introduce-tu' | translate}} <strong>{{'codigo-postal-form' | translate}}</strong></mat-error>
-        <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'minlength') && !controlarErroresAficionado('codigoPostal','pattern')"><strong>{{'formato-incorrecto' | translate}}</strong></mat-error>
-        <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'maxlength') && !controlarErroresAficionado('codigoPostal','pattern')"><strong>{{'formato-incorrecto' | translate}}</strong></mat-error>
-        <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'pattern') && (!controlarErroresAficionado('codigoPostal','minlength') || !controlarErroresAficionado('codigoPostal','maxlength'))">{{'introduce' | translate}} <strong>{{'solo-numeros' | translate}}</strong></mat-error>
-      </mat-form-field>
-
+      <!-- Boton Confirmar Direccion existente -->
       <div class="flex justify-center">
-        <button [disabled]="!formNuevaDireccion.valid" type="submit" class="bg-azul text-white px-6 py-2 rounded-full"(click)="crearPedido()">{{'nueva-direccion' | translate}}</button>
+        <button *ngIf="usarDireccionGuardada" type="submit" class="flex w-full items-center justify-center rounded-lg bg-azul px-5 py-2.5 text-sm font-medium text-white hover:text-blue-300 duration-1000" (click)="crearPedido()">{{'usar-direccion' | translate}}</button>
       </div>
-    </form>
 
-    <!-- Boton Confirmar Direccion existente -->
-    <div class="flex justify-center">
-      <button *ngIf="usarDireccionGuardada" type="submit" class="bg-azul text-white px-6 py-2 rounded-full" (click)="crearPedido()">{{'usar-direccion' | translate}}</button>
+      <!-- Formulario Nueva Direccion -->
+      <form [formGroup]="formNuevaDireccion" *ngIf="!usarDireccionGuardada" class="animate-fade-up">
+        <!-- Direccion -->
+        <mat-form-field class="w-full mb-4" appearance="outline" hideRequiredMarker>
+          <mat-label class="bg-white p-1">{{'direccion' | translate}}</mat-label>
+          <input type="text" matInput formControlName="direccion">
+          <mat-error *ngIf="controlarErroresAficionado('direccion', 'required')">{{'introduce-tu' | translate}} <strong>{{'direccion-form' | translate}}</strong></mat-error>
+        </mat-form-field>
+        <!-- Poblacion -->
+        <mat-form-field class="w-full mb-4" appearance="outline" hideRequiredMarker>
+          <mat-label class="bg-white p-1">{{'poblacion' | translate}}</mat-label>
+          <input type="text" matInput formControlName="poblacion">
+          <mat-error *ngIf="controlarErroresAficionado('poblacion', 'required')">{{'introduce-tu' | translate}} <strong>{{'poblacion-form' | translate}}</strong></mat-error>
+        </mat-form-field>
+        <!-- Codigo Postal -->
+        <mat-form-field class="w-full mb-4" appearance="outline" hideRequiredMarker>
+          <mat-label class="bg-white p-1">{{'codigo-postal' | translate}}</mat-label>
+          <input type="text" matInput formControlName="codigoPostal">
+          <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'required')">{{'introduce-tu' | translate}} <strong>{{'codigo-postal-form' | translate}}</strong></mat-error>
+          <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'minlength') && !controlarErroresAficionado('codigoPostal','pattern')"><strong>{{'formato-incorrecto' | translate}}</strong></mat-error>
+          <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'maxlength') && !controlarErroresAficionado('codigoPostal','pattern')"><strong>{{'formato-incorrecto' | translate}}</strong></mat-error>
+          <mat-error *ngIf="controlarErroresAficionado('codigoPostal', 'pattern') && (!controlarErroresAficionado('codigoPostal','minlength') || !controlarErroresAficionado('codigoPostal','maxlength'))">{{'introduce' | translate}} <strong>{{'solo-numeros' | translate}}</strong></mat-error>
+        </mat-form-field>
+          
+        <div class="flex justify-center">
+          <button [disabled]="!formNuevaDireccion.valid" type="submit" class="flex w-full items-center justify-center rounded-lg bg-azul px-5 py-2.5 text-sm font-medium text-white hover:text-blue-300 duration-1000" (click)="crearPedido()">{{'nueva-direccion' | translate}}</button>
+        </div>
+      </form>
+
     </div>
-
-    <!-- PayPal -->
-    <div *ngIf="pedidoIDCreado" class="mt-8">
-      <h2 class="text-2xl font-semibold text-center mb-4">{{'metodo-pago' | translate}}</h2>
-      <div class="w-full flex justify-center">
-        <div #paypal class="w-full max-w-md"></div>
-      </div>
-    </div>
-
-    <!-- Alerta -->
-    <nz-alert *ngIf="alerta.mostrar" [nzMessage]="alerta.mensaje" nzShowIcon nzCloseable (nzOnClose)="alerta.mostrar = false" class="mb-4 p-5"></nz-alert>
   </div>
+  <div class="col-span-1">
+    <!-- Detalles del Pedido -->
+    <div class="col-span-1 animate-fade-left">
+      <div class="border border-azul p-5 rounded-xl shadow-xl shadow-gray-400">
+        <div class="w-full bg-azul rounded-lg p-2">
+          <h1 class="text-center text-white text-xl">{{'detallesPedido' | translate}}</h1>
+        </div>
+        <div *ngFor="let producto of listadoCarrito" class="flex flex-col justify-center items-center">
+          <div class="p-2 border-b grid grid-cols-2 justify-between">
+            <span class="col-span-1 text-center">{{producto.producto.nombre}}</span>
+            <span class="col-span-1 text-center">{{producto.talla}}</span>
+          </div>
+        </div>
+        <!-- PayPal -->
+        <div *ngIf="pedidoIDCreado" class="mt-8 animate-fade-down">
+          <div class="w-full p-2">
+            <h1 class="text-center text-black text-xl">{{'metodo-pago' | translate}}</h1>
+          </div>
+          <div class="flex justify-center items-center">
+            <div #paypal class="w-full max-w-md"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Alertas -->
+  <ng-container class="col-span-1 md:col-span-2">
+    <nz-alert *ngIf="alerta.mostrar" [nzMessage]="alerta.mensaje" nzShowIcon nzCloseable (nzOnClose)="alerta.mostrar = false" class="mb-4 p-5"></nz-alert>
+  </ng-container>
 </div>

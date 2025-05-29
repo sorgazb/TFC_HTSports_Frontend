@@ -255,5 +255,6 @@
   "alergias" : "Allergies",
   "detalles-entrada" : "Ticket Details",
   "cargando-detalles-partido": "Loading Match Details...",
-  "cargando-partidos": "Loading matches ..."
+  "cargando-partidos": "Loading matches ...",
+  "detallesPedido" : "Order details"
 }
