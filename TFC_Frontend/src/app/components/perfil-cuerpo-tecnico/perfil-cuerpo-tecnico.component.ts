@@ -10,6 +10,8 @@ import { ServicioUsuarioService } from 'src/app/services/servicio-usuario.servic
 })
 export class PerfilCuerpoTecnicoComponent {
     cuerpoTecnico !: CuerpoTecnico
+
+    cargando : boolean = true
   
     constructor(private serviciosUsuario : ServicioUsuarioService, private router : Router){}
   
@@ -23,5 +25,6 @@ export class PerfilCuerpoTecnicoComponent {
       this.serviciosUsuario.obtenerCuerpoTecnicoPlantilla(id).subscribe((cuerpoTecnico: CuerpoTecnico) => {
         this.cuerpoTecnico = cuerpoTecnico
       })
+      this.cargando = false
     }
 }

@@ -69,7 +69,7 @@ export class ServicioUsuarioService {
   }
 
   obtenerJugadores(equipoId: number): Observable<Jugador[]> {
-    return this.http.get<Jugador[]>(`${this.apiUrl}${this.endPoint}/equipo/${equipoId}/jugadores`)
+    return this.http.get<Jugador[]>(`${this.apiUrl}${this.endPoint}/equipo/${equipoId}/jugadores?lang=${this.translate.currentLang}`)
   }
 
   obtenerJugadoresAlineacion(equipoId: number): Observable<Jugador[]> {
@@ -77,15 +77,15 @@ export class ServicioUsuarioService {
   }
 
   obtenerCuerposTecnicos(equipoId: number): Observable<CuerpoTecnico[]> {
-    return this.http.get<CuerpoTecnico[]>(`${this.apiUrl}${this.endPoint}/equipo/${equipoId}/cuerpotecnico`)
+    return this.http.get<CuerpoTecnico[]>(`${this.apiUrl}${this.endPoint}/equipo/${equipoId}/cuerpotecnico?lang=${this.translate.currentLang}`)
   }
 
   obtenerJugadorPlantilla(jugadorId: number): Observable<Jugador>{
-    return this.http.get<Jugador>(`${this.apiUrl}${this.endPoint}/equipo/jugadores/${jugadorId}`)
+    return this.http.get<Jugador>(`${this.apiUrl}${this.endPoint}/equipo/jugadores/${jugadorId}?lang=${this.translate.currentLang}`)
   }
 
     obtenerCuerpoTecnicoPlantilla(cuerpoTecnicoId: number): Observable<CuerpoTecnico>{
-    return this.http.get<CuerpoTecnico>(`${this.apiUrl}${this.endPoint}/equipo/cuerpotecnico/${cuerpoTecnicoId}`)
+    return this.http.get<CuerpoTecnico>(`${this.apiUrl}${this.endPoint}/equipo/cuerpotecnico/${cuerpoTecnicoId}?lang=${this.translate.currentLang}`)
   }
 
   comprobarImagenWEB(imagen: File): Observable<any> {
