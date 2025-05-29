@@ -30,6 +30,8 @@ export class ProductoComponent implements OnInit{
 
   mostrarErrorTalla : boolean = false
   mostrarProductoEnCesta : boolean = false
+
+  cargando : boolean = true
   
   constructor(translate: TranslateService, private router: Router, private serviciosProductos : ServicioProductoService, private servicioCarrito: ServicioCarritoService) {
     this.translate = translate
@@ -60,6 +62,7 @@ export class ProductoComponent implements OnInit{
       }else{
           this.esRopa = false
       }
+      this.cargando = false
     })
   }
 

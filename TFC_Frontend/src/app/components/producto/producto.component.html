@@ -1,5 +1,11 @@
-<div *ngIf="producto.stock > 0" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-5">
-    
+<div *ngIf="cargando" class="flex justify-center items-center min-h-screen">
+    <div class="flex flex-col items-center">
+      <div class="spinner-border animate-spin inline-block w-12 h-12 border-4 border-t-transparent border-azul rounded-full" role="status">
+      </div>
+      <p class="mt-4 text-lg text-azul">{{'cargando-producto' | translate}}</p>
+    </div>
+</div>
+<div *ngIf="producto.stock > 0 && !cargando" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-5">
     <div class="col-span-1">
         <div class="overflow-hidden inline-block rounded-lg w-full">
             <img class="rounded cursor-zoom-in hover:scale-150 duration-500 transition-transform w-full" src="{{producto.imagen}}" alt="">
