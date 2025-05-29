@@ -1,24 +1,23 @@
-<!-- Contenedor Producto -->
-<div *ngIf="producto.stock > 0" class="grid grid-cols-1 lg:grid-cols-3 gap-4 p-5">
-    <!-- Imagen Producto -->
-    <div class="lg:col-span-2">
+<div *ngIf="producto.stock > 0" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-5">
+    
+    <div class="col-span-1">
         <div class="overflow-hidden inline-block rounded-lg w-full">
             <img class="rounded cursor-zoom-in hover:scale-150 duration-500 transition-transform w-full" src="{{producto.imagen}}" alt="">
         </div>
     </div>
-    <!-- Contenedor Info Producto -->
-    <div class="lg:col-span-1 flex flex-col gap-4">
+
+    <div class="col-span-1 flex flex-col gap-4 rounded-lg p-5 shadow-lg shadow-gray-500">
         <!-- Nombre -->
         <div>
-            <h1 class="text-xl sm:text-2xl md:text-3xl font-extrabold text-azul">{{producto.nombre}}</h1>
+            <h1 class="text-xl sm:text-2xl md:text-3xl text-azul">{{producto.nombre}}</h1>
         </div>
         <!-- Precio -->
         <div>
-            <span class="text-2xl font-semibold">{{producto.precio}} €</span>
+            <span class="text-2xl">{{producto.precio}} €</span>
         </div>
         <!-- Descripcion -->
-        <div class="rounded-xl border-4 border-azul bg-azul bg-opacity-85 p-4 sm:p-5">
-            <h2 class="text-white text-xl font-semibold border-b-2 pb-2">{{"descripcion-producto"| translate}}</h2>
+        <div class="rounded-lg bg-azul bg-opacity-85 p-4 sm:p-5 shadow-lg shadow-blue-900">
+            <h2 class="text-white text-xl border-b-2 pb-2">{{"descripcion-producto"| translate}}</h2>
             <p class="ml-3 mt-3 text-white text-left lg:text-left">- {{producto.descripcion}}.</p>
         </div>
         <!-- Contenedor Alertas -->
@@ -34,20 +33,20 @@
         </div>
         <!-- Contenedor Tallas -->
         <div *ngIf="esRopa">
-            <p class="text-azul text-xl font-semibold">{{'tallas' | translate}}</p>
-            <div class="grid grid-cols-3 sm:grid-cols-5 gap-3 max-w-md mt-3">
-                <button class="text-center py-1 px-5 w-full text-lg leading-8 text-azul border-2 border-azul flex items-center rounded-full justify-center transition-all duration-300 hover:bg-azul hover:text-white" [ngClass]="{'bg-azul text-white': tallaSeleccionada === 'S'}" (click)="seleccionarTalla('S')">S</button>  
-                <button class="text-center py-1 px-5 w-full text-lg leading-8 text-azul border-2 border-azul flex items-center rounded-full justify-center transition-all duration-300 hover:bg-azul hover:text-white" [ngClass]="{'bg-azul text-white': tallaSeleccionada === 'M'}" (click)="seleccionarTalla('M')">M</button>
-                <button class="text-center py-1 px-5 w-full text-lg leading-8 text-azul border-2 border-azul flex items-center rounded-full justify-center transition-all duration-300 hover:bg-azul hover:text-white" [ngClass]="{'bg-azul text-white': tallaSeleccionada === 'L'}" (click)="seleccionarTalla('L')">L</button>
-                <button class="text-center py-1 px-5 w-full text-lg leading-8 text-azul border-2 border-azul flex items-center rounded-full justify-center transition-all duration-300 hover:bg-azul hover:text-white" [ngClass]="{'bg-azul text-white': tallaSeleccionada === 'XL'}" (click)="seleccionarTalla('XL')">XL</button>
-                <button class="text-center py-1 px-5 w-full text-lg leading-8 text-azul border-2 border-azul flex items-center rounded-full justify-center transition-all duration-300 hover:bg-azul hover:text-white" [ngClass]="{'bg-azul text-white': tallaSeleccionada === 'XXL'}" (click)="seleccionarTalla('XXL')">XXL</button>
+            <p class="text-azul text-lg">{{'tallas' | translate}}</p>
+            <div class="flex flex-row flex-nowrap gap-2 overflow-x-auto">
+                <button class="text-center py-1 px-3 w-full text-lg leading-8 text-azul border-2 border-azul flex items-center rounded-full justify-center transition-all duration-300 hover:bg-azul hover:text-white" [ngClass]="{'bg-azul text-white': tallaSeleccionada === 'S'}" (click)="seleccionarTalla('S')">S</button>  
+                <button class="text-center py-1 px-3 w-full text-lg leading-8 text-azul border-2 border-azul flex items-center rounded-full justify-center transition-all duration-300 hover:bg-azul hover:text-white" [ngClass]="{'bg-azul text-white': tallaSeleccionada === 'M'}" (click)="seleccionarTalla('M')">M</button>
+                <button class="text-center py-1 px-3 w-full text-lg leading-8 text-azul border-2 border-azul flex items-center rounded-full justify-center transition-all duration-300 hover:bg-azul hover:text-white" [ngClass]="{'bg-azul text-white': tallaSeleccionada === 'L'}" (click)="seleccionarTalla('L')">L</button>
+                <button class="text-center py-1 px-3 w-full text-lg leading-8 text-azul border-2 border-azul flex items-center rounded-full justify-center transition-all duration-300 hover:bg-azul hover:text-white" [ngClass]="{'bg-azul text-white': tallaSeleccionada === 'XL'}" (click)="seleccionarTalla('XL')">XL</button>
+                <button class="text-center py-1 px-3 w-full text-lg leading-8 text-azul border-2 border-azul flex items-center rounded-full justify-center transition-all duration-300 hover:bg-azul hover:text-white" [ngClass]="{'bg-azul text-white': tallaSeleccionada === 'XXL'}" (click)="seleccionarTalla('XXL')">XXL</button>
             </div>
         </div>
         <!-- Selector Cantidad -->
         <div>
             <form class="mt-3 w-full lg:w-1/2">
-                <p class="text-azul text-sm font-semibold">{{'cantidad' | translate}}</p>
-                <input name="cantidad" [(ngModel)]="cantidad" type="number" id="number-input" class="bg-gray-50 border-2 border-azul text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Introduce cantidad" min="1"/>
+                <p class="text-azul text-lg">{{'cantidad' | translate}}</p>
+                <input name="cantidad" [(ngModel)]="cantidad" type="number" id="number-input" class="border border-blue-700 text-azul rounded p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500" placeholder="Introduce cantidad" min="1"/>
             </form>
         </div>
         <!-- Botones -->
@@ -58,4 +57,5 @@
             <button class="bg-white text-center py-1 px-5 w-full text-lg leading-8 text-azul border-2 border-azul flex items-center rounded-full justify-center transition-all duration-300 hover:bg-azul hover:shadow-sm hover:shadow-gray-100 hover:border-gray-300 hover:text-white" (click)="agregarProducto(producto)">{{'agregar-carrito' | translate}}</button>
         </div>
     </div>
+
 </div>

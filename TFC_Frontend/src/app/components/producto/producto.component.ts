@@ -105,4 +105,5 @@ export class ProductoComponent implements OnInit{
     this.mostrarProductoEnCesta = false
     this.mostrarErrorTalla = false
   }
+  
 }
