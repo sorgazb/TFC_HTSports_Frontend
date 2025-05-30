@@ -11,7 +11,7 @@
       <div class="grid grid-cols-3">
         <!-- Equipo Local -->
         <div class="col-span-1 flex flex-col justify-center items-center py-2 cursor-pointer" (click)="consultarEquipo(partido.equipos[0].ID)">
-          <img src="{{partido.equipos[0].escudo}}" alt="" class="w-32 h-32 object-contain">
+          <img src="{{partido.equipos[0].escudo}}" alt="{{partido.equipos[0].nombre}}" class="w-32 h-32 object-contain">
           <p class="p-2 text-center">{{partido.equipos[0].nombre}}</p>
         </div>
         <div class="col-span-1 flex flex-col justify-center items-center py-2">
@@ -20,7 +20,7 @@
         </div>
         <!-- Equipo Visitante -->
         <div class="col-span-1 flex flex-col justify-center items-center py-2 cursor-pointer" (click)="consultarEquipo(partido.equipos[1].ID)">
-          <img src="{{partido.equipos[1].escudo}}" alt="" class="w-32 h-32 object-contain">
+          <img src="{{partido.equipos[1].escudo}}" alt="{{partido.equipos[1].nombre}}" class="w-32 h-32 object-contain">
           <p class="p-2 text-center">{{partido.equipos[1].nombre}}</p>
         </div>
       </div>
@@ -58,7 +58,7 @@
           <!-- Equipo Local -->
           <div class="flex flex-col items-center justify-center space-y-2 p-5">
             <h1 class="p-2 text-center">{{ partido.equipos[0].nombre }}</h1>
-            <img [src]="partido.equipos[0].escudo" alt="" class="w-32 h-32 object-contain" />
+            <img [src]="partido.equipos[0].escudo" alt="{{partido.equipos[0].nombre}}" class="w-32 h-32 object-contain" />
             <!-- Posesion -->
             <div class="flex flex-col items-center justify-center space-y-2">
               <div class="text-lg">
@@ -72,7 +72,7 @@
           <!-- Equipo Visitante -->
           <div class="flex flex-col items-center justify-center space-y-2 p-5">
             <h1 class="p-2 text-center">{{ partido.equipos[1].nombre }}</h1>
-            <img [src]="partido.equipos[1].escudo" alt="" class="w-32 h-32 object-contain" />
+            <img [src]="partido.equipos[1].escudo" alt="{{partido.equipos[1].nombre}}" class="w-32 h-32 object-contain" />
             <!-- Posesion -->
             <div class="flex flex-col items-center justify-center space-y-2">
               <div class="text-lg">
@@ -135,7 +135,7 @@
             <h2 class="text-xl text-center text-azul">{{ partido.equipos[0].nombre }}</h2>
           </div>
           <div class="col-span-1">
-            <img [src]="'data:image/jpeg;base64,' + alienacionesPartido[0].imagen_alineacion" class="w-full h-auto object-contain rounded-lg"/>
+            <img [src]="'data:image/jpeg;base64,' + alienacionesPartido[0].imagen_alineacion" alt="alineacion" class="w-full h-auto object-contain rounded-lg"/>
           </div>
           <div class="col-span-1">
             <div *ngFor="let jugador of jugadoresEquipoLocal">
@@ -151,7 +151,7 @@
             <h2 class="text-xl text-center text-azul">{{ partido.equipos[1].nombre }}</h2>
           </div>
           <div class="col-span-1">
-            <img [src]="'data:image/jpeg;base64,' + alienacionesPartido[1].imagen_alineacion" class="w-full h-auto object-contain rounded-lg"/>
+            <img [src]="'data:image/jpeg;base64,' + alienacionesPartido[1].imagen_alineacion" alt="alineacion" class="w-full h-auto object-contain rounded-lg"/>
           </div>
           <div class="col-span-1">
             <div *ngFor="let jugador of jugadoresEquipoVisitante">

@@ -51,7 +51,7 @@
         <div class="grid grid-cols-3">
           <!-- Equipo Local -->
           <div class="col-span-1 flex flex-col justify-center items-center py-2 cursor-pointer hover:text-azul duration-1000" (click)="consultarEquipo(partido.equipos[0].ID)">
-            <img src="{{partido.equipos[0].escudo}}" alt="" class="w-24 h-24 object-contain">
+            <img src="{{partido.equipos[0].escudo}}" alt="{{partido.equipos[0].nombre}}" class="w-24 h-24 object-contain">
             <p class="p-2 text-center">{{partido.equipos[0].nombre}}</p>
           </div>
           <div class="col-span-1 flex flex-col justify-center items-center py-2">
@@ -59,7 +59,7 @@
           </div>
           <!-- Equipo Visitante -->
           <div class="col-span-1 flex flex-col justify-center items-center py-2 cursor-pointer hover:text-azul duration-1000" (click)="consultarEquipo(partido.equipos[1].ID)">
-            <img src="{{partido.equipos[1].escudo}}" alt="" class="w-24 h-24 object-contain">
+            <img src="{{partido.equipos[1].escudo}}" alt="{{partido.equipos[1].nombre}}" class="w-24 h-24 object-contain">
             <p class="p-2 text-center">{{partido.equipos[1].nombre}}</p>
           </div>
         </div>

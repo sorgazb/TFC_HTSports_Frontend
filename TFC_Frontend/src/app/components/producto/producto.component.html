@@ -8,7 +8,7 @@
 <div *ngIf="producto.stock > 0 && !cargando" class="grid grid-cols-1 md:grid-cols-2 gap-4 p-5">
     <div class="col-span-1 animate-fade-right">
         <div class="overflow-hidden inline-block rounded-lg w-full">
-            <img class="rounded cursor-zoom-in hover:scale-150 duration-500 transition-transform w-full" src="{{producto.imagen}}" alt="">
+            <img class="rounded cursor-zoom-in hover:scale-150 duration-500 transition-transform w-full" src="{{producto.imagen}}" alt="{{producto.nombre}}">
         </div>
     </div>
 

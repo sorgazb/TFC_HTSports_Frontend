@@ -63,7 +63,7 @@
                     <mat-panel-title class="text-black text-sm sm:text-base flex items-center min-w-[150px]">
                         <span class="hidden md:inline">{{ 'nacionalidad' | translate }}</span>
                         <img class="w-5 h-3 sm:w-6 sm:h-4 object-contain rounded-sm shadow-sm ml-2" 
-                        src="../../../assets/svg-country-flags/svg/{{ j.nacionalidad }}.svg" />
+                        src="../../../assets/svg-country-flags/svg/{{ j.nacionalidad }}.svg" alt="{{j.nacionalidad}}" />
                     </mat-panel-title>
                     <div class="hidden md:inline">
                         <mat-panel-description class="text-black text-sm sm:text-base flex items-center min-w-[150px]">
@@ -75,7 +75,7 @@
 
                 <div class="p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
                     <div class="col-span-1 flex items-center justify-center">
-                        <img class="w-32 h-auto mb-4 object-cover"  [src]="'data:image/jpeg;base64,' + j.avatar">
+                        <img class="w-32 h-auto mb-4 object-cover"  [src]="'data:image/jpeg;base64,' + j.avatar" alt="{{j.nombre}}">
                     </div>
                     <div class="col-span-1 grid grid-cols-1 gap-4">
                         <div class="col-span-1">
