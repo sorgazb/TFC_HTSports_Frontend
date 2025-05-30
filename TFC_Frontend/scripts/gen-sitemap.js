@@ -1,39 +1,27 @@
-// scripts/gen-sitemap.js
 const fs = require('fs');
 const path = require('path');
 
-// 1. Define aquí todas tus rutas (incluye la raíz y las subrutas)
-const routes = [
-  '/'
-];
+const distPath = path.join(__dirname, '../dist/TFC_Frontend');
 
-// 2. Construye las entradas <url> para cada ruta
-const urls = routes.map(route => `
-  <url>
-    <loc>https://tfc-frontend-ten.vercel.app/${route}</loc>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
-  </url>
-`).join('');
+// 🔧 Asegurarse de que la carpeta existe
+fs.mkdirSync(distPath, { recursive: true });
 
-// 3. Envuelve en <urlset>
+// 1. Generar sitemap
 const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
-<urlset 
-  xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" 
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-  xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9 
-                      http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
-${urls}
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://tfc-frontend-ten.vercel.app/</loc>
+    <changefreq>weekly</changefreq>
+  </url>
 </urlset>`;
 
-// 4. Asegúrate de que la carpeta de salida existe
-const outDir = path.join(__dirname, '..', 'dist', 'browser');
-if (!fs.existsSync(outDir)) {
-  fs.mkdirSync(outDir, { recursive: true });
-}
+// 2. Escribir sitemap.xml
+fs.writeFileSync(path.join(distPath, 'sitemap.xml'), sitemap);
 
-// 5. Escribe el archivo sitemap.xml en la carpeta de salida
-const filePath = path.join(outDir, 'sitemap.xml');
-fs.writeFileSync(filePath, sitemap.trim());
+// 3. Copiar robots.txt
+fs.copyFileSync(
+  path.join(__dirname, '../src/robots.txt'),
+  path.join(distPath, 'robots.txt')
+);
 
-console.log(`✅ sitemap.xml generado en ${filePath}`);
+console.log('✅ sitemap.xml y robots.txt copiados a dist/TFC_Frontend/');
