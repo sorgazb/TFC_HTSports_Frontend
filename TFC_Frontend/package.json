@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "vercel-build": "node scripts/generate-env.ts && ng build --source-map && node scripts/gen-sitemap.js",
+    "vercel-build": "node scripts/generate-env.ts && npm run build",
     "postinstall": "node scripts/generate-env.ts",
     "start": "ng serve",
-    "build": "ng build --source-map",
+    "build": "ng build --source-map && node scripts/gen-sitemap.js",
     "postbuild": "node scripts/gen-sitemap.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
