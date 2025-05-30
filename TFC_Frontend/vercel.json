@@ -1,0 +1,11 @@
+{
+  "builds": [
+    { "src": "package.json",       "use": "@vercel/node" },
+    { "src": "dist/browser/**/*",  "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/sitemap.xml", "dest": "dist/browser/sitemap.xml" },
+    { "src": "/robots.txt",  "dest": "dist/browser/robots.txt" },
+    { "src": "/(.*)",        "dest": "dist/browser/$1" }
+  ]
+}
