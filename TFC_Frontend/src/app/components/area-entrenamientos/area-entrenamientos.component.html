@@ -7,7 +7,7 @@
     </div>
 
     <!-- Boton Registrar Nueva Sesion Entrenamiento -->
-     <div *ngIf="cuerpoTecnico.tipo === 'entrenador'" class="m-5 animate-fade-left">
+     <div *ngIf="cuerpoTecnico && cuerpoTecnico.tipo === 'entrenador'" class="m-5 animate-fade-left">
         <button (click)="registrarNuevaSesionEntrenamiento()" class="bg-azul text-white p-2 cursor-pointer rounded-lg hover:text-blue-300 duration-1000">
             {{'registrar-nueva-sesion' | translate }}
         </button>
