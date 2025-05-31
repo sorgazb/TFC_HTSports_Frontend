@@ -7,6 +7,7 @@ import { ServicioSesionEntrenamientoService } from 'src/app/services/servicio-se
 import { CardSesionEntrenamientoRegistrarComponent } from '../card-sesion-entrenamiento-registrar/card-sesion-entrenamiento-registrar.component';
 import { SesionEntrenamiento } from 'src/app/class/sesion-entrenamiento';
 import { Entrenamiento } from 'src/app/class/entrenamiento';
+import { Jugador } from 'src/app/class/jugador';
 
 @Component({
   selector: 'app-area-entrenamientos',
@@ -15,6 +16,7 @@ import { Entrenamiento } from 'src/app/class/entrenamiento';
 })
 export class AreaEntrenamientosComponent {
   cuerpoTecnico !: CuerpoTecnico
+  jugador !: Jugador
   translate !: TranslateService
   sesionesEntrenamiento : SesionEntrenamiento [] = []
 
@@ -23,6 +25,8 @@ export class AreaEntrenamientosComponent {
   }
 
   ngOnInit(): void {
+
+    let idEquipo = 0
   
     if(!sessionStorage.getItem('usuario')){
       this.router.navigate(['/error'])
@@ -38,8 +42,16 @@ export class AreaEntrenamientosComponent {
     let cuerpoTecnicoSesion = JSON.parse(cuerpoTecnicoAux!)
     this.cuerpoTecnico = cuerpoTecnicoSesion
 
-    let idEquipo = this.cuerpoTecnico.equipo_id
-  
+    let jugadorAux = localStorage.getItem('jugador')
+    let jugadorSesion = JSON.parse(jugadorAux!)
+    this.jugador = jugadorSesion
+
+    if(!this.cuerpoTecnico){
+      idEquipo = this.jugador.equipo_id
+    }else{
+      idEquipo = this.cuerpoTecnico.equipo_id
+    }
+
     this.servicioSesionEntrenamiento.obtenerSesionesEntrenamientoEquipo(idEquipo).subscribe((sesionEntrenamiento : SesionEntrenamiento [])=>{
       this.sesionesEntrenamiento = sesionEntrenamiento
     })
