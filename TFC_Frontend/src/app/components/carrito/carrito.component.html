@@ -8,9 +8,9 @@
           <div *ngFor="let producto of productosCarrito" class="rounded-lg border-2 border-azul bg-white p-4 md:p-6 animate-fade shadow-2xl shadow-gray-600 transition duration-300 ease-in-out hover:-translate-y-2">
             <div class="space-y-4 md:flex md:items-center md:justify-between md:gap-6 md:space-y-0">
               <a href="/producto/{{producto.producto.ID}}" class="shrink-0 md:order-1">
-                <img class="h-20 w-20" src="{{producto.producto.imagen}}" alt="{{producto.producto.nombre}}" />
+                <img class="h-32 w-32" src="{{producto.producto.imagen}}" alt="{{producto.producto.nombre}}" />
               </a>
-              <div class="text-end md:order-4 md:w-32">
+              <div class="text-start md:text-end md:order-4 md:w-32">
                 <p class="text-base font-bold text-azul">{{producto.producto.precio * producto.cantidad}} €</p>
               </div>
               <div class="w-full min-w-0 flex-1 space-y-4 md:order-2 md:max-w-md">

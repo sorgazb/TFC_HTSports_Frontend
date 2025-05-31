@@ -72,8 +72,8 @@
         <div *ngIf="producto.stock <= 0" class="p-2">
           <p class="text-left text-md font-medium">{{'sin-stock' | translate}}</p>
         </div>
-        <div *ngIf="producto.stock > 0"  class="p-2">
-          <p class="text-left text-md font-medium">{{'precio' | translate}} {{ producto.precio }}€</p>
+        <div *ngIf="producto.stock > 0">
+          <p class="inline-block text-left text-md font-medium bg-azul rounded-md p-1 text-white">{{'precio' | translate}} {{ producto.precio }}€</p>
         </div>
       </div>
     </div>

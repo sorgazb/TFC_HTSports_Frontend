@@ -259,5 +259,6 @@
   "detallesPedido" : "Order details",
   "cargando-perfil" : "Loading Profile...",
   "cargando-producto" : "Loading Product...",
-  "cargando-productos" : "Loading Products..."
+  "cargando-productos" : "Loading Products...",
+  "dietas" : "Request Diet"
 }
