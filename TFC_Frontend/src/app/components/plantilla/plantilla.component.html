@@ -24,6 +24,9 @@
                 <h1 class="text-3xl md:text-4xl font-bold text-azul">{{ equipo.nombre }}</h1>
                 <p class="text-lg text-gray-700">{{ equipo.estadio }}</p>
                 <p class="text-sm text-gray-500">{{ equipo.capacidad_estadio | number }} {{ 'plazas' | translate }}</p>
+                <div class="mx-auto max-w-2xl bg-gray-50 border-l-4 border-azul p-4 text-justify text-gray-500 leading-relaxed rounded-md shadow-sm">
+                    <p class="text-base md:text-lg italic">"{{ equipo.historia }}"</p>
+                </div>
               </div>
             </div>
           </mat-tab>

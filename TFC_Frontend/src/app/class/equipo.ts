@@ -4,4 +4,5 @@ export class Equipo {
     estadio !: string
     escudo !: string
     capacidad_estadio !: number
+    historia !: string
 }

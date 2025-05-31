@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Equipo } from '../class/equipo';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable({
   providedIn: 'root'
@@ -13,13 +14,13 @@ export class ServicioEquipoService {
   //private apiUrl = 'http://localhost:8080/'
   private endPoint = 'api/equipos'
 
-  constructor(private http : HttpClient) { }
+  constructor(private http : HttpClient, private translate: TranslateService) { }
 
   obtenerTodosLosEquipos():Observable<Equipo[]>{
     return this.http.get<Equipo[]>(`${this.apiUrl}${this.endPoint}`)
   }
 
   obtenerEquipoPorId(id : number):Observable<Equipo>{
-    return this.http.get<Equipo>(`${this.apiUrl}${this.endPoint}/${id}`)
+    return this.http.get<Equipo>(`${this.apiUrl}${this.endPoint}/${id}?lang=${this.translate.currentLang}`)
   }
 }
