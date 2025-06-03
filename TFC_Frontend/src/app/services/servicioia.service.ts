@@ -48,7 +48,7 @@ export class ServicioiaService {
     })
 
     const body = {
-      model: 'gpt-3.5-turbo',
+      model: 'gpt-4.1',
       messages: this.mensajes,
       max_tokens: 2000,
     }
