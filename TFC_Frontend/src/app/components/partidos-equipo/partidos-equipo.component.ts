@@ -76,6 +76,8 @@ export class PartidosEquipoComponent implements OnInit{
         partido.fecha = new Date(partido.fecha)     
         return partido
       })
+      this.partidosEquipo.sort((a, b) =>
+        (b.fecha as Date).getTime() - (a.fecha as Date).getTime())
       const tiempoCancelacion = 100 * 60 * 1000
       this.partidosEquipo.forEach(partido => {
         const fechaPartido = new Date(partido.fecha).getTime()
