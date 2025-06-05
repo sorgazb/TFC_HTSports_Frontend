@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tfc-frontend-ten.vercel.app/sitemap.xml
+Sitemap: https://htsports.es/sitemap.xml
