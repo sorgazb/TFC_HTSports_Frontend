@@ -7,7 +7,6 @@
       "config": { "distDir": "dist/tfc-frontend" }
     }
   ],
-
   "redirects": [
     {
       "source": "/(.*)",
@@ -15,10 +14,9 @@
       "permanent": true
     }
   ],
-
   "rewrites": [
-    { "source": "/sitemap.xml",  "destination": "/sitemap.xml" },
-    { "source": "/robots.txt",   "destination": "/robots.txt" },
-    { "source": "/:path*",       "destination": "/index.html" }
+    { "source": "/sitemap.xml", "destination": "/sitemap.xml" },
+    { "source": "/robots.txt",  "destination": "/robots.txt" },
+    { "source": "/:path*",      "destination": "/index.html" }
   ]
 }
