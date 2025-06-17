@@ -8,6 +8,13 @@
       }
     }
   ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://www.htsports.es/$1",
+      "permanent": true
+    }
+  ],
   "routes": [
     { "src": "/sitemap\\.xml", "dest": "/sitemap.xml" },
     { "src": "/robots\\.txt",  "dest": "/robots.txt" },
