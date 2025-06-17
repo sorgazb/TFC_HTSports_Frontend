@@ -10,6 +10,9 @@
   "redirects": [
     {
       "source": "/(.*)",
+      "has": [
+        { "type": "host", "value": "htsports.es" }
+      ],
       "destination": "https://www.htsports.es/$1",
       "permanent": true
     }
