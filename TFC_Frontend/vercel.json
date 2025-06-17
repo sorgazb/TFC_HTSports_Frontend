@@ -4,11 +4,10 @@
     {
       "src": "package.json",
       "use": "@vercel/static-build",
-      "config": {
-        "distDir": "dist/tfc-frontend"
-      }
+      "config": { "distDir": "dist/tfc-frontend" }
     }
   ],
+
   "redirects": [
     {
       "source": "/(.*)",
@@ -16,9 +15,10 @@
       "permanent": true
     }
   ],
-  "routes": [
-    { "src": "/sitemap\\.xml", "dest": "/sitemap.xml" },
-    { "src": "/robots\\.txt", "dest": "/robots.txt" },
-    { "src": "/[^.]+", "dest": "/index.html" }
+
+  "rewrites": [
+    { "source": "/sitemap.xml",  "destination": "/sitemap.xml" },
+    { "source": "/robots.txt",   "destination": "/robots.txt" },
+    { "source": "/:path*",       "destination": "/index.html" }
   ]
 }
